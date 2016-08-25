@@ -1,0 +1,24 @@
+<!-- ******************************************
+Extract text from the file and push it into the database
+Author: LEE Unkyu
+Created: 14 Mar 2016
+
+Target table must have filepath and content field
+and the SQL should return filepath and content field
+******************************************  -->
+<TXT2SQL>
+
+<!-- Specify Source SQL Connection String (SQL Alchemy Engine format) -->
+<SQL_CONNECTION>mysql://scott:tiger@localhost/fromthisdb?charset=utf8</SQL_CONNECTION>
+
+<!-- Target Table Name - table must have filepath and content field -->
+<TABLE>FileIndex</TABLE>
+
+<!-- Source SQL Query, shall return a table -->
+<SQL>
+<![CDATA[
+  SELECT filepath
+]]>
+</SQL>
+
+</TXT2SQL>

@@ -1,0 +1,18 @@
+{
+  "core_log": {
+    "mappings": {
+
+      "tasklog": {
+        "dynamic": "strict",
+        "properties": {
+          "instance_id":  {"type": "string"},
+          "action":       {"type": "string"},
+          "status":       {"type": "string"},
+          "message":      {"type": "string"},
+          "created":      {"type": "date"}
+        }
+      }
+
+    }
+  }
+}

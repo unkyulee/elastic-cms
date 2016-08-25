@@ -1,0 +1,17 @@
+{
+  "core_data": {
+    "mappings": {
+      "datasource": {
+        "dynamic": "strict",
+        "properties": {
+          "navigation_id":      {"type": "string"},
+          "type":               {"type": "string"},
+          "name":               {"type": "string"},
+          "description":        {"type": "string"},
+          "connection":         {"type": "string"},
+          "query":              {"type": "string"}
+        }
+      }
+    }
+  }
+}

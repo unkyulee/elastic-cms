@@ -1,0 +1,8 @@
+# Write your python code here
+# this will be running from the Task Server through python "exec"
+# there is a message variable within scope, which will be printed in the log
+import something
+
+def writeyourown():
+  print "you wouldn't see print result"
+  message = "this message should appear in the log"

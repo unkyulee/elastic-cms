@@ -1,0 +1,45 @@
+<table class="table table-stripped table-hover table-responsive">
+  <thead>
+  <tr>
+    <th colspan=2>Information</th>
+  </tr>
+</thead>
+
+  {%if p.post.status%}
+  <tr>
+    <td><b>status</b></td>
+    <td>
+      <span class="label label-info">
+        {{ p.post.status }}
+      </span>
+    </td>
+  </tr>
+  {%endif%}
+
+  <tr>
+    <td><b>created by</b></td>
+    <td>
+      {% set created_by = p.post.created_by|get('http://localhost:9200', 'people', 'post') %}
+      {% if created_by %}
+      <a href="/people/post/view/{{created_by.id}}" target=_blank>
+        {{ created_by.title }}
+      </a>
+      {% else %}
+        {{ p.post.created_by }}
+      {% endif %}
+    </td>
+  </tr>
+
+  <tr>
+    <td><b>created at</b></td>
+    <td>
+      {{ p.post.created|dt }}
+    </td>
+  </tr>
+
+  <tr>
+    <td><b>viewed</b></td>
+    <td>{{ p.post.viewed }}</td>
+  </tr>
+
+</table>

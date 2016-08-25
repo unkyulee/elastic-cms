@@ -1,0 +1,19 @@
+{% macro render(
+    name, id, options, selected_value, name_field="name", id_field="id"
+) %}
+<select id="{{id}}" name="{{name}}" style="width:100%" >    
+  {%- for v in options|getlist -%}
+    {%- if v is mapping -%}
+    <option value="{{v[id_field]}}"
+      {%- if v[id_field] == selected_value|string %} selected="1" {%endif-%}>{{v[name_field]}}</option>
+    {%else%}
+    <option selected="1">{{v}}</option>
+    {%endif%}
+  {% endfor -%}
+</select>
+<script>
+$(document).ready(function() {
+  $("#{{id}}").select2({  });
+});
+</script>
+{% endmacro %}

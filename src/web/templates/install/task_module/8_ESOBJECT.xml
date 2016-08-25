@@ -1,0 +1,71 @@
+<!-- ******************************************
+Add Object to Elasticsearch document
+Author: LEE Unkyu
+Created: 9 Mar 2016
+
+Runs SQL query to get batch documents and
+then loops through and update each document
+
+SQL query should return id and shall be ordered by id
+so that in the loop when id changes the batch process
+moves on to the next document update
+
+objects are mapping dependent so be aware of the index structure
+of the document that you are adding.
+
+first define the object template that would go into the index
+for example if the template looks like below
+
+{
+  "name":[[NAME]],
+  "value":[[VALUE]]
+}
+
+and the SQL looks like this
+
+SELECT id = 1, NAME='unkyu', VALUE='is awesome'
+
+
+results object will be like this
+
+{
+  "name":"unkyu",
+  "value":"is awesome"
+}
+
+******************************************  -->
+<ESOBJECT>
+
+<!-- Specify Target Elastic Search Host Name -->
+<ELASTIC_SEARCH_HOST>http://user:secret@localhost:9200</ELASTIC_SEARCH_HOST>
+
+<!-- Name of index where document shall be indexed to -->
+<INDEX>someindexname</INDEX>
+
+<!-- _type field for indexing -->
+<DOC_TYPE>documenttype</DOC_TYPE>
+
+<!-- field name where objects are added -->
+<FIELD>field_name</FIELD>
+
+<TEMPLATE><![CDATA[
+{
+  "name": "[[NAME]]",
+  "value": "[[VALUE]]"
+}
+]]></TEMPLATE>
+
+<!-- Specify Source SQL Connection String (SQL Alchemy Engine format) -->
+<SQL_CONNECTION>mysql://scott:tiger@localhost/fromthisdb?charset=utf8</SQL_CONNECTION>
+
+<!-- Source SQL Query, shall return a table -->
+<SQL><![CDATA[
+  <!-- MUST contain the following column -->
+  <!--
+    id: id of the document
+    from the template above name surrounded by [[]] will be mapped from the query
+  -->
+  SELECT id = 1, NAME='unkyu', VALUE='is awesome'
+]]></SQL>
+
+</ESOBJECT>

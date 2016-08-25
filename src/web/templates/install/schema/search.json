@@ -1,0 +1,83 @@
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "folding": {
+          "tokenizer": "standard",
+          "filter":  [ "lowercase", "asciifolding" ]
+        }
+      }
+    }
+  },
+
+  "mappings" : {
+    "post" : {
+        "_all":         {"enabled": true},
+        "_source":      {"enabled": true},
+        "dynamic": "strict",
+        "properties" :  {
+          "id" :           {"type" : "string" ,"index" : "analyzed" },
+          "app" :           {"type" : "string", "index" : "not_analyzed"},
+          "url" :           {"type" : "string" ,"index" : "analyzed" },
+          "priority":       {"type" : "float"},
+
+          "start" :         {"type" : "date"},
+          "finish" :        {"type" : "date"},
+          "filepath" :      {"type" : "string"},
+
+          "category" :      {"type" : "string", "index" : "not_analyzed"},
+          "status" :        {"type" : "string", "index" : "not_analyzed"},
+          "keyword" :       {"type" : "string", "index" : "not_analyzed"},
+          "tag" :           {"type" : "string", "index" : "not_analyzed"},
+
+          "journal" :       {"type" : "string", "index" : "not_analyzed"},
+          "campaign" :      {"type" : "string", "index" : "not_analyzed"},
+
+          "location" :      {"type" : "string", "index" : "not_analyzed"},
+          "subdirectory" :  {"type" : "string", "index" : "not_analyzed"},
+          "generic_signal_name" :  {"type" : "string", "index" : "not_analyzed"},
+          "alias" :         {"type" : "string", "index" : "not_analyzed"},
+          "datasource" :    {"type" : "string", "index" : "not_analyzed"},
+
+          "calendar" :  {"type" : "string", "index" : "not_analyzed"},
+
+          "author" :        {"type" : "string", "index" : "not_analyzed"},
+          "assignee" :      {"type" : "string", "index" : "not_analyzed"},
+
+          "email" :         {"type" : "string", "index" : "not_analyzed"},
+          "office" :        {"type" : "string", "index" : "not_analyzed"},
+          "phone" :         {"type" : "string", "index" : "not_analyzed"},
+          "photo" :         {"type" : "string", "index" : "not_analyzed"},
+
+          "title" :         {"type" : "string"},
+          "description" :   {"type" : "string", "index" : "analyzed", "norms": { "enabled": false } },
+          "comments" :      {"type" : "string", "index" : "analyzed", "norms": { "enabled": false } },
+          "content" :       {"type" : "string", "index" : "analyzed", "norms": { "enabled": false } },
+
+          "viewed":         {"type" : "long"},
+          "created" :       {"type" : "date"},
+          "created_by":     {"type" : "string"},
+          "updated" :       {"type" : "date"},
+          "updated_by":     {"type" : "string"}
+        }
+    },
+
+    "field" : {
+      "_all":         {"enabled": true},
+      "_source":      {"enabled": true},
+      "dynamic":      "strict",
+      "properties" :  {
+        "handler" :       {"type" : "string"},
+        "type" :          {"type" : "string", "index" : "not_analyzed"},
+        "name":           {"type" : "string"},
+        "order_key":      {"type" : "integer"},
+        "visible" :       {"type" : "string"},
+        "is_filter" :     {"type" : "boolean"},
+        "list_tpl" :      {"type" : "string"},
+        "edit_tpl" :      {"type" : "string"},
+        "view_tpl" :      {"type" : "string"}
+      }
+    }
+
+  }
+}

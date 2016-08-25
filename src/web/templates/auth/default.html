@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block navigation %}{% endblock %}
+{% block menu %}{% endblock %}
+
+{% block content %}
+
+<!-- CONTENT HEADER -->
+<div class="page-header">
+  <h2>Login</h2>
+</div>
+
+<div class="row">
+	<div class="col-lg-4 col-md-4">
+
+    {%if p.message%}<div class="alert alert-info">{{p.message}}</div>{%endif%}
+
+		<div class="wrapper">
+		  <form class="form-signin" method="post" accept-charset="UTF-8">
+        <input type="hidden" name="url" value="{{ p.ret_url }}" />
+
+		    <input type="text" class="form-control" name="login"
+          placeholder="User name" required="" autofocus="" />
+		    <input type="password" class="form-control" name="password"
+          placeholder="Password" required="" />
+		    <br>
+		    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+		  </form>
+		</div>
+	</div>
+
+	<div class="col-lg-8 col-md-8">
+		{{p.login_html|safe}}
+	</div>
+
+</div>
+
+
+{% endblock %}

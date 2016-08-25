@@ -1,0 +1,52 @@
+{% macro render(p, field) %}
+
+<select id="s_{{field.id}}" style="width:100%"></select>
+<br><br>
+<script>
+$(document).ready(function() {
+  $("#s_{{field.id}}").select2({
+    placeholder: "{{field.name}}",
+    allowClear: true,
+    minimumInputLength: 0,
+
+    ajax: {
+      url: '{{p.url}}/filter/{{field.id}}' ,
+      dataType: 'json',
+      delay: 250,
+
+      data: function (params) {
+        // send filter request with all the search query and selected filters
+        return {
+          q: $("#q").val(),
+          fq: params.term ? params.term + "*" : "*"
+          {% for field_id, value in p.selected_filter_list.items() %}
+            , {{field_id}}: "{%- for v in value -%}{{v|strip}}{%- if not loop.last %} _or_ {% endif -%}{%- endfor -%}"
+          {% endfor %}
+        }
+      },
+
+      processResults: function (data, page) {
+
+        // format data
+        dataList = data.aggregations.{{field.id}}.buckets
+        ResultList = { "results": [] , "more": false }
+        for ( i in dataList ) {
+          ResultList.results.push({
+              "id": dataList[i].key ,
+              "text": dataList[i].key + " ("+dataList[i].doc_count+")"
+          })
+        }
+
+        return ResultList;
+      }
+
+    }
+
+  //
+  }).on("change", function(e) {
+    // when user selects the value
+    SelectFilter("{{field.id}}", $("#s_{{field.id}}").val()) ;
+  }) ;
+});
+</script>
+{% endmacro %}

@@ -1,0 +1,82 @@
+{% extends "admin/base.html" %}
+
+{% block body %}
+<div class="row">
+  <div class="col-lg-12">
+
+    <form class="form-horizontal" method="post">
+      <legend>Site Configuration</legend>
+
+      <div class="form-group">
+        <label class="col-lg-2 col-md-2 control-label">Site Title</label>
+        <div class="col-lg-10 col-md-10">
+          <input class="form-control" type="text" name="title"
+            placeholder="Please enter browser title for the site"
+            value="{{ p.conf.title }}" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-lg-2 col-md-2 control-label">Auth Method</label>
+        <div class="col-lg-10 col-md-10">
+          <select name="auth">
+            <option {% if p.conf.auth == "None" %}selected="1"{% endif %}>None</option>
+            <option {% if p.conf.auth == "LDAP" %}selected="1"{% endif %}>LDAP</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-lg-2 col-md-2 control-label">LDAP</label>
+        <div class="col-lg-10 col-md-10">
+          <input class="form-control" type="text"
+            placeholder="ldaps://ldap" name="ldap"
+            value="{{ p.conf.ldap }}" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-lg-2 col-md-2 control-label">LDAP path</label>
+        <div class="col-lg-10 col-md-10">
+          <input class="form-control" type="text"
+            placeholder="uid={},ou=People,dc=company" name="ldap_path"
+            value="{{ p.conf.ldap_path }}" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-lg-2 col-md-2 control-label">Admin User</label>
+        <div class="col-lg-10 col-md-10">
+          {{select_multi.render("admins", "admins", p.conf.admins)}}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-lg-2 col-md-2 control-label">Safe Network</label>
+        <div class="col-lg-10 col-md-10">
+          {{select_multi.render("safe_network", "safe_network", p.conf.safe_network)}}
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label class="col-lg-2 col-md-2 control-label">Global Script</label>
+        <div class="col-lg-10 col-md-10">
+          <textarea class="form-control" name="script" rows="8">{{p.conf.script}}</textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-lg-10 col-md-10 col-lg-offset-2 col-md-offset-2">
+          <button type="reset" class="btn btn-default">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+
+
+{% endblock %}

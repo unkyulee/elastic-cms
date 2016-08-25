@@ -1,0 +1,45 @@
+{% macro render(
+    name, id, values, is_tags="true", options=[],
+    ajax="false", id_path="_id", text_path="_source.title", loop_path="hits.hits.",
+    placeholder="press enter key or , to have new value",
+    name_field="name", id_field="id"
+) %}
+<span>press "," to enter new entry</span>
+<select id="{{id}}" name="{{name}}" style="width:100%" multiple='1'>
+  {%- for v in values|getlist %}
+    {%if v is mapping%}
+    <option id="{{v[id_field]}}" selected="1">{{v[name_field]}}</option>
+    {%else%}
+    <option selected="1">{{v}}</option>
+    {%endif%}
+  {% endfor -%}
+
+  {%- for v in options if v not in values %}
+    <option>{{v}}</option>
+  {% endfor -%}
+</select>
+<script>
+$(document).ready(function() {
+  $("#{{id}}").select2({
+    placeholder: "{{placeholder}}", allowClear: true,    
+    {% if is_tags == "true" %} tokenSeparators: [','], tags: true, {% endif %}
+    {%- if ajax != "false"%}
+    delay: 250,
+    ajax: {
+      url: '{{ ajax }}', dataType: 'jsonp',
+      data: function (params) { return { q: params.term + "*" } },
+      processResults: function (data, page) {
+        ResultList = { "results" : [] , "more":false }
+        data.{{ loop_path }}forEach(function(entry) {
+          ResultList.results.push(
+            { "id":entry.{{ id_path }}, "text": entry.{{ text_path }} }
+          )
+        });
+        return ResultList;
+      }
+    }
+    {% endif -%}
+  });
+});
+</script>
+{% endmacro %}

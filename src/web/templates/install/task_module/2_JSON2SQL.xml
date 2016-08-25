@@ -1,0 +1,29 @@
+<!-- ******************************************
+JSON to SQL
+Author: LEE Unkyu
+Created: 25 Feb 2016
+
+Given JSON url or path, this task module loads JSON data into SQL table
+******************************************  -->
+<JSON2SQL>
+
+<!-- Specify JSON URI where the data is coming from -->
+<SOURCE_JSON_URI>http://www.somewhere.com/very_nice_json_data.json</SOURCE_JSON_URI>
+
+<!-- Specify Target SQL Connection String (SQL Alchemy Engine format) -->
+<TARGET_SQL_CONNECTION>mysql://scott:tiger@localhost/foo</TARGET_SQL_CONNECTION>
+
+<!-- Target Table Name -->
+<TARGET_SQL_TABLE>PutTargetTableNameHere</TARGET_SQL_TABLE>
+
+<!-- Specify mapping between JSON data and SQL table, multiple MAP can be specified -->
+<MAP>
+  <JSON_NODE></JSON_NODE>
+  <SQL_COLUMN_NAME></SQL_COLUMN_NAME>
+<MAP>
+<MAP>
+  <JSON_NODE></JSON_NODE>
+  <SQL_COLUMN_NAME></SQL_COLUMN_NAME>
+<MAP>
+
+</JSON2SQL>

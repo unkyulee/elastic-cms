@@ -1,0 +1,80 @@
+{% import "widget/select.html" as select %}
+{% import "widget/select_multi.html" as select_multi %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}{{p.title}} - {{p.navigation.display_name}}{% endblock %}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <!-- jquery -->
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.12.3.min.js"></script>
+    <!-- jquery-ui -->
+    <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.11.4/themes/blitzer/jquery-ui.css">
+    <script type="text/javascript" src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- font awesome -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <!-- select2 -->
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js"></script>
+    <!-- ace -->
+    <script type="text/javascript" src="/static/ace/ace.js"></script>
+    <!-- sidebar -->
+    <link rel="stylesheet" type="text/css" href="/static/sidebar/sidebar.css">
+    <script type="text/javascript" src="/static/sidebar/sidebar.js"></script>
+
+    {% if p.script %}{{p.script|safe}}{% endif %}
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+  <div id="wrapper">
+    <div class="overlay"></div>
+
+    {% block navigation %}
+    <!-- Sidebar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+      <ul class="nav sidebar-nav">
+        <li class="sidebar-brand">
+          <a href="/">{{ p.title }}</a>
+        </li>
+        {% for nav in p.nav_list %}
+        <li><a href="/{%-if p.site.name-%}{{p.site.name}}/{%-endif-%}{{nav.name}}" title="{{nav.description}}">{{nav.display_name}}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+    <!-- /#sidebar-wrapper -->
+    {% endblock %}
+
+    <!-- page Content -->
+    <div id="page-content-wrapper">
+      {% block menu %}
+      <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
+        <span class="hamb-top"></span>
+    		<span class="hamb-middle"></span>
+    	  <span class="hamb-bottom"></span>
+      </button>
+      {% endblock %}
+      <div class="container">
+        {% block content %}{% endblock %}
+        <hr>
+        <div class="row">
+          <div class="col-lg-12">
+            <p class="text-muted text-right">
+            {%if p.login %}
+              Logged in as <a href="/auth/logout?url={{p.url}}" title="logout">{{ p.login }}</a>
+            {%endif%}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /#wrapper -->
+  <br><br>
+</body>
+</html>

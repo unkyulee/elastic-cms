@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+{% import "task/action/task_module.html" as task_module %}
+
+{% block content %}
+
+<!-- CONTENT HEADER -->
+<div class="page-header">
+  <table width="100%">
+    <tr>
+      <td>
+        <h2>Edit Action - <b>{{p.action.name}}</b></h2>
+        Set parameters for the action
+      </td>
+      <td class="text-right">
+        <div class="btn-group">
+          <a href="#" data-toggle="dropdown" title="add new task">
+            <h2 class="glyphicon glyphicon-cog"></h2>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li><a href="#modal-dialog-execute-task" data-toggle="modal">Execute task</a></li>
+            <li><a href="{{p.url}}/status/history/{{p.task.id}}">History</a></li>
+            <li class="divider"></li>
+            <li><a href="#modal-dialog-delete-action" data-toggle="modal">Delete Action</a></li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+ </table>
+</div>
+
+<!-- BREAD CRUMB -->
+<ol class="breadcrumb" style="margin-bottom: 5px;">
+  <li><a href="{{p.url}}"><span class="glyphicon glyphicon-home"></span></a></li>
+  <li><a href="{{p.url}}">List</a></li>
+  <li><a href="{{p.url}}/task/edit/{{p.action.task_id}}">Edit Task</a></li>
+  <li>Edit Action</li>
+</ol>
+
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="well">
+
+    <form class="form-horizontal" method="post">
+      <input type="hidden" name="action_id" value="{{p.action.id}}" />
+      <input type="hidden" name="task_id" value="{{p.action.task_id}}" />
+
+      <!-- Name -->
+      <div class="form-group">
+        <label class="col-lg-2 col-md-2 control-label">Name</label>
+        <div class="col-lg-10 col-md-10">
+          <input class="form-control" type="text" name="name"
+            value="{{p.action.name}}" />
+        </div>
+      </div>
+
+      <!-- TaskModule -->
+      <div class="form-group">
+        <label class="col-lg-2 col-md-2 control-label">Task Handler</label>
+        <div class="col-lg-10 col-md-10">
+          {{ task_module.render("task_module_id", 'module_id',
+            p.task_module_list, p.action.module_id) }}
+        </div>
+      </div>
+
+      <!-- Connection String -->
+      <div class="form-group">
+        <label class="col-lg-2 col-md-2 control-label">Connection String</label>
+        <div class="col-lg-10 col-md-10">
+          <input class="form-control" type="text"
+            name="connection" value="{{p.action.connection}}" />
+        </div>
+      </div>
+
+      <!-- Query -->
+      <div class="form-group">
+        <label class="col-lg-2 col-md-2 control-label">Query</label>
+        <div class="col-lg-10 col-md-10">
+          <textarea name="query" id="query">
+            {%- if not p.action.query -%}
+              {{p.action.module.definition}}
+            {%- else -%}
+              {{p.action.query}}
+            {%- endif -%}
+          </textarea>
+          <div id="editor" style="min-height: 400px"></div>
+          <script>
+              var editor = ace.edit("editor");
+              editor.setTheme("ace/theme/monokai");
+              editor.getSession().setMode("ace/mode/python");
+              var textarea = $('#query').hide();
+              editor.getSession().setValue(textarea.val());
+              editor.getSession().on('change', function(){
+                textarea.val(editor.getSession().getValue());
+              });
+          </script>
+        </div>
+      </div>
+
+
+
+      <!-- Order Key -->
+      <div class="form-group">
+        <label class="col-lg-2 col-md-2 control-label">Execute Sequence</label>
+        <div class="col-lg-4 col-md-4">
+          <input class="form-control" type="text"
+            name="order_key" value="{{p.action.order_key}}" />
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label class="col-lg-2 col-md-2 control-label">Description</label>
+        <div class="col-lg-10 col-md-10">
+          <textarea class="form-control" rows="2"
+            name="description">{{p.action.description}}</textarea>
+        </div>
+      </div>
+
+      <!-- enabled -->
+      <div class="form-group">
+        <label class="col-lg-2 col-md-2 control-label">enabled</label>
+        <div class="col-lg-10 col-md-10">
+          <select name="enabled">
+            <option {% if p.action.enabled == "Yes" %}selected="1"{% endif %}>Yes</option>
+            <option {% if p.action.enabled == "No" %}selected="1"{% endif %}>No</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Stop at Fail -->
+      <div class="form-group">
+        <label class="col-lg-2 col-md-2 control-label">Stop at failure</label>
+        <div class="col-lg-10 col-md-10">
+          <select name="stop">
+            <option {% if p.action.stop == "Yes" %}selected="1"{% endif %}>Yes</option>
+            <option {% if p.action.stop == "No" %}selected="1"{% endif %}>No</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2 col-md-10 col-md-offset-2">
+          <button type="reset" class="btn btn-default">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+
+    </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- Delete Action Dialog -->
+<form class="form-horizontal" action="{{p.url}}/action/delete/{{p.action.id}}" method="post">
+  <div id="modal-dialog-delete-action" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirm Delete Action</h4>
+        </div>
+
+        <div class="modal-body">
+          <p>Are you sure you want to delete the action?</p>
+          <p>
+            <strong>{{p.action.Name}}</strong><br>
+            {{p.action.description}}
+          </p>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn" data-dismiss="modal">No</button>
+          <button type="submit" class="btn btn-warning">Delete Action</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Execute Task Dialog -->
+<form class="form-horizontal" action="{{p.url}}/task/execute/{{p.action.task_id}}" method="post">
+  <div id="modal-dialog-execute-task" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirm Execute Task</h4>
+        </div>
+
+        <div class="modal-body">
+          <p>Are you sure you want to <font color=red><b>RUN</b></font> the task?</p>
+          <p>
+            <strong>{{p.task.name}}</strong><br>
+            {{p.task.description}}
+          </p>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Execute Task</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

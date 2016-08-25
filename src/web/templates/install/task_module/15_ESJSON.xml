@@ -1,0 +1,28 @@
+<!-- ******************************************
+JSON to ElasticSearch
+Author: LEE Unkyu
+Created: 11 Apr 2016
+
+JSON to Elastic Search Engine
+******************************************  -->
+<JSON2ES>
+
+<!-- Specify Target Elastic Search Host Name -->
+<ELASTIC_SEARCH_HOST>http://user:secret@localhost:9200</ELASTIC_SEARCH_HOST>
+<INDEX>Name of index where document shall be indexed to</INDEX>
+<DOC_TYPE>Document type</DOC_TYPE>
+
+
+<!-- Specify Source SQL Connection String (SQL Alchemy Engine format) -->
+<JSON_URL><![CDATA[
+  http://somethwere/this.json
+]]></JSON_URL>
+
+<LOOP_PATH>hits.hits</LOOP_PATH>
+
+<MAP>
+  <PATH>_source.title</PATH>
+  <ES_FIELD>title</ES_FIELD>
+</MAP>
+
+</JSON2ES>

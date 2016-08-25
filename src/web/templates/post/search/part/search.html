@@ -1,0 +1,56 @@
+{% include "post/search/part/script.html" %}
+
+<form id="searchform" action="{{ p.url }}/search">
+
+  <!-- Search Options -->
+  {% if p.from and p.from|int != 0 %}
+    <input type="hidden" id="from" name="from" value="{{p.from}}">
+  {% endif %}
+  {% if p.size and p.size|int != p.c.page_size|int %}
+    <input type="hidden" id="size" name="size" value="{{p.size}}">
+  {% endif %}
+  {% if p.sort_field and p.sort_field != p.c.sort_field %}
+    <input type="hidden" id="sort_field" name="sort_field" value="{{p.sort_field}}">
+  {% endif %}
+
+  <div class="input-group custom-search-form">
+
+    <span class="input-group-btn">
+      <button class="btn btn-default" type="button" data-toggle="dropdown">
+        <span class="glyphicon glyphicon-cog"></span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-left">
+        <li><a href="javascript:NewSearch();">New search</a></li>
+        <li class="divider"></li>
+        <li><a href="javascript:$('#sort').val('updated'); $('#searchform').submit();">Order by date</a></li>
+        <li class="divider"></li>
+        <li><a href="javascript:Set('size', 1); $('#searchform').submit();">Page Size - 1</a></li>
+        <li><a href="javascript:Set('size', 5); $('#searchform').submit();">Page Size - 5</a></li>
+        <li><a href="javascript:Set('size', 10); $('#searchform').submit();">Page Size - 10</a></li>
+        <li><a href="javascript:Set('size', 50); $('#searchform').submit();">Page Size - 50</a></li>
+      </ul>
+    </span>
+
+    <input type="text" class="form-control" placeholder="Search" onkeypress="Reset();"
+          id="q" name="q" value="{%- if p.q == "*" -%}{%- else -%}{{ p.q }}{%- endif -%}">
+
+    <span class="input-group-btn">
+      <button class="btn btn-primary" type="submit">
+        <span class="glyphicon glyphicon-search"></span>
+      </button>
+    </span>
+  </div>
+
+  <!-- List of Selected Filters -->
+  {% include "post/search/part/selected_filters.html" %}
+
+</form>
+
+<!-- Available Filter List -->
+{% import "post/search/part/filter.html" as filter %}
+{% for field in p.available_filter_list|sort(attribute='name') %}
+  {% if loop.first %}
+    <br><p class="bg-info">&nbsp;Available Filters</p>
+  {%endif%}
+  {{ filter.render(p, field) }}
+{% endfor %}

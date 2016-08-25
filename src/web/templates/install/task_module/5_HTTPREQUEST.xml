@@ -1,0 +1,10 @@
+<!--
+ Connection String shall be URL,METHOD (defaults to GET)
+http://localhost:9200/warehouse,POST
+
+ Put any post data into the query field
+! Remove this comment when writing query
+-->
+{
+ "some":"json stuff here"
+}

@@ -1,0 +1,177 @@
+{% extends "admin/base.html" %}
+
+{% block body %}
+{%if p.message%}<div class="alert alert-danger">{{p.message}}</div>{%endif%}
+
+<legend>Reverse Proxy</legend>
+<table class="table table-striped table-hover table-responsive">
+  <thead>
+    <tr>
+      <th></th>
+      <th>inc_url</th>
+      <th>out_url</th>
+      <th>auth_method</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for proxy in p.proxy_list %}
+    <tr>
+      <td><a href="#modal-edit-{{proxy.id}}" data-toggle="modal">#</a></td>
+      <td>{{ proxy.inc_url }}</td>
+      <td>{{ proxy.out_url }}</td>
+      <td>{{ proxy.auth_method }}</td>
+      <td>
+        <div class="btn-group">
+          <button type="button" class="btn dropdown-toggle btn-mini btn-primary btn-xs"
+              data-toggle="dropdown">
+            Action<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="#modal-edit-{{proxy.id}}" data-toggle="modal">Edit</a></li>
+            <li class="divider"></li>
+            <li><a href="#modal-del-{{proxy.id}}" data-toggle="modal">Delete</a></li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="col-lg-12 text-right">
+  <a href="#" data-target="#modal-new-proxy" data-toggle="modal" title="add new site">
+    <button type="button" class="btn btn-xs btn-danger">
+      <span class="glyphicon glyphicon-plus"></span>&nbsp;New Reverse Proxy
+    </button>
+  </a>
+</div>
+
+
+<!-- new proxy rules -->
+<form class="form-horizontal" action="{{ p.url }}/proxy/create" method="POST">
+<div id="modal-new-proxy" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">New Reverse Proxy Rules</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="col-lg-2 control-label">incoming URL</label>
+          <div class="col-lg-10">
+            <input class="form-control" type="text" name="inc_url"
+              placeholder="URL match rules" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-2 control-label">outgoing URL</label>
+          <div class="col-lg-10">
+            <input class="form-control" type="text" name="out_url"
+              placeholder="URL match rules" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-2 control-label">auth method</label>
+          <div class="col-lg-10">
+            <input class="form-control" type="text" name="auth_method"
+              placeholder="auth" value='None' />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-2 control-label">header</label>
+          <div class="col-lg-10">
+            <textarea class="form-control" rows="2"
+              name="header" placeholder="header"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Create Reverse Proxy Rule</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+
+{% for proxy in p.proxy_list %}
+<!-- Edit Site Dialog -->
+<form class="form-horizontal" action="{{ p.url }}/proxy/edit/{{ proxy.id }}" method="post">  
+  <div id="modal-edit-{{ proxy.id }}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Reverse Proxy Rule</h4>
+        </div>
+        <div class="modal-body">
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="col-lg-2 control-label">incoming URL</label>
+              <div class="col-lg-10">
+                <input class="form-control" type="text" name="inc_url"
+                  placeholder="URL match rules" value="{{ proxy.inc_url }}" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-2 control-label">outgoing URL</label>
+              <div class="col-lg-10">
+                <input class="form-control" type="text" name="out_url"
+                  placeholder="URL match rules" value="{{ proxy.out_url }}" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-2 control-label">auth method</label>
+              <div class="col-lg-10">
+                <input class="form-control" type="text" name="auth_method"
+                  placeholder="auth" value='None' />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-2 control-label">header</label>
+              <div class="col-lg-10">
+                <textarea class="form-control" rows="2"
+                  name="header" placeholder="header">{{ proxy.header }}</textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-warning">Save</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Delete Site Dialog -->
+<form class="form-horizontal" action="{{ p.url }}/delete?mode=proxy" method="post">
+  <input type=hidden name="id" value="{{ proxy.id }}">
+  <div id="modal-del-{{ proxy.id }}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Delete Site</h4>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete the site?</p>
+          <p>incoming url: <strong>{{ proxy.inc_url }}</strong></p>
+          <p>outgoing url: <strong>{{ proxy.out_url }}</strong></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+          <button type="submit" class="btn btn-warning">Delete Reverse Proxy Rule</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+{% endfor %}
+
+
+{% endblock %}

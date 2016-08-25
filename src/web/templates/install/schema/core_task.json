@@ -1,0 +1,64 @@
+{
+  "core_task": {
+    "mappings": {
+
+      "task": {
+        "dynamic": "strict",
+        "properties": {
+          "navigation_id":      {"type": "string"},
+          "name":               {"type": "string"},
+          "description":        {"type": "string"},
+          "runat":              {"type": "string"}
+        }
+      },
+
+      "action": {
+        "dynamic": "strict",
+        "properties": {
+          "task_id":        {"type": "string"},
+          "module_id":      {"type": "string"},
+          "enabled":        {"type": "boolean"},
+          "stop":           {"type": "boolean"},
+          "order_key":      {"type": "long"},
+          "name":           {"type": "string"},
+          "description":    {"type": "string"},
+          "connection":     {"type": "string"},
+          "query":          {"type": "string"}
+        }
+      },
+
+      "instance": {
+        "dynamic": "strict",
+        "properties": {
+          "task_id":      {"type": "string"},
+          "status":       {"type": "string"},
+          "login":        {"type": "string"},
+          "created":      {"type": "date"},
+          "started":      {"type": "date"},
+          "finished":     {"type": "date"}
+        }
+      },
+
+      "schedule": {
+        "dynamic": "strict",
+        "properties": {
+          "task_id":      {"type": "string"},
+          "dayofmonth":   {"type": "long"},
+          "dayofweek":    {"type": "long"},
+          "hour":         {"type": "long"},
+          "minute":       {"type": "long"}
+        }
+      },
+
+      "module": {
+        "dynamic": "strict",
+        "properties": {
+          "name":               {"type": "string"},
+          "description":        {"type": "string"},
+          "definition":         {"type": "string"}
+        }
+      }
+
+    }
+  }
+}

@@ -1,0 +1,46 @@
+<script>
+  $(document).ready(function() {
+    // Give search box focus
+    $("#q").focus();
+  });
+
+  // reset search
+  function NewSearch() { location = "{{ p.url }}" ; }
+
+  function Reset() {
+    $("#from").val('');
+    $("#size").val('');
+    $("#sort_field").val('');
+  }
+
+  // Select Filter
+  function SelectFilter(filter_id, value) {
+    Reset()
+    // If the filter already exists then append OR condition
+    if( $('#'+filter_id).val() ) {
+      prev_value = $('#'+filter_id).val() ;
+      $('#'+filter_id).val(prev_value + " _or_ " + value) ;
+    }
+    // First time setting the filter then create input and set value
+    else {
+      $("#searchform").append('<input type="hidden" name="'+filter_id+'" value="'+value+'" />');
+    }
+    $('#searchform').submit();
+  }
+
+  function Set(name, value) {
+    if ( $("#"+name).length > 0 ) {
+      $("#"+name).val(value)
+    }
+    else {
+      $("#searchform").append('<input type="hidden" name="'+name+'" value="'+value+'" />');
+    }
+  }
+
+  // Remove Selected Filter
+  function RemoveFilter(FilterName) {
+    Reset();
+    $("#"+FilterName).val("");
+    $('#searchform').submit();
+  }
+</script>

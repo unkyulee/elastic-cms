@@ -1,0 +1,36 @@
+<!-- ******************************************
+LDAP to SQL
+Author: LEE Unkyu
+Created: 11 March 2016
+
+Search LDAP and Transfer to SQL table
+******************************************  -->
+<LDAP2SQL>
+
+<!-- SQL Connection String (SQL Alchemy Engine format) -->
+<SQL_CONNECTION>mysql://scott:tiger@localhost/fromthisdb?charset=utf8</SQL_CONNECTION>
+
+<!-- LDAP address -->
+<LDAP>ldaps://ldap</LDAP>
+
+<!-- Base DN -->
+<BASE_DN>ou=People, dc=compass</BASE_DN>
+
+<!-- Search Filter -->
+<FILTER>uid=*</FILTER>
+
+<!-- SQL Table Name -->
+<TABLE>Person</TABLE>
+
+<!-- Field mapping from LDAP to SQL -->
+<MAP>
+  <ldap_field>uid</ldap_field>
+  <table_field>uid</table_field>
+</MAP>
+
+<MAP>
+  <ldap_field>mail</ldap_field>
+  <table_field>email</table_field>
+</MAP>
+
+</LDAP2SQL>

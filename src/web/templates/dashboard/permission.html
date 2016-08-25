@@ -1,0 +1,88 @@
+{% extends "dashboard/admin_base.html" %}
+
+{% block body %}
+
+<!-- EDIT DASHBOARD -->
+<div class="row">
+  <div class="col-lg-3 col-md-3">
+    <table class="table table-stripped table-hover">
+      <tr>
+        <th>Role</th>
+      </tr>
+      <tbody>
+        {% for role in p.role_list %}
+        <tr {% if role.id == p.role.id %} class="active" {% endif %}>
+          <td>
+            <a href="{{p.url}}/permission/{{role.id}}">{{role.name}}</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+
+  <div class="col-lg-9 col-md-9">
+
+    <form class="form-horizontal" method="post">
+
+      <legend>Permission</legend>
+
+      <div class="form-group">
+        <div class="col-lg-10 col-md-10 control-label">
+          View dashboard
+        </div>
+        <label class="col-lg-2">
+          <select name="operations">
+            <option value=''>No</option>
+            <option value='default'
+              {%- if 'default' in p.permission.operations %}
+                selected="1"
+              {% endif -%}>Yes</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <div class="col-lg-10 col-md-10 control-label">
+          Edit dashboard
+        </div>
+        <label class="col-lg-2">
+          <select name="operations">
+            <option value=''>No</option>
+            <option value='edit'
+              {%- if 'edit' in p.permission.operations %}
+                selected="1"
+              {% endif -%}>Yes</option>
+          </select>
+        </label>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-lg-10 col-md-10 control-label">
+          Change permission
+        </div>
+        <label class="col-lg-2">
+          <select name="operations">
+            <option value=''>No</option>
+            <option value='permission'
+              {%- if 'permission' in p.permission.operations %}
+                selected="1"
+              {% endif -%}>Yes</option>
+          </select>
+        </label>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-lg-4 col-md-4 col-lg-offset-8 col-md-offset-8">
+          <button type="reset" class="btn btn-default">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+{% endblock %}

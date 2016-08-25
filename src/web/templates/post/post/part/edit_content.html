@@ -1,0 +1,29 @@
+{% import "widget/select_multi.html" as select_multi %}
+
+{% for field in p.field_list %}
+
+  <div class="form-group">
+    <label class="col-lg-2 col-md-2 control-label">{{field.name}}</label>
+    <div class="col-lg-10 col-md-10">
+
+    {% if field.edit_tpl %}
+      {{ field.edit_tpl|render(p, p.post)|safe }}
+
+    {% elif field.handler == "file" %}
+      <input type=file name="{{field.id}}">
+
+    {% elif field.handler == "multiple" %}
+      {{select_multi.render(field.id, field.id,
+        p.post[field.id],
+        is_tags="true", ajax="/people?jsonp=1")}}
+
+    {%else%}
+      <input class="form-control" name="{{field.id}}"
+        value="{{ p.post[field.id] }}">
+
+    {%endif%}
+
+    </div>
+  </div>
+
+{%endfor%}

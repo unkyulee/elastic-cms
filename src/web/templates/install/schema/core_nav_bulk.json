@@ -1,0 +1,80 @@
+{ "index" : { "_index" : "core_nav", "_type" : "module", "_id" : "1" } }
+{"name": "install", "description": "Installation Script"}
+
+{ "index" : { "_index" : "core_nav", "_type" : "module", "_id" : "2" } }
+{"name": "auth", "description": "Authentication"}
+
+{ "index" : { "_index" : "core_nav", "_type" : "module", "_id" : "3" } }
+{"name": "admin", "description": "Site Administration"}
+
+{ "index" : { "_index" : "core_nav", "_type" : "module", "_id" : "4" } }
+{"name": "dashboard", "description": "Dashboard"}
+
+{ "index" : { "_index" : "core_nav", "_type" : "module", "_id" : "6" } }
+{"name": "task", "description": "Task"}
+
+{ "index" : { "_index" : "core_nav", "_type" : "module", "_id" : "7" } }
+{"name": "post", "description": "Post"}
+
+{ "index" : { "_index" : "core_nav", "_type" : "module", "_id" : "8" } }
+{"name": "dataservice", "description": "json / data webservices"}
+
+
+{"index" : { "_index" : "core_task", "_type" : "module", "_id" : "1" } }
+{"name": "SQL2SQL", "description": "[SQL] Copy SQL table to another SQL table"}
+
+{"index" : { "_index" : "core_task", "_type" : "module", "_id" : "2"} }
+{"name": "JSON2SQL", "description": "[SQL] Copy JSON to SQL table"}
+
+{"index" : { "_index" : "core_task", "_type" : "module", "_id" : "3"} }
+{"name": "RUNSQL", "description": "[SQL] Run SQL"}
+
+{"index" : { "_index" : "core_task", "_type" : "module", "_id" : "4"} }
+{"name": "ESSQL", "description": "[ES] Create document in search"}
+
+{"index" : { "_index" : "core_task", "_type" : "module", "_id" : "5"} }
+{"name": "HTTPREQUEST", "description": "[UTIL] Http Request"}
+
+{"index" : { "_index" : "core_task", "_type" : "module", "_id" : "6"} }
+{"name": "ESUPDATE", "description": "[ES] Add field to search"}
+
+{"index" : { "_index" : "core_task", "_type" : "module", "_id" : "7"} }
+{"name": "CMD", "description": "[UTIL] Command line"}
+
+{"index" : { "_index" : "core_task", "_type" : "module", "_id" : "8"} }
+{"name": "ESOBJECT", "description": "[ES] Add objects to search"}
+
+{"index" : { "_index" : "core_task", "_type" : "module", "_id" : "9"} }
+{"name": "LDAP2SQL", "description": "[SQL] LDAP to SQL"}
+
+{"index" : { "_index" : "core_task", "_type" : "module", "_id" : "10"} }
+{"name": "TXT2SQL", "description": "[UTIL] Extract file text"}
+
+{"index" : { "_index" : "core_task", "_type" : "module", "_id" : "11"} }
+{"name": "FSIDX", "description": "[UTIL] Index File System"}
+
+{"index" : { "_index" : "core_task", "_type" : "module", "_id" : "12"} }
+{"name": "WFINIT", "description": "[WF] Initiate Condition"}
+
+{"index" : { "_index" : "core_task", "_type" : "module", "_id" : "13"} }
+{"name": "WFRUN", "description": "[WF] Workflow Scheduler"}
+
+{"index" : { "_index" : "core_task", "_type" : "module", "_id" : "14"} }
+{"name": "PYTHON", "description": "[UTIL] Python"}
+
+{"index" : { "_index" : "core_task", "_type" : "module", "_id" : "15"} }
+{"name": "ESJSON", "description": "[ES] json to search"}
+
+
+
+
+{"index" : { "_index" : "core_log", "_type" : "tasklog", "_id" : "1"} }
+{ "instance_id": "0", "action": "0", "status": "0", "message": "", "created": "2016-01-01T01:01:01"}
+
+{"index" : { "_index" : "core_task", "_type" : "action", "_id" : "1"} }
+{"task_id": "", "module_id": "", "enabled": "", "stop": "", "order_key": 1, "name": "", "description": "", "connection": "", "query": ""}
+
+
+
+{"index" : { "_index" : "core_history", "_type" : "log", "_id" : "1"} }
+{"field": "", "previous": "", "current": "", "created": "2016-01-01T01:01:01"}

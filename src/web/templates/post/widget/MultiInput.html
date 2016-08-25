@@ -1,0 +1,18 @@
+{% macro MultiInput(name, id, values, placeholder="press enter key or , to have new value") %}
+<select type=hidden id="{{id}}" name="{{name}}" style="width:100%" multiple="multiple">
+  {% for v in values if values is not string %}
+    <option selected="1">{{v}}</option>
+  {% endfor %}
+  {% if values is string %}
+    <option selected="1">{{values}}</option>
+  {% endif %}
+</select>
+<script>
+$(document).ready(function() {
+  $("#{{id}}").select2({
+    placeholder: "{{placeholder}}", allowClear: true, delay: 250,
+    tokenSeparators: [','], tags:true
+  });
+});
+</script>
+{% endmacro %}

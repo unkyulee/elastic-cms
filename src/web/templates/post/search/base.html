@@ -1,0 +1,29 @@
+{% extends "post/base.html" %}
+
+{% block body %}
+
+{% if p.debug %}
+<textarea style="visibility:hidden; display: None">
+[[Search Query]]
+{{p.search_query|prettyjson|safe}}
+
+[[Response]]
+{{p.response|prettyjson|safe}}
+</textarea>
+{% endif %}
+
+<div class="row">
+  <div class="col-lg-3 col-md-3">
+    {% include 'post/search/part/search.html' %}
+  </div>
+  <div class="col-lg-9 col-md-9">
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+        {% block search_result %}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

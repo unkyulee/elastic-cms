@@ -1,0 +1,20 @@
+""" Workflow Initiation
+Author: LEE Unkyu
+Created: 29 Feb 2016
+
+Workflow Initiation tells the task runner
+whether to continue running to the next action or not
+
+this is to check the trigger condition of each workflow
+initiation code will run in python code that will
+
+if init() function returns True then the workflow will be executed
+if it returns something else then True such as "MONITORING" then the task status
+will state monitoring - if it's set "WAITING" then at the next run the task will
+be automatically picked up.
+
+ True - continue and execute the rest of the workflow
+ Other type of returns - Task status will be displaying the return value
+"""
+def init():
+  return "NOT INIT"

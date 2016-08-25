@@ -1,0 +1,279 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+   <h2>{{p.navigation.display_name}} <small>Task Module Permission</small></h2>
+</div>
+
+<!-- EDIT DASHBOARD -->
+<div class="row">
+  <div class="col-lg-3 col-md-3">
+    <table class="table table-stripped table-hover">
+      <tr>
+        <th>Role</th>
+      </tr>
+      <tbody>
+        {% for role in p.role_list %}
+        <tr {% if role.id == p.role.id %} class="active" {% endif %}>
+          <td>
+            <a href="{{p.url}}/permission/{{role.id}}">{{role.name}}</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+
+  <div class="col-lg-9 col-md-9">
+
+    <form class="form-horizontal" method="post">
+
+      <legend>Permission</legend>
+
+      <div class="form-group">
+        <div class="col-lg-10 col-md-10 control-label">
+          View Task List</div>
+        <label class="col-lg-2">
+          <select name="operations">
+            <option value=''>No</option>
+            <option value='task/default'
+              {%- if 'task/default' in p.permission.operations %}
+                selected="1"
+              {% endif -%}>Yes</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <div class="col-lg-10 col-md-10 control-label">
+          Create Task
+        </div>
+        <label class="col-lg-2">
+          <select name="operations">
+            <option value=''>No</option>
+            <option value='task/create'
+              {%- if 'task/create' in p.permission.operations %}
+                selected="1"
+              {% endif -%}>Yes</option>
+          </select>
+        </label>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-lg-10 col-md-10 control-label">
+          Edit Task
+        </div>
+        <label class="col-lg-2">
+          <select name="operations">
+            <option value=''>No</option>
+            <option value='task/edit'
+              {%- if 'task/edit' in p.permission.operations %}
+                selected="1"
+              {% endif -%}>Yes</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <div class="col-lg-10 col-md-10 control-label">
+          Delete Task
+        </div>
+        <label class="col-lg-2">
+          <select name="operations">
+            <option value=''>No</option>
+            <option value='task/delete'
+              {%- if 'task/delete' in p.permission.operations %}
+                selected="1"
+              {% endif -%}>Yes</option>
+          </select>
+        </label>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-lg-10 col-md-10 control-label">
+          View Action
+        </div>
+        <label class="col-lg-2">
+          <select name="operations">
+            <option value=''>No</option>
+            <option value='action/default'
+              {%- if 'action/default' in p.permission.operations %}
+                selected="1"
+              {% endif -%}>Yes</option>
+          </select>
+        </label>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-lg-10 col-md-10 control-label">
+          Create Action
+        </div>
+        <label class="col-lg-2">
+          <select name="operations">
+            <option value=''>No</option>
+            <option value='action/create'
+              {%- if 'action/create' in p.permission.operations %}
+                selected="1"
+              {% endif -%}>Yes</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <div class="col-lg-10 col-md-10 control-label">
+          Edit Action
+        </div>
+        <label class="col-lg-2">
+          <select name="operations">
+            <option value=''>No</option>
+            <option value='action/edit'
+              {%- if 'action/edit' in p.permission.operations %}
+                selected="1"
+              {% endif -%}>Yes</option>
+          </select>
+        </label>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-lg-10 col-md-10 control-label">
+          Delete Action
+        </div>
+        <label class="col-lg-2">
+          <select name="operations">
+            <option value=''>No</option>
+            <option value='action/delete'
+              {%- if 'action/delete' in p.permission.operations %}
+                selected="1"
+              {% endif -%}>Yes</option>
+          </select>
+        </label>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-lg-10 col-md-10 control-label">
+          Disable Action
+        </div>
+        <label class="col-lg-2">
+          <select name="operations">
+            <option value=''>No</option>
+            <option value='action/disable'
+              {%- if 'action/disable' in p.permission.operations %}
+                selected="1"
+              {% endif -%}>Yes</option>
+          </select>
+        </label>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-lg-10 col-md-10 control-label">
+          Create Schedule
+        </div>
+        <label class="col-lg-2">
+          <select name="operations">
+            <option value=''>No</option>
+            <option value='schedule/create'
+              {%- if 'schedule/create' in p.permission.operations %}
+                selected="1"
+              {% endif -%}>Yes</option>
+          </select>
+        </label>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-lg-10 col-md-10 control-label">
+          Delete Schedule
+        </div>
+        <label class="col-lg-2">
+          <select name="operations">
+            <option value=''>No</option>
+            <option value='schedule/delete'
+              {%- if 'schedule/delete' in p.permission.operations %}
+                selected="1"
+              {% endif -%}>Yes</option>
+          </select>
+        </label>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-lg-10 col-md-10 control-label">
+          View Status
+        </div>
+        <label class="col-lg-2">
+          <select name="operations">
+            <option value=''>No</option>
+            <option value='status/view'
+              {%- if 'status/view' in p.permission.operations %}
+                selected="1"
+              {% endif -%}>Yes</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <div class="col-lg-10 col-md-10 control-label">
+          View Status Log
+        </div>
+        <label class="col-lg-2">
+          <select name="operations">
+            <option value=''>No</option>
+            <option value='status/log'
+              {%- if 'status/log' in p.permission.operations %}
+                selected="1"
+              {% endif -%}>Yes</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <div class="col-lg-10 col-md-10 control-label">
+          View Status History
+        </div>
+        <label class="col-lg-2">
+          <select name="operations">
+            <option value=''>No</option>
+            <option value='status/history'
+              {%- if 'status/history' in p.permission.operations %}
+                selected="1"
+              {% endif -%}>Yes</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <div class="col-lg-10 col-md-10 control-label">
+          Change Permission
+        </div>
+        <label class="col-lg-2">
+          <select name="operations">
+            <option value=''>No</option>
+            <option value='permission/default'
+              {%- if 'permission/default' in p.permission.operations %}
+                selected="1"
+              {% endif -%}>Yes</option>
+          </select>
+        </label>
+      </div>
+
+
+
+      <div class="form-group">
+        <div class="col-lg-4 col-md-4 col-lg-offset-8 col-md-offset-8">
+          <button type="reset" class="btn btn-default">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+{% endblock %}

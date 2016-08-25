@@ -1,0 +1,134 @@
+{% extends "admin/base.html" %}
+
+{% block body %}
+{%if p.message%}<div class="alert alert-danger">{{p.message}}</div>{%endif%}
+
+<legend>Public Sites</legend>
+<table class="table table-striped table-hover table-responsive">
+  <thead>
+    <tr>
+      <th></th>
+      <th>url</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for public in p.public_list %}
+    <tr>
+      <td><a href="#modal-edit-{{public.id}}" data-toggle="modal">#</a></td>
+      <td>{{ public.url }}</td>
+      <td>
+        <div class="btn-group">
+          <button type="button" class="btn dropdown-toggle btn-mini btn-primary btn-xs"
+              data-toggle="dropdown">
+            Action<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="#modal-edit-{{ public.id }}" data-toggle="modal">Edit</a></li>
+            <li class="divider"></li>
+            <li><a href="#modal-del-{{ public.id }}" data-toggle="modal">Delete</a></li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="col-lg-12 text-right">
+  <a href="#" data-target="#modal-new-proxy" data-toggle="modal" title="add new site">
+    <button type="button" class="btn btn-xs btn-danger">
+      <span class="glyphicon glyphicon-plus"></span>&nbsp;New Public URL
+    </button>
+  </a>
+</div>
+
+
+<!-- new proxy rules -->
+<form class="form-horizontal" action="{{ p.url }}/public/create" method="POST">
+<div id="modal-new-proxy" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">New Public URL</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group">
+          <label class="col-lg-2 control-label">URL</label>
+          <div class="col-lg-10">
+            <input class="form-control" type="text" name="url"
+              placeholder="URL match rules" />
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Create Public URL</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+
+{% for public in p.public_list %}
+<!-- Edit Site Dialog -->
+<form class="form-horizontal" action="{{ p.url }}/public/edit/{{ public.id }}" method="post">  
+  <div id="modal-edit-{{ public.id }}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Public URL</h4>
+        </div>
+        <div class="modal-body">
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label">URL</label>
+              <div class="col-lg-10">
+                <input class="form-control" type="text" name="url"
+                  placeholder="URL match rules" value="{{ public.url }}" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-warning">Save</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Delete Site Dialog -->
+<form class="form-horizontal" action="{{ p.url }}/delete?mode=public" method="post">
+  <input type=hidden name="id" value="{{ public.id }}">
+  <div id="modal-del-{{ public.id }}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Delete Public URL</h4>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete?</p>
+          <p>public url: <strong>{{ public.url }}</strong></p>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+          <button type="submit" class="btn btn-warning">Delete Public URL</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+{% endfor %}
+
+
+{% endblock %}

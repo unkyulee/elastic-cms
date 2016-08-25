@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class = "page-header">
+   <h2><a href="{{p.url}}">{{p.c.name}}</a> <small>Post Module Administration</small></h2>
+</div>
+
+<div class="row">
+  <div class="col-lg-3 col-md-3">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <strong>Configuration</strong>
+        </h4>
+      </div>
+      <ul class="list-group">
+
+        <a href="{{p.url}}/config" class="list-group-item
+          {% if p.operation == 'config' %}list-group-item-info{% endif -%}">
+          General</a>
+
+        <a href="{{p.url}}/index" class="list-group-item
+          {% if p.operation == 'index' %}list-group-item-info{% endif -%}">
+          Index</a>
+
+      </ul>
+    </div>
+
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <strong>Customize</strong>
+        </h4>
+      </div>
+      <ul class="list-group">
+
+        <a href="{{p.url}}/layout" class="list-group-item
+          {% if p.operation == 'layout' %}list-group-item-info{% endif -%}">
+          Layout</a>
+
+        <a href="{{p.url}}/item" class="list-group-item
+          {% if p.operation == 'item' %}list-group-item-info{% endif -%}">
+          Search Item Render</a>
+
+      </ul>
+    </div>
+
+
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <strong>Data</strong>
+        </h4>
+      </div>
+      <ul class="list-group">
+
+        <a href="{{p.url}}/field" class="list-group-item
+          {% if p.operation == 'field' %}list-group-item-info{% endif -%}">
+          Fields</a>
+
+        <a href="{{p.url}}/mapping" class="list-group-item
+          {% if p.operation == 'mapping' %}list-group-item-info{% endif -%}">
+          Mappings</a>
+
+        <a href="{{p.url}}/backup" class="list-group-item
+          {% if p.operation == 'backup' %}list-group-item-info{% endif -%}">
+          Backup/Restore</a>
+
+      </ul>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <strong>Workflow</strong>
+        </h4>
+      </div>
+      <ul class="list-group">
+
+        <a href="{{p.url}}/role" class="list-group-item
+          {% if p.operation == 'role' %}list-group-item-info{% endif -%}">
+          Roles</a>
+
+        <a href="{{p.url}}/permission" class="list-group-item
+          {% if p.operation == 'permission' %}list-group-item-info{% endif -%}">
+          Permission</a>
+
+        <a href="{{p.url}}/workflow" class="list-group-item
+          {% if p.operation == 'workflow' %}list-group-item-info{% endif -%}">
+          Workflows</a>
+
+      </ul>
+    </div>
+
+
+  </div>
+
+  <div class="col-lg-9 col-md-9">
+    {% block body %}{% endblock %}
+  </div>
+
+</div>
+{% endblock %}

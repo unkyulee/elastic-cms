@@ -1,0 +1,32 @@
+<!-- ******************************************
+SQL to ELASTIC
+Author: LEE Unkyu
+Created: 29 Feb 2016
+
+Load SQL to Elastic Search Engine
+******************************************  -->
+<ESSQL>
+
+<!-- Specify Source SQL Connection String (SQL Alchemy Engine format) -->
+<SOURCE_SQL_CONNECTION>mysql://scott:tiger@localhost/fromthisdb?charset=utf8</SOURCE_SQL_CONNECTION>
+
+<!-- Specify Target Elastic Search Host Name -->
+<ELASTIC_SEARCH_HOST>http://user:secret@localhost:9200</ELASTIC_SEARCH_HOST>
+
+<INDEX>Name of index where document shall be indexed to</INDEX>
+
+<DOC_TYPE>Document type</DOC_TYPE>
+
+<!-- Source SQL Query, shall return a table -->
+<SOURCE_SQL>
+<![CDATA[
+  <!-- MUST contain the following column -->
+  <!--
+    id: id of the document
+    priority: importance of the document [0-50] higher more important
+    updated: timestamp of the document
+  -->
+  SELECT priority = 1, updated=NOW(), id = 3 , name = 'someone' ...
+]]>
+</SOURCE_SQL>
+</ESSQL>

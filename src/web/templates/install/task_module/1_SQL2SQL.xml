@@ -1,0 +1,32 @@
+<!-- ******************************************
+SQL to SQL
+Author: LEE Unkyu
+Created: 25 Feb 2016
+
+Given JSON url or path, this task module loads JSON data into SQL table
+******************************************  -->
+<SQL2SQL>
+
+<!-- Specify Source SQL Connection String (SQL Alchemy Engine format) -->
+<SOURCE_SQL_CONNECTION>mysql://scott:tiger@localhost/fromthisdb</SOURCE_SQL_CONNECTION>
+<!-- Source SQL Query, shall return a table -->
+<SOURCE_SQL><![CDATA[
+  SELECT id = 3 , name = 'someone'
+]]></SOURCE_SQL>
+
+<!-- Specify Target SQL Connection String (SQL Alchemy Engine format) -->
+<TARGET_SQL_CONNECTION>mysql://scott:tiger@localhost/foo</TARGET_SQL_CONNECTION>
+<!-- Target Table Name -->
+<TARGET_SQL_TABLE>PutTargetTableNameHere</TARGET_SQL_TABLE>
+
+<!-- Specify mapping between source and target column, multiple MAP can be specified -->
+<MAP>
+  <SOURCE_COLUMN_NAME></SOURCE_COLUMN_NAME>
+  <TARGET_COLUMN_NAME></TARGET_COLUMN_NAME>
+<MAP>
+<MAP>
+  <SOURCE_COLUMN_NAME></SOURCE_COLUMN_NAME>
+  <TARGET_COLUMN_NAME></TARGET_COLUMN_NAME>
+<MAP>
+
+</SQL2SQL>

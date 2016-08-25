@@ -1,0 +1,12 @@
+{% macro render( Status ) %}
+  {% if Status == "COMPLETED" %}
+      <span class="label label-success">{{Status}}<span>
+  {% elif Status == "ERROR" %}
+      <span class="label label-danger">{{Status}}<span>
+  {% elif Status == "WAITING" %}
+      <span class="label label-primary">{{Status}}<span>
+  {% elif not Status or Status == "" %}
+  {% else %}
+      <span class="label label-info">{{Status}}<span>
+  {% endif %}
+{% endmacro %}

@@ -1,0 +1,34 @@
+{% extends "post/base.html" %}
+
+{% block body %}
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="well">
+      <form class="form-horizontal" method="post" enctype="multipart/form-data">
+        <legend>
+          {% if p.workflow and p.workflow.description %}
+            {{p.workflow.description}}
+          {% else %}
+            New Post
+          {% endif %}
+        </legend>
+
+        {% include "post/post/part/edit_content.html" %}
+
+        <div class="form-group">
+          <div class="col-lg-10 col-lg-offset-2 col-md-10 col-md-offset-2">
+            <button type="button" class="btn btn-primary"
+                onclick="location='{{p.url}}'">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+            </button>
+            <button type="submit" class="btn btn-danger">Create</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

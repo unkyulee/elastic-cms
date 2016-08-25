@@ -1,0 +1,33 @@
+<!-- ******************************************
+Index file list to SQL table
+Author: LEE Unkyu
+Created: 29 Feb 2016
+
+loops through all the files and directories
+and stores them in the SQL table
+******************************************  -->
+<FSIDX>
+<SQL_CONNECTION>
+    <!-- Where file index will be stored -->
+    <!-- SQL Connection String (SQL Alchemy Engine format) -->
+    mysql://scott:tiger@localhost/fromthisdb?charset=utf8
+</SQL_CONNECTION>
+
+<TABLE>
+    <!-- Where file index will be stored -->
+    <!-- Table Name must have column -
+         ino, dev, dir, name, ext, owner,
+         idx, content, created, updated -->
+    FileIndex
+</TABLE>
+
+<PATH>
+    <!-- name the search -->
+    <idx>lee</idx>
+    
+    <!-- directory search starting point -->
+    <dir>/compass/home/lee/Projects/test/files</dir>
+
+</PATH>
+
+</FSIDX>

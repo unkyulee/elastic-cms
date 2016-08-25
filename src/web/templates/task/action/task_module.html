@@ -1,0 +1,15 @@
+{% macro render( id, name, module_list, selected_module_id ) %}
+  <select id="{{id}}" name="{{name}}" style="width:100%">
+    {% for module in module_list -%}
+      <option value="{{module.id}}"
+      {% if selected_module_id == module.id %}selected{% endif %}
+      >{{module.description}}</option>
+    {% endfor %}
+  </select>
+
+  <script>
+  $(document).ready(function() {
+    $("#{{id}}").select2() ; // Init Select2
+  });
+  </script>
+{% endmacro %}

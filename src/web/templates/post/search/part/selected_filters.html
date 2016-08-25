@@ -1,0 +1,20 @@
+{% for field_id, value in p.selected_filter_list.items() %}
+  {% if loop.first %}
+    <br><p class="bg-danger">&nbsp;Selected Filters</p>
+  {% endif %}
+
+  <div align="left" style="margin:5px">
+    <span class="label label-success">{{ field_id }}</span>
+    <a href="javascript:RemoveFilter('{{field_id}}')"
+        title="click to remove the filter">
+      <small>
+        {% for v in value|getlist %}
+          {{v}} {% if not loop.last %} or {% endif %}
+        {% endfor %}
+      </small>
+    </a>
+  </div>
+
+  <input type="hidden" id="{{field_id}}" name="{{field_id}}"
+    value="{%- for v in value|getlist -%}{{v}}{%- if not loop.last %} or {% endif -%}{%- endfor -%}">
+{% endfor %}

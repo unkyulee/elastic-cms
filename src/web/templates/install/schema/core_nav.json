@@ -1,0 +1,76 @@
+{
+    "mappings" : {
+
+        "site" : {
+          "_all" :        {"enabled": true},
+          "_source":      {"enabled": true},
+          "dynamic":      "strict",
+          "properties" :  {
+            "name" :          {"type" : "string"},
+            "display_name" :  {"type" : "string"},
+            "description" :   {"type" : "string"}
+          }
+        },
+
+        "navigation" : {
+          "_all" :        {"enabled": true},
+          "_source":      {"enabled": true},
+          "dynamic":      "strict",
+            "properties" :  {
+              "site_id":        {"type" : "string"},
+              "parent_id":      {"type" : "string"},
+              "module_id":      {"type" : "string"},
+              "order_key":      {"type" : "long"},
+              "is_displayed":   {"type" : "boolean"},
+              "name" :          {"type" : "string"},
+              "display_name" :  {"type" : "string"},
+              "description" :   {"type" : "string"}
+            }
+        },
+
+        "config" : {
+          "_all" :        {"enabled": true},
+          "_source":      {"enabled": true},
+          "dynamic":      "strict",
+          "properties" :  {
+            "site_id":        {"type" : "string"},
+            "navigation_id":  {"type" : "string"},
+            "name" :          {"type" : "string"},
+            "value" :         {"type" : "string"}
+          }
+        },
+
+        "role" : {
+          "_all" :        {"enabled": true},
+          "_source":      {"enabled": true},
+          "dynamic":      "strict",
+            "properties" :  {
+              "site_id":        {"type" : "string"},
+              "users":          {"type" : "string"},
+              "name" :          {"type" : "string"},
+              "description" :   {"type" : "string"}
+            }
+        },
+
+        "permission" : {
+          "_all" :        {"enabled": true},
+          "_source":      {"enabled": true},
+          "dynamic":      "strict",
+            "properties" :  {
+              "role_id":          {"type" : "string"},
+              "navigation_id" :   {"type" : "string"},
+              "operations" :      {"type" : "string"}
+            }
+        },
+
+        "module" : {
+          "_all" :        {"enabled": true},
+          "_source":      {"enabled": true},
+          "dynamic":      "strict",
+            "properties" :  {
+              "name" :          {"type" : "string"},
+              "description" :   {"type" : "string"}
+            }
+        }
+    }
+}

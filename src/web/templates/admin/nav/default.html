@@ -1,0 +1,17 @@
+{% extends "admin/base.html" %}
+{% import "admin/nav/navigation.html" as nav %}
+{% import "admin/role/role.html" as role %}
+
+{% block body %}
+<!-- BREAD CRUMB -->
+<ol class="breadcrumb" style="margin-bottom: 5px;">
+  <li><a href="{{p.url}}"><span class="glyphicon glyphicon-home"></span></a></li>
+  <li><a href="{{p.url}}/site">Sites</a></li>
+  <li><a href="{{p.url}}/nav?site_id={{ p.site_id }}">Manage Navigation</a></li>
+</ol>
+{%if p.message%}<div class="alert alert-danger">{{p.message}}</div>{%endif%}
+
+<br>{{ role.render(p) }}
+<br>{{ nav.render(p) }}
+
+{% endblock %}

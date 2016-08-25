@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class = "page-header">
+   <h2>Administration</h2>
+</div>
+
+<div class="row">
+  <div class="col-lg-3 col-md-3">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <strong>Sites</strong>
+        </h4>
+      </div>
+      <ul class="list-group">
+
+        <a href="{{p.url}}/config" class="list-group-item
+          {% if p.operation == 'config' %}list-group-item-info{% endif -%}">
+          Global Configuration</a>
+
+        <a href="{{p.url}}/site" class="list-group-item
+          {% if p.operation == 'site' or p.operation == 'nav' %}
+          list-group-item-info{% endif -%}">
+          Manage Sites</a>
+
+      </ul>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <strong>Network</strong>
+        </h4>
+      </div>
+      <ul class="list-group">
+
+        <a href="{{p.url}}/proxy" class="list-group-item
+          {% if p.operation == 'proxy' %}list-group-item-info{% endif -%}">
+          Reverse Proxy</a>
+
+        <a href="{{p.url}}/public" class="list-group-item
+          {% if p.operation == 'public' %}list-group-item-info{% endif -%}">
+          Public Sites</a>
+
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="col-lg-9 col-md-9">
+    {% block body %}{% endblock %}
+  </div>
+
+</div>
+{% endblock %}
