@@ -116,7 +116,7 @@ def install(host, base_dir):
             "list_tpl": '',
             "view_tpl": """
 {% if item.photo %}
-<a href="{{p.url}}/post/file/view/{{item.photo}}">
+<a href="{{p.url}}/file/view/{{item.photo}}">
   <img src="{{p.url}}/file/view/{{item.photo}}" width=200>
 </a>
 {% endif %}
