@@ -21,7 +21,7 @@ def install(host, base_dir):
         tools.set_conf(h, n, 'host', 'http://localhost:9200')
         tools.set_conf(h, n, 'index', 'people')
         tools.set_conf(h, n, 'upload_dir', '')
-        tools.set_conf(h, n, 'allowed_exts', ['jpg', 'jpeg', 'gif', 'png'])
+        tools.set_conf(h, n, 'allowed_exts', "jpg, jpeg, gif, png")
         tools.set_conf(h, n, 'page_size', 10)
         tools.set_conf(h, n, 'query', '*')
         tools.set_conf(h, n, 'sort_field', 'created')
@@ -33,7 +33,8 @@ def install(host, base_dir):
             "office": { "type": "string" },
             "phone": { "type": "string" },
             "photo": { "type": "string" },
-            "password": { "type": "string" }
+            "password": { "type": "string" },
+            "new_password": { "type": "string" }
         })
         es.flush(host, 'people')
 
@@ -69,6 +70,41 @@ def install(host, base_dir):
         es.update(host, 'people', 'field', doc['id'], doc)
         es.flush(host, 'people')
 
+        # add password field configuration
+        doc = {
+            "id": 'password',
+            "is_filter": '0',
+            "filter_field": '',
+            "handler": '',
+            "name": 'password',
+            "visible": ['create'],
+            "order_key": 11,
+            "list_tpl": '',
+            "view_tpl": '',
+            "edit_tpl": """
+<input type=password class="form-control" name="password">
+            """
+        }
+        es.update(host, 'people', 'field', doc['id'], doc)
+        es.flush(host, 'people')
+
+        # add new_password field configuration
+        doc = {
+            "id": 'id',
+            "is_filter": '0',
+            "filter_field": '',
+            "handler": '',
+            "name": 'id',
+            "visible": '',
+            "order_key": 12,
+            "list_tpl": '',
+            "view_tpl": '',
+            "edit_tpl": """
+<input type=password class="form-control" name="new_password">
+            """
+        }
+        es.update(host, 'people', 'field', doc['id'], doc)
+        es.flush(host, 'people')
 
         # add title field configuration
         doc = {
@@ -180,6 +216,57 @@ def install(host, base_dir):
         es.flush(host, 'people')
 
 
+        # create workflow
+        doc = {
+            "name" : 'create',
+            "description" : '',
+            "status" : '',
+            "condition" : '',
+            "validation" : """
+import hashlib
+
+def validation(p):
+    if p['post'].get('password'):
+        p['post']['password'] = hashlib.sha512(p['post'].get('password')).hexdigest()
+
+
+            """,
+            "postaction" : '',
+            "screen" : ''
+        }
+        es.create(host, 'people', 'workflow', '', doc)
+
+
+        doc = {
+            "name" : 'password',
+            "description" : '',
+            "status" : '',
+            "condition" : '',
+            "validation" : """
+import hashlib
+
+def validation(p):
+    # check if the password matches the orginal
+    password = hashlib.sha512(p['post'].get('password')).hexdigest()
+    if p['original'].get('password'):
+        orig_password = hashlib.sha512(p['original'].get('password')).hexdigest()
+    else:
+        orig_password = ''
+
+    # update to new password
+    if password == orig_password:
+        p['post']['password'] = hashlib.sha512(p['post'].get('new_password')).hexdigest()
+
+    else:
+        # if the password doesn't match then alert
+        raise Exception('password does not match')
+
+            """,
+            "postaction" : '',
+            "screen" : ['password', 'new_password']
+        }
+        es.create(host, 'people', 'workflow', '', doc)
+
         # add default people
         doc = {
             "id": 'EVERYONE',
@@ -213,6 +300,14 @@ def install(host, base_dir):
             ]
         }
         es.create(host, 'core_nav', 'permission', permission_id, doc)
+
+
+        # side layout
+        tools.set_conf(h, n, 'side', """
+<button type="button" class="btn btn-danger btn-block"
+    onclick="location='{{p.url}}/post/edit/{{p.post.id}}?wf=password'">Change Password</button>
+<br>
+        """)
 
 
         # people item renderer

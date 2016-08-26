@@ -38,10 +38,7 @@ def get(p):
         except SystemExit: pass
         except Exception, e:
             return "{}\n{}".format(e.message, traceback.format_exc())
-    else:
-        # default condition is that only author can edit
-        if p['post'].get('created_by') != p['login']:
-            return tools.alert('only author can edit')
+    
     ######################################################
 
     if request.method == "POST":
