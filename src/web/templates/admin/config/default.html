@@ -22,6 +22,7 @@
           <select name="auth">
             <option {% if p.conf.auth == "None" %}selected="1"{% endif %}>None</option>
             <option {% if p.conf.auth == "LDAP" %}selected="1"{% endif %}>LDAP</option>
+            <option {% if p.conf.auth == "People" %}selected="1"{% endif %}>People</option>
           </select>
         </div>
       </div>

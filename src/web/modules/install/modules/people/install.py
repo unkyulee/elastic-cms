@@ -90,11 +90,11 @@ def install(host, base_dir):
 
         # add new_password field configuration
         doc = {
-            "id": 'id',
+            "id": 'new_password',
             "is_filter": '0',
             "filter_field": '',
             "handler": '',
-            "name": 'id',
+            "name": 'new_password',
             "visible": '',
             "order_key": 12,
             "list_tpl": '',
