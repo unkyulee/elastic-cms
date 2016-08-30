@@ -3,6 +3,7 @@ from lib import config # config.py
 import lib.es as es
 from lib.read import readfile
 import web.util.tools as tools
+import web.modules.install.modules.people.install as people
 
 def install(host, form, base_dir):
     # check if core_nav already exists
@@ -11,6 +12,25 @@ def install(host, form, base_dir):
         schema = tools.read_file(
             "web/templates/install/schema/core_nav.json", base_dir)
         es.create_index(host, "core_nav", schema)
+        es.flush(host, "core_nav")
+        # set default title
+        tools.set_conf(host, '-1', 'title', 'Portal')
+        # create defailt role
+        doc = {
+            'site_id': 0,
+            'users': ['EVERYONE'],
+            'name': 'Users',
+            'description': 'users'
+        }
+        es.create(host, 'core_nav', 'role', 'Users', doc)
+
+        doc = {
+            'site_id': 0,
+            'users': ['EVERYONE'],
+            'name': 'Admins',
+            'description': 'site administrator'
+        }
+        es.create(host, 'core_nav', 'role', 'Admins', doc)
         es.flush(host, "core_nav")
 
     # check if core_log already exists
@@ -56,6 +76,9 @@ def install(host, form, base_dir):
     # insert data
     install_data(host, base_dir)
 
+    # install people
+    people.install(host, base_dir)
+
     # create config
     config.create(base_dir, **form)
 
@@ -95,7 +118,7 @@ def install_data(host, base_dir):
     # install default navigation - dashboard
     if not es.get(host, "core_nav", "navigation", 0):
         es.create(host, "core_nav", "navigation", 0,
-            {"name": "", "display_name":"home",
+            {"name": "", "display_name":"Home",
              "site_id":0, "module_id":"4", "is_displayed":"1", "order_key": 0})
 
     # install default navigation - install
@@ -108,10 +131,16 @@ def install_data(host, base_dir):
     if not es.get(host, "core_nav", "navigation", 2):
         es.create(host, "core_nav", "navigation", 2,
             {"name": "auth", "display_name": "auth",
-             "site_id": 0, "module_id": "2", "is_displayed":"1"})
+             "site_id":0, "module_id": "2", "is_displayed":"0"})
 
     # install default navigation - admin
     if not es.get(host, "core_nav", "navigation", 3):
         es.create(host, "core_nav", "navigation", 3,
             {"name": "admin", "display_name":"admin",
-             "site_id":0, "module_id":"3", "is_displayed":"1"})
+             "site_id":0, "module_id":"3", "is_displayed":"0"})
+
+    # install default navigation - people
+    if not es.get(host, "core_nav", "navigation", 4):
+        es.create(host, "core_nav", "navigation", 4,
+            {"name": "people", "display_name":"People",
+             "site_id":0, "module_id":"7", "is_displayed":"1", "order_key": 4})

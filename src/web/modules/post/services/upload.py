@@ -7,12 +7,13 @@ def save(file, allowed_exts, prefix, upload_dir):
         # save the file splitted into year/month folder
         # in order to have limited number of files in each folder
         now = datetime.datetime.now()
-        path = "{}/{}".format(now.year, now.month)
-        filename = "{}/{}_{}".format(path, prefix, file.filename)
+        path = os.path.join(str(now.year), str(now.month))
+        filename = os.path.join(path, '{}_{}'.format(prefix, file.filename))
         # create dir
-        upload_path = "{}/{}".format(upload_dir, path)
+        upload_path = os.path.join(upload_dir, path)
         if not os.path.exists(upload_path): os.makedirs(upload_path)
         # save file
+        print upload_dir
         file.save(os.path.join(upload_dir, filename))
         return filename
     else:

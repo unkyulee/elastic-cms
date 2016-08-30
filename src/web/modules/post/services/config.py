@@ -1,4 +1,6 @@
 import web.util.tools as tools
+import os
+from web import app
 
 def get(p):
     h = p['host']; n = p['navigation']['id'];
@@ -8,7 +10,10 @@ def get(p):
         'description': tools.get_conf(h, n, 'description', ''),
         'host': tools.get_conf(h, n, 'host', ''),
         'index': tools.get_conf(h, n, 'index', ''),
-        'upload_dir': tools.get_conf(h, n, 'upload_dir',''),
+        'upload_dir':
+            tools.get_conf(h, n, 'upload_dir',
+                os.path.join( app.config.get('BASE_DIR'), 'uploads' )
+            ),
         'allowed_exts': tools.get_conf(h, n, 'allowed_exts',''),
         'page_size': tools.get_conf(h, n, 'page_size', '10'),
         'query': tools.get_conf(h, n, 'query', '*'),

@@ -88,15 +88,15 @@ def post(p):
     p["post"]["id"] = response["_id"]
 
     # handle attachment
-    try:
-        for f in request.files:
-            if request.files[f]:
-                p["post"][f] = \
-                    upload.save(request.files[f], p['c']['allowed_exts'],
-                                p["post"]["id"], p['c']['upload_dir'])
-    except Exception, e:
-        es.delete(host, index, 'post', p['post'].get('id'))
-        return tools.alert(e.message)
+    #try:
+    for f in request.files:
+        if request.files[f]:
+            p["post"][f] = \
+                upload.save(request.files[f], p['c']['allowed_exts'],
+                            p["post"]["id"], p['c']['upload_dir'])
+    #except Exception, e:
+    #    es.delete(host, index, 'post', p['post'].get('id'))
+    #    return tools.alert(str(e))
 
     es.update(host, index, 'post', p["post"]["id"], p["post"])
     es.flush(host, index)
