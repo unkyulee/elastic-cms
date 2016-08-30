@@ -8,7 +8,12 @@ import lib.es as es
 
 @app.template_filter("get")
 def get(id, host, index, type_):
-    return es.get(host, index, type_, id)
+    ret = ''
+    try:
+        ret = es.get(host, index, type_, id)
+    except Exception, e:
+        ret = str(e)
+    return ret
 
 
 @app.template_filter("es_list")
