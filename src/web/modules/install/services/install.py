@@ -4,6 +4,8 @@ import lib.es as es
 from lib.read import readfile
 import web.util.tools as tools
 import web.modules.install.modules.people.install as people
+import web.modules.install.modules.schedule.install as schedule
+import web.modules.install.modules.document.install as document
 
 def install(host, form, base_dir):
     # check if core_nav already exists
@@ -79,6 +81,13 @@ def install(host, form, base_dir):
     # install people
     people.install(host, base_dir)
 
+    # install schedule
+    schedule.install(host, base_dir)
+
+    # install document
+    document.install(host, base_dir)
+
+
     # create config
     config.create(base_dir, **form)
 
@@ -144,3 +153,9 @@ def install_data(host, base_dir):
         es.create(host, "core_nav", "navigation", 4,
             {"name": "people", "display_name":"People",
              "site_id":0, "module_id":"7", "is_displayed":"1", "order_key": 4})
+
+    # install default navigation - people
+    if not es.get(host, "core_nav", "navigation", 5):
+        es.create(host, "core_nav", "navigation", 5,
+            {"name": "schedule", "display_name":"Schedule",
+             "site_id":0, "module_id":"7", "is_displayed":"1", "order_key": 5})
