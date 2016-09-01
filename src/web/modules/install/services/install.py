@@ -3,9 +3,11 @@ from lib import config # config.py
 import lib.es as es
 from lib.read import readfile
 import web.util.tools as tools
+
 import web.modules.install.modules.people.install as people
 import web.modules.install.modules.schedule.install as schedule
 import web.modules.install.modules.document.install as document
+import web.modules.install.modules.dashboard.install as dashboard
 
 def install(host, form, base_dir):
     # check if core_nav already exists
@@ -87,6 +89,9 @@ def install(host, form, base_dir):
     # install document
     document.install(host, base_dir)
 
+    # install dashboard
+    dashboard.install(host, base_dir)
+
 
     # create config
     config.create(base_dir, **form)
@@ -159,3 +164,9 @@ def install_data(host, base_dir):
         es.create(host, "core_nav", "navigation", 5,
             {"name": "schedule", "display_name":"Schedule",
              "site_id":0, "module_id":"7", "is_displayed":"1", "order_key": 5})
+
+    # install default navigation - people
+    if not es.get(host, "core_nav", "navigation", 6):
+        es.create(host, "core_nav", "navigation", 6,
+            {"name": "doc", "display_name":"Document",
+             "site_id":0, "module_id":"7", "is_displayed":"1", "order_key": 6})
