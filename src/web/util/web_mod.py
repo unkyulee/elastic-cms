@@ -1,5 +1,6 @@
 import os
 import json
+import urlparse
 import importlib
 from flask import session
 import lib.es as es
@@ -79,7 +80,7 @@ def define(host, nav):
 
 def build_payload(conf, request, navigation):
     # navigation_url
-    navigation['url'] = os.path.join(
+    navigation['url'] = urlparse.urljoin(
         request.url_root,
         navigation['site']['name'],
         navigation['navigation']['name']).strip("/")

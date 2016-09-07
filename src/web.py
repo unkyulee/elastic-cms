@@ -11,4 +11,4 @@ application.config['BASE_DIR'] = BASE_DIR
 
 if __name__ == "__main__":
     # Run Web Server
-    application.run(host='0.0.0.0',port=8081, debug=True)
+    application.run(host='0.0.0.0',port=8081, debug=True, threaded=True)
