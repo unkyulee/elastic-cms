@@ -23,7 +23,7 @@ def authorize(p):
         auth_key += p['nav'][3]
 
     if auth_key in p['allowed_operation']:
-        return True
+        return True 
 
     # if auth method is none then show
     auth = tools.get_conf(p['host'], '-1', 'auth', '')
