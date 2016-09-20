@@ -96,7 +96,7 @@ def build_payload(conf, request, navigation):
     navigation['session_key'] = conf['CSRF_SESSION_KEY']
     navigation['base_dir'] = conf['BASE_DIR']
 
-    # site title
+    # global title
     navigation['title'] = tools.get_conf(conf['HOST'], "-1", "title")
 
     # global script
@@ -141,7 +141,7 @@ def get_nav_list(host, navigation):
     # sort the nav list according to the hierarchy
     for nav in nav_list:
         # does its id appears as parent_id in others?
-        nav['children'] = (
+        nav['children'] = list(
             child for child in nav_list
             if child.get('parent_id') == nav['id']
         )

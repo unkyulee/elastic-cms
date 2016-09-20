@@ -24,57 +24,84 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js"></script>
     <!-- ace -->
     <script type="text/javascript" src="/static/ace/ace.js"></script>
-    <!-- sidebar -->
-    <link rel="stylesheet" type="text/css" href="/static/sidebar/sidebar.css">
-    <script type="text/javascript" src="/static/sidebar/sidebar.js"></script>
 
     {% if p.script %}{{p.script|safe}}{% endif %}
     {% block head %}{% endblock %}
 </head>
 
 <body>
-  <div id="wrapper">
-    <div class="overlay"></div>
-
-    {% block navigation %}
-    <!-- Sidebar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
-      <ul class="nav sidebar-nav">
-        <li class="sidebar-brand">
-          <a href="/">{{ p.title }}</a>
-        </li>
-        {% for nav in p.nav_list %}
-        <li><a href="/{%-if p.site.name-%}{{p.site.name}}/{%-endif-%}{{nav.name}}" title="{{nav.description}}">{{nav.display_name}}</a></li>
-        {% endfor %}
-      </ul>
-    </nav>
-    <!-- /#sidebar-wrapper -->
-    {% endblock %}
-
-    <!-- page Content -->
-    <div id="page-content-wrapper">
-      {% block menu %}
-      <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
-        <span class="hamb-top"></span>
-    		<span class="hamb-middle"></span>
-    	  <span class="hamb-bottom"></span>
-      </button>
-      {% endblock %}
+  {% block navigation %}
+    {%- if p.site.navigation -%}
+      {{p.site.navigation|safe}}
+    {%- else -%}
+    <style>
+      body {
+        padding-top: 50px;
+      }
+    </style>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
-        {% block content %}{% endblock %}
-        <hr>
-        <div class="row">
-          <div class="col-lg-12">
-            <p class="text-muted text-right">
-            {%if p.login %}
-              Logged in as <a href="/auth/logout?url={{p.url}}" title="logout">{{ p.login }}</a>
-            {%endif%}</p>
-          </div>
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/{{p.site.name}}"
+            title="{{p.site.description}}">{{p.site.display_name}}</a>
         </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+          {%- for nav in p.nav_list -%}
+            {%- if nav.children|length > 0 -%}
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                aria-haspopup="true" aria-expanded="false">{{nav.display_name}} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                {%- for child in nav.children -%}
+                <li {%- if child.id == p.navigation.id %} class="active" {% endif -%}
+                  ><a href="{%-if p.site.name-%}/{{p.site.name}}{%-endif-%}/{{child.name}}">
+                  {{child.display_name}}</a></li>
+                {%- endfor -%}
+              </ul>
+            </li>
+            {%- else -%}
+            <li {%- if nav.id == p.navigation.id %} class="active" {% endif -%}
+              ><a href="{%-if p.site.name-%}/{{p.site.name}}{%-endif-%}/{{nav.name}}">
+              {{nav.display_name}}</a></li>
+            {%- endif -%}
+
+          {%- endfor -%}
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/people/post/view/{{p.login}}" title="logout">{{p.login}}</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+
+    </nav>
+    {%- endif -%}
+  {% endblock %}
+
+  <!-- page Content -->
+  <div class="container">
+    {% block content %}{% endblock %}
+    <hr>
+    <div class="row">
+      <div class="col-lg-12">
+        <p class="text-muted text-right">
+        {%if p.login %}
+          Logged in as <a href="/auth/logout?url={{p.url}}" title="logout">{{ p.login }}</a>
+        {%endif%}</p>
       </div>
     </div>
   </div>
-  <!-- /#wrapper -->
+  <!-- /#page Content -->
+
   <br><br>
 </body>
 </html>

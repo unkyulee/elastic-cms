@@ -12,12 +12,6 @@ def get(p):
     option = 'size=1000&sort=order_key:asc'
     p['nav_list'] = es.list(p['host'], 'core_nav', 'navigation', query, option)
 
-
-    # role list
-    query = 'site_id:{}'.format(p['site_id'])
-    option = 'size=1000&sort=name:asc'
-    p['role_list'] = es.list(p['host'], 'core_nav', 'role', query, option)
-
     # module list
     query = "*"
     option = 'size=1000&sort=name:asc'
