@@ -63,14 +63,17 @@
               <ul class="dropdown-menu">
                 {%- for child in nav.children -%}
                 <li {%- if child.id == p.navigation.id %} class="active" {% endif -%}
-                  ><a href="{%-if p.site.name-%}/{{p.site.name}}{%-endif-%}/{{child.name}}">
+                  ><a href="{%-if p.site.name-%}/{{p.site.name}}{%-endif-%}/{{child.name}}"
+                    {%- if nav.new_window == "1" %} target=_blank {% endif -%} >
                   {{child.display_name}}</a></li>
                 {%- endfor -%}
               </ul>
             </li>
             {%- else -%}
             <li {%- if nav.id == p.navigation.id %} class="active" {% endif -%}
-              ><a href="{%-if p.site.name-%}/{{p.site.name}}{%-endif-%}/{{nav.name}}">
+              ><a href="{%-if p.site.name-%}/{{p.site.name}}{%-endif-%}/{{nav.name}}"
+                {%- if nav.new_window == "1" %} target=_blank {% endif -%}
+              >
               {{nav.display_name}}</a></li>
             {%- endif -%}
 

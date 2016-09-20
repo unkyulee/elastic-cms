@@ -8,12 +8,12 @@ def get(p):
     if not p['site_id']: return tools.alert('site id is missing')
 
     # get navigation list
-    query = 'site_id:{}'.format(p['site_id'])
+    query = 'site_id:{} AND -module_id:1 AND -module_id:2 AND -module_id:3'.format(p['site_id'])
     option = 'size=1000&sort=order_key:asc'
     p['nav_list'] = es.list(p['host'], 'core_nav', 'navigation', query, option)
 
     # module list
-    query = "*"
+    query = "* AND -name:admin AND -name:auth AND -name:install"
     option = 'size=1000&sort=name:asc'
     p['module_list'] = es.list(p['host'], 'core_nav', 'module', query, option)
 

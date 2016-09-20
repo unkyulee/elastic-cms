@@ -17,7 +17,10 @@
 {"name": "post", "description": "Post"}
 
 { "index" : { "_index" : "core_nav", "_type" : "module", "_id" : "8" } }
-{"name": "dataservice", "description": "json / data webservices"}
+{"name": "dataservice", "description": "Data Services"}
+
+{ "index" : { "_index" : "core_nav", "_type" : "module", "_id" : "9" } }
+{"name": "link", "description": "Link"}
 
 
 {"index" : { "_index" : "core_task", "_type" : "module", "_id" : "1" } }
