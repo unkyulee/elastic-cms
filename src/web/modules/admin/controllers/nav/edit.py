@@ -9,7 +9,6 @@ def get(p):
     if not navigation:
         return tools.alert('not valid navigation id - {}'.format(navigation_id))
 
-
     if not tools.get('site_id'): return tools.alert("site id missing")
     if not tools.get('module_id'): return tools.alert("module id missing")
 
@@ -22,6 +21,8 @@ def get(p):
         'is_displayed': tools.get('is_displayed'),
         'name': tools.get('name'),
         'display_name': tools.get('display_name'),
+        'url': tools.get('url'),
+        'new_window': tools.get('new_window'),
         'description': tools.get('description')
     }
     es.update(p['host'], 'core_nav', 'navigation', navigation_id, doc)

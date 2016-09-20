@@ -6,4 +6,5 @@ def get(p):
 
     path = "web.modules.admin.controllers.nav.{}".format(operation)
     control = importlib.import_module(path)
+    
     return control.get(p)

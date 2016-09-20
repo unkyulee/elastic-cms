@@ -24,6 +24,8 @@
               "is_displayed":   {"type" : "boolean"},
               "name" :          {"type" : "string"},
               "display_name" :  {"type" : "string"},
+              "url" :           {"type" : "string"},
+              "new_window" :    {"type" : "string"},
               "description" :   {"type" : "string"}
             }
         },

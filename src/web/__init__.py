@@ -1,5 +1,5 @@
 # Initialize web application and setup routing
-from flask import Flask, session, request, render_template
+from flask import Flask, session, request, render_template, send_from_directory
 app = Flask(__name__) # Define the WSGI application object
 # very first run will not have config.py
 try: app.config.from_object('config')
@@ -10,12 +10,19 @@ import web.util.bootstrap as boot # Initialize web
 import web.util.web_mod as mod # Module locator
 import web.util.rev_proxy as rev # Reverse Proxy
 
+import os
+from flask import send_from_directory
 
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 # Setup Routing - catch all
 @app.route('/', defaults={'path':''}, methods=['GET','POST','PUT','DELETE','HEAD'])
 @app.route('/<path:path>', methods=['GET','POST','PUT','DELETE','HEAD'])
 @boot.require_install
 def index(path):
+
     # session will live for 31 days
     session.permanent = True
 

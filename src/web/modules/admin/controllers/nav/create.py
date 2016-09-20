@@ -16,6 +16,8 @@ def get(p):
         'is_displayed': tools.get('is_displayed'),
         'name': tools.get('name'),
         'display_name': tools.get('display_name'),
+        'url': tools.get('url'),
+        'new_window': tools.get('new_window'),
         'description': tools.get('description')
     }
     es.create(p['host'], 'core_nav', 'navigation', '', doc)

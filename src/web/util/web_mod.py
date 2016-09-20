@@ -135,4 +135,18 @@ def get_module(navigation):
 def get_nav_list(host, navigation):
     query = "site_id:{} AND is_displayed:1".format(navigation['site']['id'])
     option = "size=10000&sort=order_key:asc"
-    return es.list(host, 'core_nav', 'navigation', query, option)
+    nav_list = es.list(host, 'core_nav', 'navigation', query, option)
+    nav_tree = []
+
+    # sort the nav list according to the hierarchy
+    for nav in nav_list:
+        # does its id appears as parent_id in others?
+        nav['children'] = (
+            child for child in nav_list
+            if child.get('parent_id') == nav['id']
+        )
+        # if it is not root node then do not add to the tree
+        if not nav.get('parent_id'):
+            nav_tree.append(nav)
+
+    return nav_tree

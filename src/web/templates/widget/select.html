@@ -1,7 +1,11 @@
 {% macro render(
-    name, id, options, selected_value, name_field="name", id_field="id"
+    name, id, options, selected_value, name_field="name", id_field="id", none_field="false"
 ) %}
-<select id="{{id}}" name="{{name}}" style="width:100%" >    
+<select id="{{id}}" name="{{name}}" style="width:100%" >
+  {%- if none_field != "false" -%}
+  <option value=""
+    {%- if not selected_value %} selected="1" {%endif-%}>{{none_field}}</option>
+  {%- endif -%}
   {%- for v in options|getlist -%}
     {%- if v is mapping -%}
     <option value="{{v[id_field]}}"
