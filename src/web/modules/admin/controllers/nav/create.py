@@ -12,7 +12,7 @@ def get(p):
         'site_id': tools.get('site_id'),
         'parent_id': tools.get('parent_id'),
         'module_id': tools.get('module_id'),
-        'order_key': int(tools.get('order_key')),
+        'order_key': int(tools.get('order_key', 0)),
         'is_displayed': tools.get('is_displayed'),
         'name': tools.get('name'),
         'display_name': tools.get('display_name'),

@@ -59,6 +59,7 @@ def list(host, index, type_, query="*", option="size=10000", debug=False):
         docs = []
         for doc in response['hits']['hits']:
             doc['_source']['id'] = doc['_id']
+            doc['_source']['index'] = doc['_index']
             docs.append(doc['_source'])
         return docs
     except urllib2.HTTPError, e:

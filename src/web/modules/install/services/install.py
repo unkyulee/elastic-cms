@@ -8,6 +8,7 @@ import web.modules.install.modules.people.install as people
 import web.modules.install.modules.schedule.install as schedule
 import web.modules.install.modules.document.install as document
 import web.modules.install.modules.dashboard.install as dashboard
+import web.modules.install.modules.search.install as search
 
 def install(host, form, base_dir):
     # check if core_nav already exists
@@ -91,6 +92,9 @@ def install(host, form, base_dir):
 
     # install dashboard
     dashboard.install(host, base_dir)
+
+    # install search
+    search.install(host, base_dir)
 
 
     # create config
