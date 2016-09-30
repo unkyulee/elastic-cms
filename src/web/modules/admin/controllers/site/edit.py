@@ -13,7 +13,8 @@ def get(p):
     doc = {
         'name': tools.get('name'),
         'display_name': tools.get('display_name'),
-        'description': tools.get('description')
+        'description': tools.get('description'),
+        'is_displayed': tools.get('is_displayed')
     }
     es.update(p['host'], 'core_nav', 'site', site_id, doc)
     es.flush(p['host'], 'core_nav')

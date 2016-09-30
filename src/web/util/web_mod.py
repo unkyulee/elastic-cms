@@ -102,6 +102,9 @@ def build_payload(conf, request, navigation):
     # global script
     navigation['script'] = tools.get_conf(conf['HOST'], "-1", "script")
 
+    # site list
+    navigation['site_list'] = get_site_list(conf['HOST'], navigation)
+
     # navigation list
     navigation['nav_list'] = get_nav_list(conf['HOST'], navigation)
 
@@ -150,3 +153,11 @@ def get_nav_list(host, navigation):
             nav_tree.append(nav)
 
     return nav_tree
+
+
+def get_site_list(host, navigation):
+    query = "is_displayed:1".format(navigation['site']['id'])
+    option = "size=10&sort=display_name:asc"
+    site_list = es.list(host, 'core_nav', 'site', query, option)
+
+    return site_list

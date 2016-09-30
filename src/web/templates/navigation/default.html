@@ -14,8 +14,21 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/{{p.site.name}}"
-        title="{{p.site.description}}">{{p.site.display_name}}</a>
+      <li class="dropdown">
+
+        <a href="#" class="dropdown-toggle navbar-brand" data-toggle="dropdown" role="button"
+          aria-haspopup="true" aria-expanded="false" title="{{p.site.description}}"><b>{{p.site.display_name}}</b></a>
+
+        <ul class="dropdown-menu">
+          {%- for site in p.site_list -%}
+          <li {%- if site.id == p.site.id %} class="active" {% endif -%}
+            ><a href="{%-if site.name-%}/{{site.name}}{%-endif-%}/">
+            {{site.display_name}}</a></li>
+          {%- endfor -%}
+        </ul>
+      </li>
+
+
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">

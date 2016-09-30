@@ -9,7 +9,8 @@
             "name" :          {"type" : "string"},
             "display_name" :  {"type" : "string"},
             "description" :   {"type" : "string"},
-            "navigation" :    {"type" : "string"}
+            "navigation" :    {"type" : "string"},
+            "is_displayed":   {"type" : "boolean"}
           }
         },
 
@@ -26,7 +27,7 @@
               "name" :          {"type" : "string"},
               "display_name" :  {"type" : "string"},
               "url" :           {"type" : "string"},
-              "new_window" :    {"type" : "string"},
+              "new_window" :    {"type" : "boolean"},
               "description" :   {"type" : "string"}
             }
         },

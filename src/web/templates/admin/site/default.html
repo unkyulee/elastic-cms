@@ -90,6 +90,14 @@
               name="description" placeholder="Description"></textarea>
           </div>
         </div>
+        <!-- is_displayed -->
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Visible</label>
+          <div class="col-lg-9">
+            {{select.render("is_displayed", "is_displayed_new_site",
+              [{"id":"1", "name":"Yes"}, {"id":"0", "name":"No"}] )}}
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -134,6 +142,14 @@
               <textarea class="form-control" rows="2"
                 name="description" placeholder="Description"
                 >{{ site.description }}</textarea>
+            </div>
+          </div>
+          <!-- is_displayed -->
+          <div class="form-group">
+            <label class="col-lg-2 control-label">Visible</label>
+            <div class="col-lg-10">
+              {{select.render("is_displayed", "is_displayed_edit_site",
+                [{"id":"1", "name":"Yes"}, {"id":"0", "name":"No"}] )}}
             </div>
           </div>
         </div>
