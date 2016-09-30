@@ -69,6 +69,14 @@
         <h4 class="modal-title">Create New Site</h4>
       </div>
       <div class="modal-body">
+        <!-- Order Key -->
+        <div class="form-group">
+          <label class="col-lg-2 control-label">Order Key</label>
+          <div class="col-lg-10">
+            <input class="form-control" type="text" name="order_key"
+            placeholder="to define navigaion display order" />
+          </div>
+        </div>
         <div class="form-group">
           <label class="col-lg-2 control-label">Name</label>
           <div class="col-lg-10">
@@ -120,6 +128,14 @@
           <h4 class="modal-title">Edit Site</h4>
         </div>
         <div class="modal-body">
+          <!-- Order Key -->
+          <div class="form-group">
+            <label class="col-lg-2 control-label">Order Key</label>
+            <div class="col-lg-10">
+              <input class="form-control" type="text" name="order_key"
+              placeholder="to define navigaion display order" value="{{site.order_key}}" />
+            </div>
+          </div>
           <div class="form-group">
             <label class="col-lg-2 control-label">Name</label>
             <div class="col-lg-10">
@@ -148,8 +164,8 @@
           <div class="form-group">
             <label class="col-lg-2 control-label">Visible</label>
             <div class="col-lg-10">
-              {{select.render("is_displayed", "is_displayed_edit_site",
-                [{"id":"1", "name":"Yes"}, {"id":"0", "name":"No"}] )}}
+              {{select.render("is_displayed", "is_displayed_edit_site_{}".format(site.id),
+                [{"id":"1", "name":"Yes"}, {"id":"0", "name":"No"}], site.is_displayed )}}
             </div>
           </div>
         </div>

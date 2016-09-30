@@ -14,7 +14,8 @@ def get(p):
         'name': tools.get('name'),
         'display_name': tools.get('display_name'),
         'description': tools.get('description'),
-        'is_displayed': tools.get('is_displayed')
+        'is_displayed': tools.get('is_displayed'),
+        'order_key': tools.get('order_key')
     }
     es.update(p['host'], 'core_nav', 'site', site_id, doc)
     es.flush(p['host'], 'core_nav')

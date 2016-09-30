@@ -10,7 +10,8 @@
             "display_name" :  {"type" : "string"},
             "description" :   {"type" : "string"},
             "navigation" :    {"type" : "string"},
-            "is_displayed":   {"type" : "boolean"}
+            "is_displayed":   {"type" : "boolean"},
+            "order_key":      {"type" : "long"}
           }
         },
 

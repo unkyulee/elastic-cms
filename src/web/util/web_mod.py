@@ -156,8 +156,8 @@ def get_nav_list(host, navigation):
 
 
 def get_site_list(host, navigation):
-    query = "is_displayed:1".format(navigation['site']['id'])
-    option = "size=10&sort=display_name:asc"
+    query = "is_displayed:1"
+    option = "size=10&sort=order_key:asc"
     site_list = es.list(host, 'core_nav', 'site', query, option)
 
     return site_list
