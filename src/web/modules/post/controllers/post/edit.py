@@ -38,7 +38,7 @@ def get(p):
         except SystemExit: pass
         except Exception, e:
             return "{}\n{}".format(e.message, traceback.format_exc())
-    
+
     ######################################################
 
     if request.method == "POST":
@@ -139,4 +139,6 @@ def post(p):
     ######################################################
 
     # redirect to view
+    if tools.get("redirect"):
+        return tools.redirect(tools.get("redirect"))
     return tools.redirect("{}/post/view/{}".format(p['url'], p["post"]["id"]))
