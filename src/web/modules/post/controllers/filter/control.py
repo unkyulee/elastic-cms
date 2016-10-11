@@ -14,7 +14,7 @@ def get(p):
 
     # load field
     field_id = p['nav'][-1]
-    p['field'] = es.list(host, index, 'field', 'id:{}'.format(field_id))
+    p['field'] = es.list(host, index, 'field', '_id:{}'.format(field_id))
     if not p['field']:
         return 'not valid field id - {}'.format(field_id)
     p['field'] = p['field'][0]
