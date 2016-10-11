@@ -4,7 +4,6 @@
     placeholder="press enter key or , to have new value",
     name_field="name", id_field="id"
 ) %}
-<span>press "," to enter new entry</span>
 <select id="{{id}}" name="{{name}}" style="width:100%" multiple='1'>
   {%- for v in values|getlist %}
     {%if v is mapping%}
@@ -21,7 +20,7 @@
 <script>
 $(document).ready(function() {
   $("#{{id}}").select2({
-    placeholder: "{{placeholder}}", allowClear: true,    
+    placeholder: "{{placeholder}}", allowClear: true,
     {% if is_tags == "true" %} tokenSeparators: [','], tags: true, {% endif %}
     {%- if ajax != "false"%}
     delay: 250,

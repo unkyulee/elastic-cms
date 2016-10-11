@@ -11,97 +11,112 @@
   },
 
   "aliases" : {
-      "everything" : {}
+    "everything" : {}
   },
 
   "mappings" : {
 
-      "post" : {
-        "_all":         {"enabled": true},
-        "_source":      {"enabled": true},
-        "dynamic": "strict",
-        "properties" :  {
-          "index" :           {"type" : "string", "index" : "not_analyzed"},
-          "id" :              {"type" : "string", "index" : "not_analyzed"},
-          "type" :            {"type" : "string", "index" : "not_analyzed"},
-          "category" :        {"type" : "string", "index" : "not_analyzed"},
-          "title" :           {"type" : "string", "analyzer": "standard",
-                               "fields": {
-                                "raw": {
-                                    "type":  "string",
-                                    "index": "not_analyzed"
-                                },
-                                "folded": {
-                                    "type": "string",
-                                    "analyzer": "folding"
-                                }
-                               }
+    "post" : {
+      "_all":         {"enabled": true},
+      "_source":      {"enabled": true},
+      "dynamic": "strict",
+      "properties" :  {
+        "index" :           {"type" : "string", "index" : "not_analyzed"},
+        "id" :              {"type" : "string", "index" : "not_analyzed"},
+        "type" :            {"type" : "string", "index" : "not_analyzed"},
+        "category" :        {"type" : "string", "index" : "not_analyzed"},
+        "title" :           {"type" : "string", "analyzer": "standard",
+                             "fields": {
+                              "raw": {
+                                  "type":  "string",
+                                  "index": "not_analyzed"
                               },
-          "description" :     {"type": "string"},
-          "status" :          {"type": "string",
-                            	 "fields": {
-                      	        "raw": {
-                                	"index": "not_analyzed",
-                	                "type": "string"
-                              	}
-                            	}},
-          "viewed":           {"type": "long"},
-          "created" :         {"type": "date"},
-          "created_by":       {"type": "string"},
-          "updated" :         {"type": "date"},
-          "updated_by":       {"type": "string"},
-          "comment":          {"type": "object",
-            "properties" :  {
-              "id":               {"type" : "string"},
-              "comment":          {"type" : "string"},
-              "created" :         {"type" : "date"},
-              "created_by":       {"type" : "string"},
-              "updated" :         {"type" : "date"},
-              "updated_by":       {"type" : "string"}
-            }
+                              "folded": {
+                                  "type": "string",
+                                  "analyzer": "folding"
+                              }
+                             }
+                            },
+        "description" :     {"type": "string"},
+        "status" :          {"type": "string",
+                          	 "fields": {
+                    	        "raw": {
+                              	"index": "not_analyzed",
+              	                "type": "string"
+                            	}
+                          	}},
+        "viewed":           {"type": "long"},
+        "created" :         {"type": "date"},
+        "created_by":       {"type": "string"},
+        "updated" :         {"type": "date"},
+        "updated_by":       {"type": "string"},
+        "comment":          {"type": "object",
+          "properties" :  {
+            "id":               {"type" : "string"},
+            "comment":          {"type" : "string"},
+            "created" :         {"type" : "date"},
+            "created_by":       {"type" : "string"},
+            "updated" :         {"type" : "date"},
+            "updated_by":       {"type" : "string"}
           }
         }
-      },
-
-      "field" : {
-        "_all":         {"enabled": true},
-        "_source":      {"enabled": true},
-        "dynamic":      "strict",
-        "properties" :  {
-          "id" :            {"type" : "string", "index" : "not_analyzed"},
-          "handler" :       {"type" : "string"},
-          "filter_field" :  {"type" : "string"},
-          "type" :          {"type" : "string", "index" : "not_analyzed"},
-          "name":           {"type" : "string"},
-          "order_key":      {"type" : "integer"},
-          "visible" :       {"type" : "string"},
-          "is_filter" :     {"type" : "boolean"},
-          "list_tpl" :      {"type" : "string"},
-          "edit_tpl" :      {"type" : "string"},
-          "view_tpl" :      {"type" : "string"}
-        }
-      },
-
-      "workflow" : {
-        "_all":         {"enabled": true},
-        "_source":      {"enabled": true},
-        "dynamic":      "strict",
-        "properties" :  {
-          "id" :          {"type" : "string", "index" : "not_analyzed"},
-          "name":         {"type" : "string"},
-          "description":  {"type" : "string"},
-          "screen":       {"type" : "string"},
-          "status" :      {"type": "string",
-                           "fields": {
-                            "raw": {
-                              "index": "not_analyzed",
-                              "type": "string"
-                            }
-                          }},
-          "condition":    {"type" : "string"},
-          "validation":   {"type" : "string"},
-          "postaction":   {"type" : "string"}
-        }
       }
+    },
+
+    "field" : {
+      "_all":         {"enabled": true},
+      "_source":      {"enabled": true},
+      "dynamic":      "strict",
+      "properties" :  {
+        "id" :            {"type" : "string", "index" : "not_analyzed"},
+        "handler" :       {"type" : "string"},
+        "filter_field" :  {"type" : "string"},
+        "type" :          {"type" : "string", "index" : "not_analyzed"},
+        "name":           {"type" : "string"},
+        "order_key":      {"type" : "integer"},
+        "visible" :       {"type" : "string"},
+        "is_filter" :     {"type" : "boolean"},
+        "list_tpl" :      {"type" : "string"},
+        "edit_tpl" :      {"type" : "string"},
+        "view_tpl" :      {"type" : "string"}
+      }
+    },
+
+    "workflow" : {
+      "_all":         {"enabled": true},
+      "_source":      {"enabled": true},
+      "dynamic":      "strict",
+      "properties" :  {
+        "id" :          {"type" : "string", "index" : "not_analyzed"},
+        "name":         {"type" : "string"},
+        "description":  {"type" : "string"},
+        "screen":       {"type" : "string"},
+        "status" :      {"type": "string",
+                         "fields": {
+                          "raw": {
+                            "index": "not_analyzed",
+                            "type": "string"
+                          }
+                        }},
+        "condition":    {"type" : "string"},
+        "validation":   {"type" : "string"},
+        "postaction":   {"type" : "string"}
+      }
+    },
+
+    "notification" : {
+      "_all":         {"enabled": true},
+      "_source":      {"enabled": true},
+      "dynamic":      "strict",
+      "properties" :  {
+        "workflow" :    {"type" : "string", "index" : "not_analyzed"},
+        "id" :          {"type" : "string", "index" : "not_analyzed"},
+        "recipients":   {"type" : "string"},
+        "header":       {"type" : "string"},
+        "message":      {"type" : "string"},
+        "condition":    {"type" : "string"}
+      }
+    }
+
   }
 }
