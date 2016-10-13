@@ -13,9 +13,7 @@
       <input type=file name="{{field.id}}">
 
     {% elif field.handler == "multiple" %}
-      {{select_multi.render(field.id, field.id,
-        p.post[field.id],
-        is_tags="true", ajax="/people?jsonp=1")}}
+      {{select_multi.render(field.id, field.id, p.post[field.id])}}
 
     {%else%}
       <input class="form-control" name="{{field.id}}"
