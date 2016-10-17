@@ -22,11 +22,12 @@ def get(p):
         return tools.alert('post id is not valid- {}'.format(tools.get("post_id")))
 
     ######################################################
-    # validate
-    if p['workflow'] and p['workflow'].get('validation'):
+    # check condition
+    if p['workflow'] and p['workflow'].get('condition'):
         try:
-            exec (p['workflow']['validation'], globals())
-            validation(p)
+            exec (p['workflow']['condition'], globals())
+            ret = condition(p)
+            if ret != True and ret: return ret
         except SystemExit: pass
         except Exception, e:
             return "{}\n{}".format(e.message, traceback.format_exc())
@@ -44,6 +45,18 @@ def get(p):
         if p["post"].get("comment") \
         else []
     comments.append(p['comment'])
+
+    ######################################################
+    # validate
+    if p['workflow'] and p['workflow'].get('validation'):
+        try:
+            exec (p['workflow']['validation'], globals())
+            ret = validation(p)
+            if ret != True and ret: return ret
+        except SystemExit: pass
+        except Exception, e:
+            return "{}\n{}".format(e.message, traceback.format_exc())
+    ######################################################
 
     es.update(host, index, 'post', p["post"]['id'], {"comment": comments})
     es.flush(host, index)
