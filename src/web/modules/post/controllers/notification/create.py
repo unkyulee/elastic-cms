@@ -15,7 +15,8 @@ def get(p):
             'header': tools.get('header'),
             'message': tools.get('message'),
             'recipients': tools.get('recipients'),
-            'condition': tools.get('condition')
+            'condition': tools.get('condition'),
+            'workflow': tools.get('workflow')
         }
         es.create(host, index, 'notification', None, doc)
         es.flush(host, index)
