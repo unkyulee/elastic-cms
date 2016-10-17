@@ -1,4 +1,4 @@
-# edit notification
+# edit role
 from flask import render_template, request
 import web.util.tools as tools
 import lib.es as es
@@ -6,23 +6,24 @@ import lib.es as es
 def get(p):
     host = p['c']['host']; index = p['c']['index'];
 
-    # load role
-    role_id = p['nav'][-1]
-    p['role'] = es.get(host, 'core_nav', 'role', role_id)
-    if not p['role']:
-        return tools.alert('not valid role id - {}'.format(role_id))
+    # load notification
+    notification_id = p['nav'][-1]
+    p['notification'] = es.get(host, index, 'notification', notification_id)
+    if not p['notification']:
+        return tools.alert('not valid notification id - {}'.format(notification_id))
 
-
-    # save role
+    # save notification
     if request.method == "POST":
-        # edit role
-        doc = {}
-        if tools.get('users'): doc['users'] = tools.get('users')
-        if tools.get('operations'): doc['operations'] = tools.get('operations')
+        doc = {
+            'header': tools.get('header'),
+            'message': tools.get('message'),
+            'recipients': tools.get('recipients'),
+            'condition': tools.get('condition'),
+            'workflow': tools.get('workflow')
+        }
+        es.update(host, index, 'notification', notification_id, doc)
+        es.flush(host, index)
 
-        es.update(p['host'], 'core_nav', 'role', role_id, doc)
-        es.flush(p['host'], 'core_nav')
+        return tools.redirect("{}/notification/edit/{}".format(p['url'], notification_id))
 
-        return tools.redirect(request.referrer)
-
-    return render_template("post/role/edit.html", p=p)
+    return render_template("post/notification/edit.html", p=p)

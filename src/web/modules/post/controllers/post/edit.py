@@ -6,6 +6,7 @@ import web.util.tools as tools
 import web.modules.post.services.workflow as workflow
 import web.modules.post.services.upload as upload
 import web.util.jinja as jinja
+import web.modules.post.services.notification as notification
 
 
 def get(p):
@@ -136,6 +137,27 @@ def post(p):
         except SystemExit: pass
         except Exception, e:
             return "{}\n{}".format(e.message, traceback.format_exc())
+    ######################################################
+
+
+    ######################################################
+    # notification
+    if p['workflow']:
+        notifications = es.list(host, index, 'notification', 'workflow:{}'.format(p['workflow'].get('name')))
+        for p['notification'] in notifications:
+            p['notification']['recipients'] = jinja.getlist(p['notification'].get('recipients'))
+
+            if p['notification'] and p['notification'].get('condition'):
+                try:
+                    exec (p['notification'].get('condition'), globals())
+                    ret = condition(p)
+                    if ret != True and ret: return ret
+                except SystemExit: pass
+                except Exception, e:
+                    return "{}\n{}".format(e.message, traceback.format_exc())
+
+                # send notification
+                notification.send(p)
     ######################################################
 
     # redirect to view

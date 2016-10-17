@@ -1,32 +1,24 @@
 {% extends "post/admin_base.html" %}
 
 {% block body %}
-<form class="form-horizontal" method="post">
-  <legend>Notification for Default Workflow</legend>
+<form class="form-horizontal" method="post" action="{{p.url}}/notification/config">
+  <legend class="text-muted">Notification Email Setup</legend>
 
-  <p class="bg-primary"> <b>Send email when new post is created</b></p>
   <div class="form-group">
-    <label class="col-sm-12 text-left"></label>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-2 control-label">Recipients</label>
+    <label class="col-sm-2 control-label">Gmail ID</label>
     <div class="col-sm-10">
-      {{select_multi.render("operator", "operator", "", ajax="/people?json=1")}}
+      <input class="form-control" type="text" name="gmail_id"
+        placeholder="xxxxx@gmail.com" value="{{p.conf.gmail_id}}" />
+      <span class="help-block">gmail id - xxxxx@gmail.com</span>
     </div>
   </div>
 
   <div class="form-group">
-    <label class="col-sm-2 control-label">Message Title</label>
+    <label class="col-sm-2 control-label">Gmail ID</label>
     <div class="col-sm-10">
-      <input class="form-control" type="text" name="host" placeholder="email title" />
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="col-sm-2 control-label">Message</label>
-    <div class="col-sm-10">
-      <textarea class="form-control" name="description" rows="5"
-        placeholder="Description of the post module">{{p.c.description}}</textarea>
+      <input class="form-control" type="password" name="gmail_pw"
+        value="{{p.conf.gmail_pw}}" />
+      <span class="help-block">gmail password</span>
     </div>
   </div>
 
@@ -37,4 +29,72 @@
     </div>
   </div>
 </form>
+
+<br><br>
+<form class="form-horizontal" method="post">
+  <legend class="text-muted">Notification Messages</legend>
+
+  <div class="col-lg-12 text-right">
+    <a href="{{p.url}}/notification/create" title="new">
+      <button type="button" class="btn btn-xs btn-danger">
+        <span class="glyphicon glyphicon-plus"></span> New Notification
+      </button>
+    </a>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>message title</th>
+        <th>workflow</th>
+        <th>recipients</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for notification in p.notification_list %}
+      <tr>
+        <td><a href="{{p.url}}/notification/edit/{{notification.id}}">#</a></td>
+        <td><a href="{{p.url}}/notification/edit/{{notification.id}}">{{notification.header}}</a></td>
+        <td>{{notification.workflow}}</td>
+        <td>{{notification.recipients|getlist|join(', ')}}</td>
+        <td>
+          <div class="btn-group">
+            <button type="button" class="btn dropdown-toggle btn-mini btn-primary btn-xs" data-toggle="dropdown">
+              Action<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="{{p.url}}/notification/edit/{{notification.id}}">Edit</a></li>
+              <li class="divider"></li>
+              <li><a href="#modal-notification-del-{{notification.id}}" data-toggle="modal">Delete</a></li>
+            </ul>
+          </div>
+          <!-- Delete notification dialog -->
+          <form class="form-horizontal" action="{{p.url}}/notification/delete/{{notification.id}}" method="post">
+            <div id="modal-notification-del-{{notification.id}}" class="modal fade">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4>Confirm Delete Navigation</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>Are you sure you want to <span class="text-error">DELETE</span> the notificatio?</p>
+                    <p>Deleting notification: <strong>{{notification.header}}</strong></p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Delete Notification</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</form>
+
 {% endblock %}
