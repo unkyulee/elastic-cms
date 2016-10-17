@@ -2,7 +2,6 @@
 from flask import render_template, request
 import web.util.tools as tools
 import lib.es as es
-import web.modules.post.services.recipients as recipients
 
 def get(p):
     host = p['c']['host']; index = p['c']['index'];
