@@ -1,0 +1,40 @@
+{% extends "mercurial/admin_base.html" %}
+
+{% block body %}
+<form class="form-horizontal" method="post">
+  <legend class="text-muted">General Configuration</legend>
+
+  <div class="form-group">
+    <label class="col-lg-2 col-md-2 control-label">Name</label>
+    <div class="col-lg-10 col-md-10">
+      <input class="form-control" type="text" name="name"
+        placeholder="Display Name of the post module" value="{{p.c.name}}" />
+      <span class="help-block">Name is displayed as the title of the page header</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2 col-md-2 control-label">Description</label>
+    <div class="col-lg-10 col-md-10">
+      <textarea class="form-control" name="description" rows="2"
+        placeholder="Description of the post module">{{p.c.description}}</textarea>
+      <span class="help-block">Description is displayed as the subtext of the page header</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2 col-md-2 control-label">Mercurial Path</label>
+    <div class="col-lg-10 col-md-10">
+      <input class="form-control" type="text" name="mercurial_path"
+        placeholder="Path to the mercurial repository" value="{{p.c.mercurial_path}}" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-lg-10 col-lg-offset-2">
+      <button type="reset" class="btn btn-default">Cancel</button>
+      <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+  </div>
+</form>
+{% endblock %}

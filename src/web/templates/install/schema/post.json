@@ -116,6 +116,16 @@
         "message":      {"type" : "string"},
         "condition":    {"type" : "string"}
       }
+    },
+
+    "config" : {
+      "_all" :        {"enabled": true},
+      "_source":      {"enabled": true},
+      "dynamic":      "strict",
+      "properties" :  {
+        "name" :          {"type" : "string"},
+        "value" :         {"type" : "string"}
+      }
     }
 
   }
