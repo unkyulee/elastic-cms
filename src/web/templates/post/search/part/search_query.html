@@ -35,9 +35,22 @@
 
       "query": {
         "query_string": {
+          "query": "{{ p.q }}",
           "default_operator": "AND",
-          "fields" : ["id^1000", "title^100", "_all", "title.folded"],
-          "query": "{{ p.q }}"
+          "fields" : [
+          {% if p.fields %}
+            {% for f in p.fields|split(",") %}
+              "{{f}}"
+              {% if not loop.last %},{% endif %}
+            {% endfor %}
+          {% else %}
+            "id^1000",
+            "title^100",
+            "description",
+            "title.folded",
+            "_all"
+          {% endif %}
+          ]
         }
       }
     }

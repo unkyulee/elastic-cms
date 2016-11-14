@@ -25,6 +25,9 @@ def get(p):
     p['sort_field'] = tools.get('sort_field', p['c']['sort_field'])
     p['sort_dir'] = tools.get('sort_dir', p['c']['sort_dir'])
 
+    # fields
+    p['fields'] = tools.get('fields')
+
     # init workflow
     wf = tools.get('wf', 'search')
     p['workflow'] = workflow.init(wf, host, index)
