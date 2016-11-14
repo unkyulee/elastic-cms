@@ -22,9 +22,6 @@
 { "index" : { "_index" : "core_nav", "_type" : "module", "_id" : "9" } }
 {"name": "link", "description": "Link"}
 
-{ "index" : { "_index" : "core_nav", "_type" : "module", "_id" : "10" } }
-{"name": "mercurial", "description": "Mercurial (hg)"}
-
 
 {"index" : { "_index" : "core_task", "_type" : "module", "_id" : "1" } }
 {"name": "SQL2SQL", "description": "[SQL] Copy SQL table to another SQL table"}

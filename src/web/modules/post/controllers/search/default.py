@@ -6,7 +6,8 @@ import urllib2
 from web import app
 import json
 from lib.read import readfile
-
+import web.modules.post.services.workflow as workflow
+import traceback
 
 def get(p):
     if p['intro'] and not tools.get('q'):
@@ -23,6 +24,23 @@ def get(p):
     # sort
     p['sort_field'] = tools.get('sort_field', p['c']['sort_field'])
     p['sort_dir'] = tools.get('sort_dir', p['c']['sort_dir'])
+
+    # init workflow
+    wf = tools.get('wf', 'search')
+    p['workflow'] = workflow.init(wf, host, index)
+
+    ######################################################
+    # check condition
+    if p['workflow'] and p['workflow'].get('condition'):
+        try:
+            exec (p['workflow']['condition'], globals())
+            ret = condition(p)
+            if ret != True and ret: return ret
+        except SystemExit: pass
+        except Exception, e:
+            return "{}\n{}".format(e.message, traceback.format_exc())
+
+    ######################################################
 
     # selected filters
     p['field_list'] = es.list(host, index, 'field')
