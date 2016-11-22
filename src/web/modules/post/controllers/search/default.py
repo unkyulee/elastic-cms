@@ -46,7 +46,16 @@ def get(p):
     ######################################################
 
     # selected filters
-    p['field_list'] = es.list(host, index, 'field')
+    field_list = es.list(host, index, 'field')
+    # remove duplicates in filter lists
+    p['field_list'] = []
+    field_id_list = []
+    for field in field_list:
+        # add id to the field_id_list
+        if field['id'] not in field_id_list:
+            field_id_list.append(field['id'])
+            p['field_list'].append(field)
+
     p['field_map'] = {}
     for field in p['field_list']:
         filter_field = field['id']
