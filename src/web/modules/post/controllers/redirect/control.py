@@ -18,7 +18,7 @@ def get(p):
     site = es.get(p['host'], 'core_nav', 'site', navigation['site_id'])
 
     return tools.redirect(
-        "/{}/{}/post/view/{}".format(
+        "{}/{}/post/view/{}".format(
             site['name'],
             navigation['name'],
             id
