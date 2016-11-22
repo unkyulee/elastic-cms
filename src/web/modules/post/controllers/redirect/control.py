@@ -17,10 +17,18 @@ def get(p):
     navigation = es.get(p['host'], 'core_nav', 'navigation', navigation_id)
     site = es.get(p['host'], 'core_nav', 'site', navigation['site_id'])
 
-    return tools.redirect(
-        "{}/{}/post/view/{}".format(
-            site['name'],
-            navigation['name'],
-            id
+    if site['name']:
+        return tools.redirect(
+            "{}/{}/post/view/{}".format(
+                site['name'],
+                navigation['name'],
+                id
+            )
         )
-    )
+    else:
+        return tools.redirect(
+            "{}/post/view/{}".format(                
+                navigation['name'],
+                id
+            )
+        )
