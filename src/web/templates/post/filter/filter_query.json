@@ -1,7 +1,6 @@
 {
   "query": {
     "function_score": {
-      {%- if p.selected_filter_list|length > 0 %}
       "filter": {
         "bool": {
           "must": [
@@ -18,12 +17,12 @@
             {% endfor %}
           ]
         }
-      },{% endif -%}
+      },
 
       "query": {
         "query_string": {
           "default_operator": "AND",
-          "fields" : ["id^1000", "title^100", "_all"],
+          "fields" : ["id", "title", "title.folded", "{{p.field.id}}"],
           "query": "{{ p.q }} AND {{ p.fq }}"
         }
       }

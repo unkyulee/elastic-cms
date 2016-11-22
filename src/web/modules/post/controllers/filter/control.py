@@ -37,7 +37,7 @@ def get(p):
             p["selected_filter_list"][field['id']] = values
 
     # search query
-    search_query = render_template("post/filter/filter_query.html", p=p)
+    search_query = render_template("post/filter/filter_query.json", p=p)
     try:
         search_url = "{}/{}/post/_search".format(host, index)
         response = http.http_req_json(search_url, "POST", search_query)
