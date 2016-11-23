@@ -3,7 +3,7 @@
 {% block title %}{{p.post.title}}{% endblock %}
 {% block body %}
 
-<div class="row">{{p.content_header|render(p)|safe}}</div>
+<div class="row">{{p.c.content_header|render(p)|safe}}</div>
 
 <div class="row">
   <div class="col-lg-9 col-md-9">
@@ -53,6 +53,6 @@
 
 {% include "post/post/part/view_delete_dlg.html" %}
 
-<div class="row">{{p.content_footer|render(p)|safe}}</div>
+<div class="row">{{p.c.content_footer|render(p)|safe}}</div>
 
 {% endblock %}

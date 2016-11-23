@@ -13,12 +13,4 @@ def get(p):
     path = "web.modules.post.controllers.search.{}".format(p['mode'])
     control = importlib.import_module(path)
 
-    # load top, footer, left
-    p['top'] = tools.get_conf(h, n, 'top', '')
-    p['footer'] = tools.get_conf(h, n, 'footer', '')
-    p['side'] = tools.get_conf(h, n, 'side', '')
-    p['content_header'] = tools.get_conf(h, n, 'content_header', '')
-    p['content_footer'] = tools.get_conf(h, n, 'content_footer', '')
-    p['intro'] = tools.get_conf(h, n, 'intro', '')
-
     return control.get(p)

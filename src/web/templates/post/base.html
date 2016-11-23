@@ -2,8 +2,8 @@
 
 {% block content %}
 
-{% if p.top %}
-  <div class="row" id="top">{{ p.top|render(p)|safe }}</div>
+{% if p.c.top %}
+  <div class="row" id="top">{{ p.c.top|render(p)|safe }}</div>
 
 {% else %}
   <div class="page-header">
@@ -15,6 +15,6 @@
 
 {% block body %}{% endblock %}
 
-  <div class="row">{{ p.footer|safe|render(p) }}</div>
+  <div class="row">{{ p.c.footer|safe|render(p) }}</div>
 
 {% endblock %}

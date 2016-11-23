@@ -10,8 +10,8 @@ import web.modules.post.services.workflow as workflow
 import traceback
 
 def get(p):
-    if p['intro'] and not tools.get('q'):
-        return render_template(app.jinja_env.from_string(p['intro']), p=p)
+    if p['c']['intro'] and not tools.get('q'):
+        return render_template(app.jinja_env.from_string(p['c']['intro']), p=p)
 
     host = p['c']['host']; index = p['c']['index'];
     # debug
@@ -73,9 +73,8 @@ def get(p):
 
     # search query
     p["q"] = p["q"].replace('"', '\\"')
-    p['search_query'] = tools.get_conf(p['host'], p['navigation']['id'], 'search_query', '')
-    if p['search_query']:
-        p['search_query'] = render_template(app.jinja_env.from_string(p['search_query']), p=p)
+    if p['c'].get('search_query'):
+        p['search_query'] = render_template(app.jinja_env.from_string(p['c']['search_query']), p=p)
     else:
         p['search_query'] = render_template("post/search/part/search_query.html", p=p)
     p["q"] = p["q"].replace('\\"', '"')
