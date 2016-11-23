@@ -191,6 +191,33 @@ def mapping(host, index, type):
         raise Exception("url: {}\n{}".format( url, e.read() ))
 
 
+# schema
+def schema(host, index):
+    try:
+        url = "{}/{}".format(host, index)
+        return http_req_json(url, "GET")[index]
+    except urllib2.HTTPError, e:
+        raise Exception("url: {}\n{}".format( url, e.read() ))
+
+
+# reindex
+def reindex(host, source_index, target_index):
+    try:
+        url = "{}/_reindex".format(host)
+        reindex = {
+          "source": {
+            "index": source_index
+          },
+          "dest": {
+            "index": target_index
+          }
+        }
+        return http_req_json(url, "POST", reindex)
+    except urllib2.HTTPError, e:
+        raise Exception("url: {}\n{}".format( url, e.read() ))
+
+
+
 # create index
 def create_index(host, index, schema):
     try:
@@ -200,6 +227,15 @@ def create_index(host, index, schema):
         return (
             "url: {}\nschema: {}\n{}".format(url, schema, e.read())
         )
+
+
+# delete index
+def delete_index(host, index):
+    try:
+        url = "{}/{}".format(host, index)
+        http_req_json(url, "DELETE")
+    except urllib2.HTTPError, e:
+        raise Exception("url: {}\n{}".format( url, e.read() ))
 
 
 # check if the index exists

@@ -65,6 +65,10 @@
           {% if p.operation == 'mapping' %}list-group-item-info{% endif -%}">
           Mappings</a>
 
+        <a href="{{p.url}}/schema" class="list-group-item
+          {% if p.operation == 'schema' %}list-group-item-info{% endif -%}">
+          Schema</a>
+
         <a href="{{p.url}}/backup" class="list-group-item
           {% if p.operation == 'backup' %}list-group-item-info{% endif -%}">
           Backup/Restore</a>
