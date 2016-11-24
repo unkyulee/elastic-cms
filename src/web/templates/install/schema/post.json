@@ -126,6 +126,18 @@
         "name" :          {"type" : "string"},
         "value" :         {"type" : "string"}
       }
+    },
+
+    "log": {
+      "dynamic": "strict",
+      "properties": {
+        "id":           {"type": "string"},
+        "field":        {"type": "string"},
+        "previous":     {"type": "string"},
+        "current":      {"type": "string"},
+        "login":        {"type": "string"},
+        "created":      {"type": "date"}
+      }
     }
 
   }

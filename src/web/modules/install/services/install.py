@@ -11,6 +11,7 @@ import web.modules.install.modules.dashboard.install as dashboard
 import web.modules.install.modules.search.install as search
 
 def install(host, form, base_dir):
+
     # check if core_nav already exists
     if not es.index_exists(host, "core_nav"):
         # create core_nav
@@ -38,14 +39,6 @@ def install(host, form, base_dir):
         es.create(host, 'core_nav', 'role', 'Admins', doc)
         es.flush(host, "core_nav")
 
-    # check if core_log already exists
-    if not es.index_exists(host, "core_log"):
-        # create core_log
-        schema = tools.read_file(
-            "web/templates/install/schema/core_log.json", base_dir)
-        es.create_index(host, "core_log", schema)
-        es.flush(host, "core_log")
-
     # check if core_data already exists
     if not es.index_exists(host, "core_data"):
         # create core_data
@@ -69,14 +62,6 @@ def install(host, form, base_dir):
             "web/templates/install/schema/core_task.json", base_dir)
         es.create_index(host, "core_task", schema)
         es.flush(host, "core_task")
-
-    # check if core_task already exists
-    if not es.index_exists(host, "core_history"):
-        # create core_task
-        schema = tools.read_file(
-            "web/templates/install/schema/core_history.json", base_dir)
-        es.create_index(host, "core_history", schema)
-        es.flush(host, "core_history")
 
     # insert data
     install_data(host, base_dir)

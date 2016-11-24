@@ -3,6 +3,7 @@ from lib import config # config.py
 import lib.es as es
 from lib.read import readfile
 import web.util.tools as tools
+from web.modules.post.services import config
 
 
 def install(host, base_dir):
@@ -17,17 +18,19 @@ def install(host, base_dir):
         es.create_index(host, index, schema)
         es.flush(host, index)
 
-        # general configuration
-        tools.set_conf(h, n, 'name', 'Schedule')
-        tools.set_conf(h, n, 'description', 'News and event of the organization')
+        # global configuration
         tools.set_conf(h, n, 'host', 'http://localhost:9200')
         tools.set_conf(h, n, 'index', index)
-        tools.set_conf(h, n, 'upload_dir', '')
-        tools.set_conf(h, n, 'allowed_exts', "jpg, jpeg, gif, png")
-        tools.set_conf(h, n, 'page_size', 1000)
-        tools.set_conf(h, n, 'query', '*')
-        tools.set_conf(h, n, 'sort_field', 'start')
-        tools.set_conf(h, n, 'sort_dir', 'desc')
+
+        # local configuration
+        config.set_conf(h, 'schedule', 'name', 'Schedule')
+        config.set_conf(h, 'schedule', 'description', 'News and event of the organization')
+        config.set_conf(h, 'schedule', 'upload_dir', '')
+        config.set_conf(h, 'schedule', 'allowed_exts', "jpg, jpeg, gif, png")
+        config.set_conf(h, 'schedule', 'page_size', 1000)
+        config.set_conf(h, 'schedule', 'query', '*')
+        config.set_conf(h, 'schedule', 'sort_field', 'start')
+        config.set_conf(h, 'schedule', 'sort_dir', 'desc')
 
         # create fields
         es.create_mapping(host, index, 'post', {
@@ -398,14 +401,16 @@ function remove_attendee(id) {
             "attendee": "EVERYONE",
             "start": es.now(),
             "finish": es.now(),
-            "description": 'Thanks for installing the system. This is a sample event'
+            "description": 'Thanks for installing the system. This is a sample event',
+            "created": es.now(),
+            "updated": es.now()
         }
         es.update(host, index, 'post', doc['id'], doc)
         es.flush(host, index)
 
 
         # people item renderer
-        tools.set_conf(h, n, 'search_item_template', """
+        config.set_conf(h, 'schedule', 'search_item_template', """
 {% extends "post/search/base.html" %}
 
 {% block search_result %}

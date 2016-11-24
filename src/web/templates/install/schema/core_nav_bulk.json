@@ -67,17 +67,3 @@
 
 {"index" : { "_index" : "core_task", "_type" : "module", "_id" : "15"} }
 {"name": "ESJSON", "description": "[ES] json to search"}
-
-
-
-
-{"index" : { "_index" : "core_log", "_type" : "tasklog", "_id" : "1"} }
-{ "instance_id": "0", "action": "0", "status": "0", "message": "", "created": "2016-01-01T01:01:01"}
-
-{"index" : { "_index" : "core_task", "_type" : "action", "_id" : "1"} }
-{"task_id": "", "module_id": "", "enabled": "", "stop": "", "order_key": 1, "name": "", "description": "", "connection": "", "query": ""}
-
-
-
-{"index" : { "_index" : "core_history", "_type" : "log", "_id" : "1"} }
-{"field": "", "previous": "", "current": "", "created": "2016-01-01T01:01:01"}

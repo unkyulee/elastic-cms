@@ -3,7 +3,7 @@ from lib import config # config.py
 import lib.es as es
 from lib.read import readfile
 import web.util.tools as tools
-
+from web.modules.post.services import config
 
 def install(host, base_dir):
     index = 'doc'
@@ -17,17 +17,19 @@ def install(host, base_dir):
         es.create_index(host, index, schema)
         es.flush(host, index)
 
-        # general configuration
-        tools.set_conf(h, n, 'name', 'Document')
-        tools.set_conf(h, n, 'description', 'Document Management')
+        # global configuration
         tools.set_conf(h, n, 'host', 'http://localhost:9200')
         tools.set_conf(h, n, 'index', index)
-        tools.set_conf(h, n, 'upload_dir', '')
-        tools.set_conf(h, n, 'allowed_exts', "jpg, jpeg, gif, png, doc, docx, pdf, ppt, pptx, txt, xls, xlsx, rtf, odp, mp4, avi, ogg")
-        tools.set_conf(h, n, 'page_size', 30)
-        tools.set_conf(h, n, 'query', '*')
-        tools.set_conf(h, n, 'sort_field', 'created')
-        tools.set_conf(h, n, 'sort_dir', 'desc')
+
+        # local configuration
+        config.set_conf(h, 'doc', 'name', 'Document')
+        config.set_conf(h, 'doc', 'description', 'Document Management')
+        config.set_conf(h, 'doc', 'upload_dir', '')
+        config.set_conf(h, 'doc', 'allowed_exts', "jpg, jpeg, gif, png, doc, docx, pdf, ppt, pptx, txt, xls, xlsx, rtf, odp, mp4, avi, ogg")
+        config.set_conf(h, 'doc', 'page_size', 30)
+        config.set_conf(h, 'doc', 'query', '*')
+        config.set_conf(h, 'doc', 'sort_field', 'created')
+        config.set_conf(h, 'doc', 'sort_dir', 'desc')
 
         # create fields
         es.create_mapping(host, index, 'post', {

@@ -3,7 +3,7 @@ from lib import config # config.py
 import lib.es as es
 from lib.read import readfile
 import web.util.tools as tools
-
+from web.modules.post.services import config
 
 def install(host, base_dir):
     # check if people already exists
@@ -16,16 +16,20 @@ def install(host, base_dir):
 
         # general configuration
         h = host; n = 4;
-        tools.set_conf(h, n, 'name', 'People')
-        tools.set_conf(h, n, 'description', 'Members of the organization')
+
+        # set global config
         tools.set_conf(h, n, 'host', 'http://localhost:9200')
         tools.set_conf(h, n, 'index', 'people')
-        tools.set_conf(h, n, 'upload_dir', '')
-        tools.set_conf(h, n, 'allowed_exts', "jpg, jpeg, gif, png")
-        tools.set_conf(h, n, 'page_size', 10)
-        tools.set_conf(h, n, 'query', '*')
-        tools.set_conf(h, n, 'sort_field', 'created')
-        tools.set_conf(h, n, 'sort_dir', 'desc')
+
+        # set local config
+        config.set_conf(h, 'people', 'name', 'People')
+        config.set_conf(h, 'people', 'description', 'Members of the organization')
+        config.set_conf(h, 'people', 'upload_dir', '')
+        config.set_conf(h, 'people', 'allowed_exts', "jpg, jpeg, gif, png")
+        config.set_conf(h, 'people', 'page_size', 10)
+        config.set_conf(h, 'people', 'query', '*')
+        config.set_conf(h, 'people', 'sort_field', 'created')
+        config.set_conf(h, 'people', 'sort_dir', 'desc')
 
         # create fields
         es.create_mapping(host, 'people', 'post', {
@@ -271,7 +275,9 @@ def validation(p):
         doc = {
             "id": 'EVERYONE',
             "title": 'EVERYONE',
-            "description": 'system account representing all authenticated users'
+            "description": 'system account representing all authenticated users',
+            "created": es.now(),
+            "updated": es.now()
         }
         es.update(host, 'people', 'post', doc['id'], doc)
         es.flush(host, 'people')
@@ -303,7 +309,7 @@ def validation(p):
 
 
         # side layout
-        tools.set_conf(h, n, 'side', """
+        config.set_conf(h, 'people', 'side', """
 <button type="button" class="btn btn-danger btn-block"
     onclick="location='{{p.url}}/post/edit/{{p.post.id}}?wf=password'">Change Password</button>
 <br>
@@ -311,7 +317,7 @@ def validation(p):
 
 
         # people item renderer
-        tools.set_conf(h, n, 'search_item_template', """
+        config.set_conf(h, 'people', 'search_item_template', """
 {% extends "post/search/base.html" %}
 
 {% macro default(post) %}

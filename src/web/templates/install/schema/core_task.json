@@ -57,6 +57,17 @@
           "description":        {"type": "string"},
           "definition":         {"type": "string"}
         }
+      },
+
+      "log": {
+        "dynamic": "strict",
+        "properties": {
+          "instance_id":  {"type": "string"},
+          "action":       {"type": "string"},
+          "status":       {"type": "string"},
+          "message":      {"type": "string"},
+          "created":      {"type": "date"}
+        }
       }
 
     }

@@ -158,4 +158,4 @@ def install(host, base_dir):
 {% endblock %}
             """
         }
-        es.create( host, 'core_nav', 'config', 'searchnav_{}'.format(config['name']), config)
+        es.create( host, 'search', 'config', config['name'], config)
