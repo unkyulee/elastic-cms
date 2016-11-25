@@ -29,6 +29,7 @@ def get(p):
         'content_footer': get_conf(h, n, 'content_footer', ''),
         'intro': get_conf(h, n, 'intro', ''),
         'search_query': get_conf(h, n, 'intro', ''),
+        'keep_history': get_conf(h, n, 'keep_history', 'Yes'),
     }
 
 def set(p):
@@ -44,6 +45,7 @@ def set(p):
     set_conf(h, n, 'query', tools.get('query'))
     set_conf(h, n, 'sort_field', tools.get('sort_field'))
     set_conf(h, n, 'sort_dir', tools.get('sort_dir'))
+    set_conf(h, n, 'keep_history', tools.get('keep_history'))
 
 
 def get_conf(host, index, name, default):

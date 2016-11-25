@@ -69,6 +69,7 @@
       </select>
     </div>
   </div>
+
   <div class="form-group">
     <label class="col-lg-2 col-md-2 control-label">Upload Directory</label>
     <div class="col-lg-10 col-md-10">
@@ -76,6 +77,7 @@
         placeholder="Upload Directory" value="{{p.c.upload_dir}}" />
     </div>
   </div>
+
   <div class="form-group">
     <label class="col-lg-2 col-md-2 control-label">Allowed Extensions</label>
     <div class="col-lg-10 col-md-10">
@@ -83,6 +85,15 @@
         placeholder="jpg, png, doc, txt" value="{{p.c.allowed_exts}}" />
     </div>
   </div>
+
+  <div class="form-group">
+    <label class="col-lg-2 col-md-2 control-label">Keep History</label>
+    <div class="col-lg-10 col-md-10">
+      {{ select.render("keep_history", "keep_history",
+            [{"id":"Yes", "name":"Yes"}, {"id":"No", "name":"No"}], p.c.keep_history )}}      
+    </div>
+  </div>
+
   <div class="form-group">
     <div class="col-lg-10 col-lg-offset-2">
       <button type="reset" class="btn btn-default">Cancel</button>

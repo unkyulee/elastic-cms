@@ -105,19 +105,20 @@ def post(p):
 
     ######################################################
     # Record History
-    for k, v in p['post'].items():
-        if k in ["updated", "viewed"]: continue
-        if p['original'].get(k) != p['post'].get(k):
-            # write history
-            doc = {
-                "id": p["post"]["id"],
-                "field": k,
-                "previous": unicode(p['original'].get(k)),
-                "current": unicode(p['post'].get(k)),
-                "login": p['login'],
-                "created": es.now()
-            }
-            es.create(host, index, 'log', '', doc)
+    if p['c']['keep_history'] == "Yes":
+        for k, v in p['post'].items():
+            if k in ["updated", "viewed"]: continue
+            if p['original'].get(k) != p['post'].get(k):
+                # write history
+                doc = {
+                    "id": p["post"]["id"],
+                    "field": k,
+                    "previous": unicode(p['original'].get(k)),
+                    "current": unicode(p['post'].get(k)),
+                    "login": p['login'],
+                    "created": es.now()
+                }
+                es.create(host, index, 'log', '', doc)
 
     # update post
     p['post']['updated'] = es.now()
