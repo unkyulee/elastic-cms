@@ -10,7 +10,7 @@ class TaskLog():
         self.action = action
 
     def log(self, status, message):
-        es.create(self.host, 'core_log', 'tasklog', '', {
+        es.create(self.host, 'core_task', 'log', '', {
             "instance_id": self.instance['id'],
             "action": self.action['name'],
             "status": status,

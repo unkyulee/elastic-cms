@@ -14,12 +14,12 @@ def get(p):
 
     # statistics
     query = "instance_id:{}".format(p['instance']['id'])
-    p['total'] = es.count(p['host'], 'core_log', 'tasklog', query)
+    p['total'] = es.count(p['host'], 'core_task', 'log', query)
 
     query = "instance_id:{} AND status:SUCCESS".format(p['instance']['id'])
-    p['success'] = es.count(p['host'], 'core_log', 'tasklog', query)
+    p['success'] = es.count(p['host'], 'core_task', 'log', query)
 
     query = "instance_id:{} AND status:ERROR".format(p['instance']['id'])
-    p['error'] = es.count(p['host'], 'core_log', 'tasklog', query)
+    p['error'] = es.count(p['host'], 'core_task', 'log', query)
 
     return render_template("task/status/default.html", p=p)

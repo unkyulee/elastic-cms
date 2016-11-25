@@ -20,15 +20,15 @@ def get(p):
     for history in p['history_list']:
         # statistics
         query = "instance_id:{}".format(history['id'])
-        history['total'] = es.count(p['host'], 'core_log', 'tasklog', query)
+        history['total'] = es.count(p['host'], 'core_task', 'log', query)
         if not history['total']: history['total'] = ''
 
         query = "instance_id:{} AND status:SUCCESS".format(history['id'])
-        history['success'] = es.count(p['host'], 'core_log', 'tasklog', query)
+        history['success'] = es.count(p['host'], 'core_task', 'log', query)
         if not history['success']: history['success'] = ''
 
         query = "instance_id:{} AND status:ERROR".format(history['id'])
-        history['error'] = es.count(p['host'], 'core_log', 'tasklog', query)
+        history['error'] = es.count(p['host'], 'core_task', 'log', query)
         if not history['error']: history['error'] = ''
 
     return render_template("task/status/history.html", p=p)

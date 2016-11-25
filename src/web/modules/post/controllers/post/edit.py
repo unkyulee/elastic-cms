@@ -117,7 +117,7 @@ def post(p):
                 "login": p['login'],
                 "created": es.now()
             }
-            es.create(host, 'core_history', 'log', '', doc)
+            es.create(host, index, 'log', '', doc)
 
     # update post
     p['post']['updated'] = es.now()

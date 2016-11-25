@@ -21,7 +21,11 @@ def get(p):
         return tools.redirect(request.referrer)
 
     # load action list
-    option = 'size=10000&sort=order_key:asc'
+    # when there are no records then the task fails to run
+    option = ''
+    if es.count(p['host'], 'core_task', 'action'):
+        option = 'size=10000&sort=order_key:asc'
+
     query = 'task_id:{}'.format(p['task']['id'])
     p['action_list'] = es.list(p['host'], 'core_task', 'action',
                                  query, option)

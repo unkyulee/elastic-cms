@@ -9,7 +9,7 @@ def get(p):
     item_id = p['nav'][-1]
     query =  "id:{}".format(item_id)
     option = "size=100&sort=created:desc"
-    p['history_list'] = es.list(host, 'core_history', 'log', query, option)
+    p['history_list'] = es.list(host, index, 'log', query, option)
     if not p['history_list']:
         return tools.alert('not valid id - {}'.format(item_id))
 

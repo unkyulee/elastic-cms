@@ -30,11 +30,11 @@ def get(p):
 
     option = 'from={}&size={}&sort=created:desc'.format(start, length)
     # search results
-    search_result = es.list(p['host'], 'core_log', 'tasklog', query, option)
+    search_result = es.list(p['host'], 'core_task', 'log', query, option)
 
     # Get Total number of records
-    total = es.count(p['host'], 'core_log', 'tasklog')
-    filter_total = es.count(p['host'], 'core_log', 'tasklog', query)
+    total = es.count(p['host'], 'core_task', 'log')
+    filter_total = es.count(p['host'], 'core_task', 'log', query)
 
     # Form header
     DataTableJson = {}

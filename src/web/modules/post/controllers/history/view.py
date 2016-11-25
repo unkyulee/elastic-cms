@@ -7,7 +7,7 @@ def get(p):
 
     # load history
     history_id = p['nav'][-1]
-    p['history'] = es.get(host, 'core_history', 'log', history_id)
+    p['history'] = es.get(host, index, 'log', history_id)
     if not p['history']:
         return tools.alert('not valid id - {}'.format(history_id))
 
