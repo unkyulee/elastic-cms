@@ -83,6 +83,16 @@ def post(p):
 
 
     ######################################################
+    # Check ACL - if empty then set to EVERYONE
+    if not p['post'].get('acl_readonly') and not p['post'].get('acl_edit'):
+        p['post']['acl_readonly'] = 'EVERYONE'
+
+    # if acl_edit is set then acl_readonly MUST not be empty
+    if p['post'].get('acl_edit') and not p['post'].get('acl_readonly'):
+         p['post']['acl_readonly'] = p['post'].get('acl_edit')
+
+
+    ######################################################
     # validate
     if p['workflow'] and p['workflow'].get('validation'):
         try:

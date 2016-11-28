@@ -86,6 +86,10 @@ def get(p):
         raise Exception("url: {}\nquery: {}\{}".format(
                 search_url, p['search_query'], e.read()))
 
+    # debug mode - return search query
+    if tools.get('debug'):
+        return p['search_query']
+
     # extract post list
     p['post_list'] = []
     for r in p['response']["hits"]["hits"]:

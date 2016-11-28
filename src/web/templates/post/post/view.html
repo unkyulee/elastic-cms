@@ -37,15 +37,29 @@
         </button>
       </a>
     {% endif %}
+    
+    {# display edit icon for editor and author #}
+    {% if p.login == p.post.created_by or
+          p.login in p.post.acl_edit or
+          'EVERYONE' in p.post.acl_edit
+    %}
+    <a href="{{p.url}}/post/edit/{{p.post.id}}?wf=security" title="set security">
+      <button type="button" class="btn btn-xs btn-warning">
+        <i class="fa fa-lock" aria-hidden="true"></i>&nbsp;Security
+      </button>
+    </a>
+    {% endif %}
 
     {# display edit icon when post/history is allowed #}
     {% if 'history/list' in p.allowed_operation %}
-    <a href="{{p.url}}/history/list/{{p.post.id}}" title="new">
+    <a href="{{p.url}}/history/list/{{p.post.id}}" title="show history">
       <button type="button" class="btn btn-xs btn-default">
         <i class="fa fa-history" aria-hidden="true"></i>&nbsp;History
       </button>
     </a>
     {% endif %}
+
+
 
   </div>
 

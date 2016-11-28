@@ -23,6 +23,8 @@
       "properties" :  {
         "index" :           {"type" : "string", "index" : "not_analyzed"},
         "id" :              {"type" : "string", "index" : "not_analyzed"},
+        "acl_readonly" :    {"type" : "string"},
+        "acl_edit" :        {"type" : "string"},
         "type" :            {"type" : "string", "index" : "not_analyzed"},
         "category" :        {"type" : "string", "index" : "not_analyzed"},
         "title" :           {"type" : "string", "analyzer": "standard",

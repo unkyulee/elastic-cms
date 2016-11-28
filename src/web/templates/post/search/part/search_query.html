@@ -10,24 +10,36 @@
       ],
       "boost_mode": "multiply",
 
-      {%- if p.selected_filter_list|length > 0 %}
+
       "filter": {
         "bool": {
+          "should": [
+            {# filters out ACL #}
+            { "match" : { "acl_readonly" : "EVERYONE" } },
+            { "match" : { "acl_readonly" : "{{p.login}}" } },
+            { "match" : { "acl_edit" : "EVERYONE" } },
+            { "match" : { "acl_edit" : "{{p.login}}" } },
+            { "missing" : { "field": "acl_readonly" } }
+          ],
           "must": [
-            {%- for field_id, value in p.selected_filter_list.items() %}
-              {
-                "terms": { "{{- p.field_map[field_id] -}}": [
-                  {% for term in value %}
-                    "{{term|strip}}" {% if not loop.last %}, {% endif %}
-                  {% endfor %}
-                  ]
-                }
+            {# filters out the results by given user selected filters #}
+            {%- if p.selected_filter_list|length > 0 %}
+              {%- for field_id, value in p.selected_filter_list.items() %}
+            {
+              "terms": { "{{- p.field_map[field_id] -}}": [
+                {% for term in value %}
+                  "{{term|strip}}" {% if not loop.last %}, {% endif %}
+                {% endfor %}
+                ]
               }
-            {%- if not loop.last %}, {% endif -%}
-            {% endfor %}
+            }
+                {%- if not loop.last %}, {% endif -%}
+              {% endfor %}
+            {% endif -%}
+
           ]
         }
-      },{% endif -%}
+      },
 
       "query": {
         "query_string": {

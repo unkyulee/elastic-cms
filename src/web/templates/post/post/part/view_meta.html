@@ -37,6 +37,28 @@
     </td>
   </tr>
 
+  {% if p.post.acl_readonly %}
+  <tr>
+    <td><b>read only</b></td>
+    <td>
+      {% for acl in p.post.acl_readonly|getlist %}
+        {{acl}}
+      {% endfor %}
+    </td>
+  </tr>
+  {% endif %}
+
+  {% if p.post.acl_edit %}
+  <tr>
+    <td><b>editor</b></td>
+    <td>
+      {% for acl in p.post.acl_edit|getlist %}
+        {{acl}}
+      {% endfor %}
+    </td>
+  </tr>
+  {% endif %}
+
   <tr>
     <td><b>viewed</b></td>
     <td>{{ p.post.viewed }}</td>
