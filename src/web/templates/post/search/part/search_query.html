@@ -19,6 +19,7 @@
             { "match" : { "acl_readonly" : "{{p.login}}" } },
             { "match" : { "acl_edit" : "EVERYONE" } },
             { "match" : { "acl_edit" : "{{p.login}}" } },
+            { "match" : { "created_by" : "{{p.login}}" } },
             { "missing" : { "field": "acl_readonly" } }
           ],
           "must": [

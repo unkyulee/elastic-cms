@@ -39,7 +39,13 @@ def get(p):
         except SystemExit: pass
         except Exception, e:
             return "{}\n{}".format(e.message, traceback.format_exc())
-
+    else:
+        # check ACL
+        valid_acl = False
+        if p['login'] == p['post'].get('created_by'): valid_acl = True
+        if p['login'] in p['post'].get('acl_edit'): valid_acl = True
+        if not valid_acl:
+            return tools.alert('permission not granted')
     ######################################################
 
     if request.method == "POST":
@@ -83,10 +89,6 @@ def post(p):
 
 
     ######################################################
-    # Check ACL - if empty then set to EVERYONE
-    if not p['post'].get('acl_readonly') and not p['post'].get('acl_edit'):
-        p['post']['acl_readonly'] = 'EVERYONE'
-
     # if acl_edit is set then acl_readonly MUST not be empty
     if p['post'].get('acl_edit') and not p['post'].get('acl_readonly'):
          p['post']['acl_readonly'] = p['post'].get('acl_edit')

@@ -21,6 +21,14 @@ def get(p):
     if not p['post']:
         return tools.alert('not valid post id - {}'.format(post_id))
 
+    # check ACL
+    valid_acl = False
+    if p['login'] == p['post'].get('created_by'): valid_acl = True
+    if p['login'] in p['post'].get('acl_readonly'): valid_acl = True
+    if p['login'] in p['post'].get('acl_edit'): valid_acl = True
+    if not valid_acl:
+        return tools.alert('permission not granted')
+
     # return json format
     if tools.get("json"):
         callback = tools.get("callback")
