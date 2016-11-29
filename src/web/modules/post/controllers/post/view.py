@@ -23,6 +23,7 @@ def get(p):
 
     # check ACL
     valid_acl = False
+    if not p['post'].get('acl_readonly') and not p['post'].get('acl_edit'): valid_acl = True
     if p['login'] == p['post'].get('created_by'): valid_acl = True
     if p['post'].get('acl_readonly') and p['login'] in p['post'].get('acl_readonly'): valid_acl = True
     if p['post'].get('acl_edit') and p['login'] in p['post'].get('acl_edit'): valid_acl = True

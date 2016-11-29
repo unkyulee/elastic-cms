@@ -5,6 +5,86 @@ from lib.read import readfile
 import web.util.tools as tools
 from web.modules.post.services import config
 
+def create_acl(host, index):
+    # add acl_readonly field configuration
+    doc = {
+        "id": 'acl_readonly',
+        "name": 'acl_readonly',
+        "is_filter": '0',
+        "filter_field": '',
+        "handler": '',
+        "visible": [],
+        "order_key": 900,
+        "list_tpl": '',
+        "view_tpl": '',
+        "edit_tpl": """
+{% import "widget/select_multi.html" as select_multi %}
+{{select_multi.render("acl_readonly", "acl_readonly", item.acl_readonly, ajax="/people?json=1")}}
+        """
+    }
+    es.update(host, index, 'field', doc['id'], doc)
+    es.flush(host, index)
+
+
+    # add acl_edit field configuration
+    doc = {
+        "id": 'acl_edit',
+        "name": 'acl_edit',
+        "is_filter": '0',
+        "filter_field": '',
+        "handler": '',
+        "visible": [],
+        "order_key": 900,
+        "list_tpl": '',
+        "view_tpl": '',
+        "edit_tpl": """
+{% import "widget/select_multi.html" as select_multi %}
+{{select_multi.render("acl_edit", "acl_edit", item.acl_edit, ajax="/people?json=1")}}
+        """
+    }
+    es.update(host, index, 'field', doc['id'], doc)
+    es.flush(host, index)
+
+
+    # add workflow
+    doc = {
+      "status": "",
+      "postaction": "",
+      "name": "security",
+      "screen": [
+        "acl_readonly",
+        "acl_edit"
+      ],
+      "validation": "",
+      "condition": """
+# p - context of current request
+def condition(p):
+
+# author can edit
+if p['post'].get('created_by') == p['login']:
+    return True
+
+# editors can edit
+if p['login'] in p['post'].get('acl_edit'):
+    return True
+
+# if allowed to everyone then
+if 'EVERYONE' in p['post'].get('acl_edit'):
+    return True
+
+return tools.alert('permission not granted')
+# this message will be displayed in the web browser when condition not met
+# return tools.alert('edit allowed to author only')
+
+      """,
+      "description": "Set Security"
+    }
+
+    es.create(host, index, 'workflow', '', doc)
+    es.flush(host, index)
+
+
+
 def install(host, base_dir):
     index = 'doc'
     h = host
@@ -126,83 +206,9 @@ def install(host, base_dir):
         es.flush(host, index)
 
 
-        # add acl_readonly field configuration
-        doc = {
-            "id": 'acl_readonly',
-            "name": 'acl_readonly',
-            "is_filter": '0',
-            "filter_field": '',
-            "handler": '',
-            "visible": [],
-            "order_key": 900,
-            "list_tpl": '',
-            "view_tpl": '',
-            "edit_tpl": """
-{% import "widget/select_multi.html" as select_multi %}
-{{select_multi.render("acl_readonly", "acl_readonly", item.acl_readonly, ajax="/people?json=1")}}
-            """
-        }
-        es.update(host, index, 'field', doc['id'], doc)
-        es.flush(host, index)
 
-
-        # add acl_edit field configuration
-        doc = {
-            "id": 'acl_edit',
-            "name": 'acl_edit',
-            "is_filter": '0',
-            "filter_field": '',
-            "handler": '',
-            "visible": [],
-            "order_key": 900,
-            "list_tpl": '',
-            "view_tpl": '',
-            "edit_tpl": """
-{% import "widget/select_multi.html" as select_multi %}
-{{select_multi.render("acl_edit", "acl_edit", item.acl_edit, ajax="/people?json=1")}}
-            """
-        }
-        es.update(host, index, 'field', doc['id'], doc)
-        es.flush(host, index)
-
-
-        # add workflow
-        doc = {
-          "status": "",
-          "postaction": "",
-          "name": "security",
-          "screen": [
-            "acl_readonly",
-            "acl_edit"
-          ],
-          "validation": "",
-          "condition": """
-# p - context of current request
-def condition(p):
-
-    # author can edit
-    if p['post'].get('created_by') == p['login']:
-        return True
-
-    # editors can edit
-    if p['login'] in p['post'].get('acl_edit'):
-        return True
-
-    # if allowed to everyone then
-    if 'EVERYONE' in p['post'].get('acl_edit'):
-        return True
-
-    return tools.alert('permission not granted')
-    # this message will be displayed in the web browser when condition not met
-    # return tools.alert('edit allowed to author only')
-
-          """,
-          "description": "Set Security"
-        }
-
-        es.create(host, index, 'workflow', '', doc)
-        es.flush(host, index)
-
+        # create acl
+        create_acl(host, index)
 
 
         # set permission
