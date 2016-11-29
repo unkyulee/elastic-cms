@@ -59,28 +59,27 @@ def create_acl(host, index):
       "condition": """
 # p - context of current request
 def condition(p):
+    # author can edit
+    if p['post'].get('created_by') == p['login']:
+        return True
 
-# author can edit
-if p['post'].get('created_by') == p['login']:
-    return True
+    # editors can edit
+    if p['login'] in p['post'].get('acl_edit'):
+        return True
 
-# editors can edit
-if p['login'] in p['post'].get('acl_edit'):
-    return True
+    # if allowed to everyone then
+    if 'EVERYONE' in p['post'].get('acl_edit'):
+        return True
 
-# if allowed to everyone then
-if 'EVERYONE' in p['post'].get('acl_edit'):
-    return True
-
-return tools.alert('permission not granted')
-# this message will be displayed in the web browser when condition not met
-# return tools.alert('edit allowed to author only')
+    return tools.alert('permission not granted')
+    # this message will be displayed in the web browser when condition not met
+    # return tools.alert('edit allowed to author only')
 
       """,
       "description": "Set Security"
     }
 
-    es.create(host, index, 'workflow', '', doc)
+    es.update(host, index, 'workflow', 'setsecurity', doc)
     es.flush(host, index)
 
 
