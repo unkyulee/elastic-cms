@@ -25,8 +25,12 @@ def get(p):
     valid_acl = False
     if not p['post'].get('acl_readonly') and not p['post'].get('acl_edit'): valid_acl = True
     if p['login'] == p['post'].get('created_by'): valid_acl = True
-    if p['post'].get('acl_readonly') and p['login'] in p['post'].get('acl_readonly'): valid_acl = True
-    if p['post'].get('acl_edit') and p['login'] in p['post'].get('acl_edit'): valid_acl = True
+    if p['post'].get('acl_readonly'):
+        if p['login'] in p['post'].get('acl_readonly'): valid_acl = True
+        if 'EVERYONE' in p['post'].get('acl_readonly'): valid_acl = True
+    if p['post'].get('acl_edit'):
+        if p['login'] in p['post'].get('acl_edit'): valid_acl = True
+        if 'EVERYONE' in p['post'].get('acl_edit'): valid_acl = True
     if not valid_acl:
         return tools.alert('permission not granted')
 
