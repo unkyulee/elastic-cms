@@ -50,7 +50,9 @@ def prettyjson(value):
 
 @app.template_filter("json_to_dict")
 def json_to_dict(value):
-    return json.loads(value)
+    if value:
+        return json.loads(value)
+    return {}
 
 
 @app.template_filter("render")
