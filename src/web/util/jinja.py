@@ -48,6 +48,11 @@ def prettyjson(value):
     return json.dumps(value, indent=4, sort_keys=True)
 
 
+@app.template_filter("json_to_dict")
+def json_to_dict(value):
+    return json.loads(value)
+
+
 @app.template_filter("render")
 def render(value, p, item = None):
     return render_template(
