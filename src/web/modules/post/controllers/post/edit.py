@@ -120,6 +120,8 @@ def post(p):
 
     ######################################################
     # Record History
+    p['original'] = es.get(host, index, 'post', p['post']['id'])
+    print p['original']
     if p['c']['keep_history'] == "Yes":
         for k, v in p['post'].items():
             if k in ["updated", "viewed"]: continue
