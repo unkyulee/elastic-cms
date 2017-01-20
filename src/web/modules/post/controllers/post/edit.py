@@ -1,5 +1,6 @@
 from flask import render_template, request
 import json
+import copy
 import traceback
 import lib.es as es
 import web.util.tools as tools
@@ -15,7 +16,7 @@ def get(p):
     # load post
     post_id = p['nav'][-1]
     p['post'] = es.get(host, index, 'post', post_id)
-    p['original'] = p['post'] # save the original for the later comparison
+    p['original'] = copy.deepcopy(p['post']) # save the original for the later comparison
     if not p['post']:
         return tools.alert('not valid post id - {}'.format(post_id))
 
