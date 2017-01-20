@@ -21,11 +21,12 @@ def send(p):
     # transform header and message
     header = jinja.render(p['notification'].get('header'), p)
     message = jinja.render(p['notification'].get('message'), p)
+    recipients = list(set(p['notification'].get('recipients')))
 
     gmail.send(
         gmail_id,
         gmail_pw,
-        p['notification'].get('recipients'),
+        recipients,
         header,
         message
     )
