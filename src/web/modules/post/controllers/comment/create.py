@@ -58,6 +58,7 @@ def get(p):
             return "{}\n{}".format(e.message, traceback.format_exc())
     ######################################################
 
+    es.update(host, index, 'post', p["post"]['id'], p['post'])
     es.update(host, index, 'post', p["post"]['id'], {"comment": comments})
     es.flush(host, index)
 
