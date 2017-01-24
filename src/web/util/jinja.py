@@ -55,15 +55,6 @@ def json_to_dict(value):
     return {}
 
 
-
-@app.template_filter("escape")
-def escape(value):
-    if value:
-        return json.dumps(value)
-    return {}
-
-
-
 @app.template_filter("render")
 def render(value, p, item = None):
     return render_template(
