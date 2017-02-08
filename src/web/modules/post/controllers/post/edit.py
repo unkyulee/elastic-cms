@@ -1,6 +1,5 @@
 from flask import render_template, request
 import json
-import copy
 import traceback
 import lib.es as es
 import web.util.tools as tools
@@ -16,7 +15,7 @@ def get(p):
     # load post
     post_id = p['nav'][-1]
     p['post'] = es.get(host, index, 'post', post_id)
-    p['original'] = copy.deepcopy(p['post']) # save the original for the later comparison
+    p['original'] = es.get(host, index, 'post', post_id)
     if not p['post']:
         return tools.alert('not valid post id - {}'.format(post_id))
 
@@ -76,6 +75,7 @@ def post(p):
     for field in request.form:
         field_info = p['field_map'][field]
         value = tools.get(field)
+        print field_info['id'], value
 
         # if object then convert to json object
         if field_info.get('handler') == "object":
@@ -120,8 +120,6 @@ def post(p):
 
     ######################################################
     # Record History
-    p['original'] = es.get(host, index, 'post', p['post']['id'])
-    print p['original']
     if p['c']['keep_history'] == "Yes":
         for k, v in p['post'].items():
             if k in ["updated", "viewed"]: continue

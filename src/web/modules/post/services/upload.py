@@ -13,7 +13,6 @@ def save(file, allowed_exts, prefix, upload_dir):
         upload_path = os.path.join(upload_dir, path)
         if not os.path.exists(upload_path): os.makedirs(upload_path)
         # save file
-        print upload_dir
         file.save(os.path.join(upload_dir, filename))
         return filename
     else:
