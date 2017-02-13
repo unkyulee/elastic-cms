@@ -28,7 +28,8 @@ def get(p):
         'content_header': get_conf(h, n, 'content_header', ''),
         'content_footer': get_conf(h, n, 'content_footer', ''),
         'intro': get_conf(h, n, 'intro', ''),
-        'search_query': get_conf(h, n, 'intro', ''),
+        'search_query': get_conf(h, n, 'search_query', ''),
+        'search_item_template': get_conf(h, n, 'search_item_template', ''),
         'keep_history': get_conf(h, n, 'keep_history', 'Yes'),
     }
 

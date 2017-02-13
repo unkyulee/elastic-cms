@@ -8,9 +8,11 @@ def get(p):
     h = p['host']; n = p['navigation']['id'];
 
     if request.method == "POST":
-        tools.set_conf(h, n, 'search_item_template', tools.get('search_item_template'))
+        config.set_conf(h, n, 'search_item_template', tools.get('search_item_template'))
         return tools.redirect(request.referrer)
 
-    default = readfile("{}/web/templates/post/search/default.html".format(p['base_dir']))
-    p['search_item_template'] = tools.get_conf(h, n, 'search_item_template', default)
+    if not p['c'].get('search_item_template'):
+        # set default
+        p['c']['search_item_template'] = readfile("{}/web/templates/post/search/default.html".format(p['base_dir']))
+
     return render_template("post/item/default.html", p=p)

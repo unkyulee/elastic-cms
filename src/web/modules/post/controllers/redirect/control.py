@@ -10,13 +10,14 @@ def get(p):
     # find config with matching index
     configs = es.list(p['host'], 'core_nav', 'config',
         "name:'index' AND value:'{}'".format(index))
-    if not configs:
+    if not len(configs) > 0:
         return tools.alert('site not found')
+    
     # get site id
     navigation_id = configs[0]['id'].split('_')[0]
     navigation = es.get(p['host'], 'core_nav', 'navigation', navigation_id)
     site = es.get(p['host'], 'core_nav', 'site', navigation['site_id'])
-    
+
     if site['name']:
         return tools.redirect(
             "{}/{}/post/view/{}".format(
@@ -27,7 +28,7 @@ def get(p):
         )
     else:
         return tools.redirect(
-            "/{}/post/view/{}".format(                
+            "/{}/post/view/{}".format(
                 navigation['name'],
                 id
             )

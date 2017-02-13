@@ -149,8 +149,8 @@ def get(p):
             return "{}({})".format(callback, json.dumps(p['response']))
 
     # render search result
-    search_item_tpl = tools.get_conf(p['host'], p['navigation']['id'], 'search_item_template')
-    if search_item_tpl:
-        return render_template(app.jinja_env.from_string(search_item_tpl), p=p)
+    if p['c'].get('search_item_template'):
+        return render_template(app.jinja_env.from_string(
+            p['c'].get('search_item_template')), p=p)
 
     return render_template("post/search/default.html", p=p)
