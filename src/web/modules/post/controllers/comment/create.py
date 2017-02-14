@@ -6,7 +6,7 @@ import web.modules.post.services.workflow as workflow
 import web.modules.post.services.upload as upload
 import web.util.jinja as jinja
 import traceback
-import web.modules.post.services.notification as notification
+import web.modules.admin.services.notification as notification
 
 
 def get(p):
@@ -90,7 +90,12 @@ def get(p):
                     return "{}\n{}".format(e.message, traceback.format_exc())
 
                 # send notification
-                notification.send(p)
+                # send notification
+                notification.send(p,
+                    p['notification'].get('header'),
+                    p['notification'].get('message'),
+                    p['notification'].get('recipients')
+                )
     ######################################################
 
     return tools.redirect(request.referrer)

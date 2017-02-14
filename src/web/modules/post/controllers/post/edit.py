@@ -6,7 +6,7 @@ import web.util.tools as tools
 import web.modules.post.services.workflow as workflow
 import web.modules.post.services.upload as upload
 import web.util.jinja as jinja
-import web.modules.post.services.notification as notification
+import web.modules.admin.services.notification as notification
 
 
 def get(p):
@@ -173,7 +173,11 @@ def post(p):
                     return "{}\n{}".format(e.message, traceback.format_exc())
 
                 # send notification
-                notification.send(p)
+                notification.send(p,
+                    p['notification'].get('header'),
+                    p['notification'].get('message'),
+                    p['notification'].get('recipients')
+                )
     ######################################################
 
     # redirect to view

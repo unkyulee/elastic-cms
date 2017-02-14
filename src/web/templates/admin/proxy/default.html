@@ -99,7 +99,7 @@
 
 {% for proxy in p.proxy_list %}
 <!-- Edit Site Dialog -->
-<form class="form-horizontal" action="{{ p.url }}/proxy/edit/{{ proxy.id }}" method="post">  
+<form class="form-horizontal" action="{{ p.url }}/proxy/edit/{{ proxy.id }}" method="post">
   <div id="modal-edit-{{ proxy.id }}" class="modal fade" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -149,8 +149,8 @@
 </form>
 
 <!-- Delete Site Dialog -->
-<form class="form-horizontal" action="{{ p.url }}/delete?mode=proxy" method="post">
-  <input type=hidden name="id" value="{{ proxy.id }}">
+<form class="form-horizontal" action="{{ p.url }}/proxy/delete/{{proxy.id}}" method="post">
+  
   <div id="modal-del-{{ proxy.id }}" class="modal fade" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">

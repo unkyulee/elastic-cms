@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-
+{% block navigation %}{% endblock %}
 {% block content %}
 <div class = "page-header">
-   <h2>Administration</h2>
+   <h2>Site Administration Page</h2>
 </div>
 
 <div class="row">
@@ -28,6 +28,10 @@
           {% if p.operation == 'site' or p.operation == 'nav' %}
           list-group-item-info{% endif -%}">
           Manage Navigation</a>
+
+        <a href="{{p.url}}/email" class="list-group-item
+          {% if p.operation == 'email' %}list-group-item-info{% endif -%}">
+          Email</a>
 
       </ul>
     </div>

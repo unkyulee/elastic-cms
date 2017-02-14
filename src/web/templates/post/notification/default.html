@@ -1,36 +1,6 @@
 {% extends "post/admin_base.html" %}
 
 {% block body %}
-<form class="form-horizontal" method="post" action="{{p.url}}/notification/config">
-  <legend class="text-muted">Notification Email Setup</legend>
-
-  <div class="form-group">
-    <label class="col-sm-2 control-label">Gmail ID</label>
-    <div class="col-sm-10">
-      <input class="form-control" type="text" name="gmail_id"
-        placeholder="xxxxx@gmail.com" value="{{p.conf.gmail_id}}" />
-      <span class="help-block">gmail id - xxxxx@gmail.com</span>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="col-sm-2 control-label">Gmail Password</label>
-    <div class="col-sm-10">
-      <input class="form-control" type="password" name="gmail_pw"
-        value="{{p.conf.gmail_pw}}" />
-      <span class="help-block">gmail password</span>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class="col-lg-10 col-lg-offset-2">
-      <button type="reset" class="btn btn-default">Cancel</button>
-      <button type="submit" class="btn btn-primary">Save</button>
-    </div>
-  </div>
-</form>
-
-<br><br>
 <form class="form-horizontal" method="post">
   <legend class="text-muted">Notification Messages</legend>
 
