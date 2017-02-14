@@ -31,6 +31,8 @@ def get(p):
         'search_query': get_conf(h, n, 'search_query', ''),
         'search_item_template': get_conf(h, n, 'search_item_template', ''),
         'keep_history': get_conf(h, n, 'keep_history', 'Yes'),
+        'gmail_id': get_conf(h, n, 'gmail_id', ''),
+        'gmail_pw': get_conf(h, n, 'gmail_pw', ''),
     }
 
 def set(p):

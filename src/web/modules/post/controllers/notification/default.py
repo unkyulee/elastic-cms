@@ -8,9 +8,8 @@ from web.modules.post.services import notification
 def get(p):
     host = p['c']['host']; index = p['c']['index'];
 
-    # notification config
-    h = p['host']; n = p['navigation']['id'];
-    p['conf'] = notification.get_conf(h, n)
+    # notification config    
+    p['conf'] = notification.get_conf(host, index)
 
     # Get notification list
     option = "size=1000&sort=id:asc"

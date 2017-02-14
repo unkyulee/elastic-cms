@@ -11,6 +11,6 @@ def get(p):
             'gmail_id': tools.get('gmail_id'),
             'gmail_pw': tools.get('gmail_pw')
         }
-        notification.set_conf(h, n, conf)
+        notification.set_conf(p['c']['host'], p['c']['index'], conf)
 
     return tools.redirect("{}/notification".format(p['url']))
