@@ -133,7 +133,7 @@ def install_data(host, base_dir):
     # install default navigation - auth
     if not es.get(host, "core_nav", "navigation", 2):
         es.create(host, "core_nav", "navigation", 2,
-            {"name": "auth", "display_name": "auth",
+            {"name": "auth", "display_name": "Authentication",
              "site_id":0, "module_id": "2", "is_displayed":"0"})
 
     # install default navigation - admin

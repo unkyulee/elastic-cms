@@ -1,5 +1,5 @@
 # Initialize web application and setup routing
-from flask import Flask, session, request, render_template, send_from_directory
+from flask import Flask, request, render_template, send_from_directory
 app = Flask(__name__) # Define the WSGI application object
 # very first run will not have config.py
 try: app.config.from_object('config')
@@ -22,9 +22,6 @@ def favicon():
 @app.route('/<path:path>', methods=['GET','POST','PUT','DELETE','HEAD'])
 @boot.require_install
 def index(path):
-
-    # session will live for 31 days
-    session.permanent = True
 
     # split navigation
     nav = path.split("/")

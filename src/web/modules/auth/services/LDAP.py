@@ -1,10 +1,27 @@
+"""
+LDAP Login
+
+Configuration comes in as json formatted string
+
+{
+    "ldap_uri": "ldaps://ldap",
+    "ldap_path": "uid={}, ou=People, dc=compass"
+}
+"""
 import ldap
+import json
 import web.util.tools as tools
 
 # ldap authenticate
-def authenticate(p, username, password):
-    ldap_uri = tools.get_conf(p['host'], '-1', 'ldap', '')
-    ldap_path = tools.get_conf(p['host'], '-1', 'ldap_path', '')
+def authenticate(config, username, password):
+    # parse config
+    if not config:
+        return False
+
+    config = json.loads(config)
+
+    ldap_uri = config.get('ldap_uri')
+    ldap_path = config.get('ldap_path')
     user_id = ldap_path.format(username)
 
     try:
@@ -16,7 +33,7 @@ def authenticate(p, username, password):
         con.unbind()
 
         return True
-    except:        
+    except:
         pass
 
     return False
