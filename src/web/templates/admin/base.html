@@ -11,19 +11,43 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
-          <strong>Sites</strong>
+          <strong>Site Configuration</strong>
         </h4>
       </div>
       <ul class="list-group">
 
         <a href="{{p.url}}/config" class="list-group-item
           {% if p.operation == 'config' %}list-group-item-info{% endif -%}">
-          Global Configuration</a>
+          General</a>
+
+        <a href="{{p.url}}/security" class="list-group-item
+          {% if p.operation == 'security' %}list-group-item-info{% endif -%}">
+          Security</a>
 
         <a href="{{p.url}}/site" class="list-group-item
           {% if p.operation == 'site' or p.operation == 'nav' %}
           list-group-item-info{% endif -%}">
-          Manage Sites</a>
+          Manage Navigation</a>
+
+      </ul>
+    </div>
+
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <strong>Login</strong>
+        </h4>
+      </div>
+      <ul class="list-group">
+
+        <a href="{{p.url}}/login" class="list-group-item
+          {% if p.operation == 'login' %}list-group-item-info{% endif -%}">
+          Login Modules</a>
+
+        <a href="{{p.url}}/login_screen" class="list-group-item
+          {% if p.operation == 'login_screen' %}list-group-item-info{% endif -%}">
+          Login Screen</a>
 
       </ul>
     </div>

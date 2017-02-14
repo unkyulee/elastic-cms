@@ -41,7 +41,11 @@ def get_conf(host, navigation_id, name, default=None):
 # save configuration
 def set_conf(host, navigation_id, name, value):
     id = "{}_{}".format(navigation_id, name)
-    doc = { "name": name, "value": value }
+    doc = {
+        "navigation_id": navigation_id,
+        "name": name,
+        "value": value
+    }
     es.update(host, "core_nav", "config", id, doc)
     es.flush(host, "core_nav")
 

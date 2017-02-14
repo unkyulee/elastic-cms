@@ -1,0 +1,213 @@
+{% extends "admin/base.html" %}
+
+{% block body %}
+<br>
+<legend>Login Module Configuration</legend>
+<table class="table table-striped table-hover table-responsive">
+  <thead>
+    <tr>
+      <th></th>
+      <th>priority</th>
+      <th>type</th>
+      <th>name</th>
+      <th>description</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for lm in p.login_modules %}
+    <tr>
+      <td><a href="#modal-edit-{{lm.id}}" data-toggle="modal">#</a></td>
+      <td>{{ lm.priority }}</td>
+      <td>{{ lm.type }}</td>
+      <td><a href="#modal-edit-{{lm.id}}" data-toggle="modal">{{ lm.name }}</a></td>
+      <td>{{ lm.description }}</td>
+      <td>
+        <div class="btn-group">
+          <button type="button" class="btn dropdown-toggle btn-mini btn-primary btn-xs" data-toggle="dropdown">
+            Action<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="#modal-edit-{{lm.id}}" data-toggle="modal">Edit</a></li>
+            <li class="divider"></li>
+            <li><a href="#modal-del-{{lm.id}}" data-toggle="modal">Delete</a></li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<div class="col-lg-12 text-right">
+  <a href="#" data-target="#modal-create" data-toggle="modal">
+    <button type="button" class="btn btn-xs btn-danger">
+      <span class="glyphicon glyphicon-plus"></span>&nbsp;New Login Module
+    </button>
+  </a>
+</div>
+
+<!-- New Dialog -->
+<form class="form-horizontal" method="post"
+      action="{{p.url}}/login/create">
+
+  <div id="modal-create" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>New Login Module</h3>
+        </div>
+        <div class="modal-body">
+
+          <!-- priority -->
+          <div class="form-group">
+            <label class="col-sm-2 control-label">priority</label>
+            <div class="col-sm-10">
+              <input class="form-control" type="text" name="priority"
+                  placeholder="to define order of login module. higher number comes first" />
+            </div>
+          </div>
+          <!-- type -->
+          <div class="form-group">
+            <label class="col-sm-2 control-label">type</label>
+            <div class="col-sm-10">
+              {{ select.render("type", "type_create", p.login_module_types ) }}
+            </div>
+          </div>
+
+          <!-- Name -->
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+              <input class="form-control" type="text" name="name"
+                placeholder="name this login module" />
+            </div>
+          </div>
+
+          <!--Description-->
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Description</label>
+            <div class="col-sm-10">
+              <textarea class="form-control" rows="2" class="auto-resize"
+                name="description" placeholder="Enter description here"
+                ></textarea>
+            </div>
+          </div>
+
+          <!--configuration-->
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Configuration</label>
+            <div class="col-sm-10">
+              <textarea class="form-control" rows="6" class="auto-resize"
+                name="configuration" placeholder="Enter configuration here"
+                ></textarea>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">New Navigation</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+{% for lm in p.login_modules %}
+<!-- EDIT DIALOG -->
+<form class="form-horizontal" action="/admin/login/edit/{{lm.id}}" method="post">
+<div id="modal-edit-{{lm.id}}" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content modal-lg">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit Login Module</h4>
+      </div>
+      <div class="modal-body">
+
+        <!-- priority -->
+        <div class="form-group">
+          <label class="col-sm-2 control-label">priority</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" name="priority"
+                placeholder="to define order of login module. higher number comes first"
+                value="{{lm.priority}}" />
+          </div>
+        </div>
+
+        <!-- type -->
+        <div class="form-group">
+          <label class="col-sm-2 control-label">type</label>
+          <div class="col-sm-10">
+            {{ select.render(
+              "type",
+              "type_edit_" + lm.id,
+              p.login_module_types,
+              lm.type )
+            }}
+          </div>
+        </div>
+
+        <!-- Name -->
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Name</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" name="name" value={{lm.name}}
+              placeholder="name this login module" />
+          </div>
+        </div>
+
+        <!--Description-->
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Description</label>
+          <div class="col-sm-10">
+            <textarea class="form-control" rows="2" class="auto-resize"
+              name="description" placeholder="Enter description here"
+              >{{lm.description}}</textarea>
+          </div>
+        </div>
+
+        <!--configuration-->
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Configuration</label>
+          <div class="col-sm-10">
+            <textarea class="form-control" rows="6" class="auto-resize" value="{{lm.configuration}}"
+              name="configuration" placeholder="Enter configuration here"
+              ></textarea>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+<!-- Delete DIALOG -->
+<form class="form-horizontal" action="/admin/login/delete/{{lm.id}}" method="post">
+  <div id="modal-del-{{lm.id}}" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4>Confirm Delete Login Module</h4>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to <span class="text-error">DELETE</span> the Login Module?</p>
+          <p>Deleting login module: <strong>{{lm.name}}</strong></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+{% endfor %}
+
+{% endblock %}

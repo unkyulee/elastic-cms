@@ -33,6 +33,19 @@
             }
         },
 
+        "login_module" : {
+          "_all" :        {"enabled": true},
+          "_source":      {"enabled": true},
+          "dynamic":      "strict",
+            "properties" :  {
+              "type":           {"type" : "string"},
+              "name" :          {"type" : "string"},
+              "description" :   {"type" : "string"},
+              "priority":       {"type" : "long"},
+              "configuration":       {"type" : "string"}
+            }
+        },
+
         "config" : {
           "_all" :        {"enabled": true},
           "_source":      {"enabled": true},
