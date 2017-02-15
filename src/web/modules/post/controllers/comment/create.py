@@ -79,8 +79,7 @@ def get(p):
         notifications = es.list(host, index,
             'notification', 'workflow:{}'.format(p['workflow'].get('name')))
         for p['notification'] in notifications:
-            p['notification']['recipients'] =
-                jinja.getlist(p['notification'].get('recipients'))
+            p['notification']['recipients'] = jinja.getlist(p['notification'].get('recipients'))
 
             if p['notification'] and p['notification'].get('condition'):
                 try:
