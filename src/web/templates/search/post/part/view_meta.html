@@ -1,0 +1,67 @@
+<table class="table table-stripped table-hover table-responsive">
+  <thead>
+  <tr>
+    <th colspan=2>Information</th>
+  </tr>
+</thead>
+
+  {%if p.post.status%}
+  <tr>
+    <td><b>status</b></td>
+    <td>
+      <span class="label label-info">
+        {{ p.post.status }}
+      </span>
+    </td>
+  </tr>
+  {%endif%}
+
+  <tr>
+    <td><b>created by</b></td>
+    <td>
+      {% set created_by = p.post.created_by|get('http://localhost:9200', 'people', 'post') %}
+      {% if created_by %}
+      <a href="/people/post/view/{{created_by.id}}" target=_blank>
+        {{ created_by.title }}
+      </a>
+      {% else %}
+        {{ p.post.created_by }}
+      {% endif %}
+    </td>
+  </tr>
+
+  <tr>
+    <td><b>created at</b></td>
+    <td>
+      {{ p.post.created|dt }}
+    </td>
+  </tr>
+
+  {% if p.post.acl_readonly %}
+  <tr>
+    <td><b>read only</b></td>
+    <td>
+      {% for acl in p.post.acl_readonly|getlist %}
+        {{acl}}
+      {% endfor %}
+    </td>
+  </tr>
+  {% endif %}
+
+  {% if p.post.acl_edit %}
+  <tr>
+    <td><b>editor</b></td>
+    <td>
+      {% for acl in p.post.acl_edit|getlist %}
+        {{acl}}
+      {% endfor %}
+    </td>
+  </tr>
+  {% endif %}
+
+  <tr>
+    <td><b>viewed</b></td>
+    <td>{{ p.post.viewed }}</td>
+  </tr>
+
+</table>

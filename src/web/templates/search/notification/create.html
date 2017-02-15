@@ -1,0 +1,73 @@
+{% extends "post/admin_base.html" %}
+
+{% block body %}
+<form class="form-horizontal" method="post">
+  <legend><a href="{{p.url}}/notification"><<</a> Create Nofitication</legend>
+
+  <div class="form-group">
+    <label class="col-sm-12 text-left"></label>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Message Title</label>
+    <div class="col-sm-10">
+      <input class="form-control" type="text" name="header"
+        placeholder="email title" value="{{p.notification.header}}" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Recipients</label>
+    <div class="col-sm-10">
+      {{select_multi.render("recipients", "recipients", "", ajax="/people?json=1")}}
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Message</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" name="message" rows="5"
+        placeholder="notification message">{{p.notification.message}}</textarea>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Workflow</label>
+    <div class="col-sm-10">
+      <input class="form-control" type="text" name="workflow"
+        placeholder="workflow" value="{{p.notification.workflow}}" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Condition</label>
+    <div class="col-sm-10">
+      <textarea name="condition" id="condition">{{p.notification.condition|safe}}</textarea>
+      <div id="editor_condition" style="min-height: 400px"></div>
+      <script>
+          var editor_condition = ace.edit("editor_condition");
+          editor_condition.setTheme("ace/theme/monokai");
+          editor_condition.getSession().setMode("ace/mode/python");
+          var textarea_condition = $('#condition').hide();
+          editor_condition.getSession().setValue(textarea_condition.val());
+          editor_condition.getSession().on('change', function(){
+            textarea_condition.val(editor_condition.getSession().getValue());
+          });
+          editor_condition.commands.addCommand({
+            name: 'saveFile',
+            bindKey: { win: 'Ctrl-S', mac: 'Command-S', sender: 'editor|cli' },
+            exec: function(env, args, request) { form.submit(); }
+          });
+      </script>
+    </div>
+
+  </div>
+
+  <div class="form-group">
+    <div class="col-lg-10 col-lg-offset-2">
+      <button type="reset" class="btn btn-default">Cancel</button>
+      <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+  </div>
+</form>
+{% endblock %}

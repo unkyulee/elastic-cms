@@ -1,0 +1,121 @@
+{% extends "post/admin_base.html" %}
+
+{% block body %}
+<legend>Workflow Management</legend>
+
+<table class="table table-striped table-hover table-responsive">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Screen</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for w in p.workflow_list %}
+    <tr>
+      <td><a href="{{p.url}}/workflow/edit/{{w.id}}">#</a></td>
+      <td><a href="{{p.url}}/workflow/edit/{{w.id}}">{{w.name}}</a></td>
+      <td>{{w.description}}</td>
+      <td>
+        {%- for user in w.status|getlist %}
+          {{user}}{% if not loop.last %}, {% endif %}
+        {% endfor -%}
+      </td>
+      <td>
+        {%- for s in w.screen|getlist %}
+          {{s}}{% if not loop.last %}, {% endif %}
+        {% endfor -%}
+      </td>
+
+      <td>
+        <div class="btn-group">
+          <button type="button" class="btn dropdown-toggle btn-mini btn-danger btn-xs"
+            data-toggle="dropdown">Action<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="{{p.url}}/workflow/edit/{{w.id}}">Edit</a></li>
+            <li><a href="#modal-del-workflow-{{w.id}}" data-toggle="modal">Delete</a></li>
+          </ul>
+        </div>
+      </td>
+
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="col-lg-12 text-right">
+  <a href="#modal-new-workflow" data-toggle="modal" title="add new workflow">
+    <button type="button" class="btn btn-xs btn-danger">
+      <span class="glyphicon glyphicon-plus"></span>&nbsp;New Workflow
+    </button>
+  </a>
+</div>
+
+
+<!-- New Workflow Dialog -->
+<form class="form-horizontal" method="post" action="{{p.url}}/workflow/create">
+<div id="modal-new-workflow" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Create New Workflow</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group">
+          <label class="col-lg-4 control-label">Name</label>
+          <div class="col-lg-8">
+            <input class="form-control" type="text"
+              name="name" placeholder="name" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-4 control-label">Description</label>
+          <div class="col-lg-8">
+            <textarea class="form-control"  name="description"
+              placeholder="description"></textarea>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Create New Workflow</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+
+{% for w in p.workflow_list %}
+<!-- Delete Workflow Dialog -->
+<form class="form-horizontal" action="{{p.url}}/workflow/delete/{{w.id}}" method="post">
+<div id="modal-del-workflow-{{w.id}}" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Confirm Delete Workflow</h4>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete the workflow?</p>
+        <p>Workflow: <strong>{{w.Name}}</strong></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="submit" class="btn btn-warning">Delete Workflow</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+{% endfor %}
+
+{% endblock %}

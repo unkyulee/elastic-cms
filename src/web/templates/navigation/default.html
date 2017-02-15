@@ -1,8 +1,92 @@
 <style>
+
   body {
     padding-top: 50px;
+    padding-left: 230px;
+  }
+
+  .container {
+    width: 100%;
+  }
+
+  /* The side navigation menu */
+  .sidenav {
+    height: 100%; /* 100% Full-height */
+    width: 230px; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 50px;
+    left: 0;
+    background-color: #333; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 0px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  }
+
+  /* The navigation menu links */
+  .sidenav a {
+      padding: 8px 8px 8px 15px;
+      text-decoration: none;
+      font-size: 17px;
+      color: #AAA;
+      display: block;
+      transition: 0.3s
+  }
+
+  a.small {
+      padding: 4px 4px 4px 25px;
+      font-size: 15px;
+      /*color: #888;*/
+      display: block;
+      transition: 0.3s
+  }
+
+  a.active {
+      color: orange;
+      font-weight: bold;
+  }
+
+  /* When you mouse over the navigation links, change their color */
+  .sidenav a:hover, .offcanvas a:focus{
+      color: #f1f1f1;
+  }
+
+  /* Position and style the close button (top right corner) */
+  .sidenav .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+  }
+
+  /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+  #main {
+      transition: margin-left .5s;
+      padding: 20px;
+  }
+
+  /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+  @media screen and (max-width: 768px) {
+      body {
+        padding-left: 0;
+      }
+
+      .sidenav {
+        width: 100%; /* 0 width - change this with JavaScript */
+        position: relative; /* Stay in place */
+        z-index: 1; /* Stay on top */
+        top: 0;
+        left: 0;
+        background-color: #333; /* Black*/
+        overflow-x: hidden; /* Disable horizontal scroll */
+        padding-top: 0px; /* Place content 60px from the top */
+        transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+      }
   }
 </style>
+
+
 <!-- Fixed navbar -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -30,37 +114,16 @@
             {%- endfor -%}
           </ul>
         </li>
-      </ul>
 
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-      {%- for nav in p.nav_list -%}
-        {%- if nav.children|length > 0 -%}
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-            aria-haspopup="true" aria-expanded="false">{{nav.display_name}} <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            {%- for child in nav.children -%}
-            <li {%- if child.id == p.navigation.id %} class="active" {% endif -%}
-              ><a href="{%-if p.site.name-%}/{{p.site.name}}{%-endif-%}/{{child.name}}"
-                {%- if nav.new_window == "1" %} target=_blank {% endif -%} >
-              {{child.display_name}}</a></li>
-            {%- endfor -%}
-          </ul>
-        </li>
-        {%- else -%}
-        <li {%- if nav.id == p.navigation.id %} class="active" {% endif -%}
-          ><a href="{%-if p.site.name-%}/{{p.site.name}}{%-endif-%}/{{nav.name}}"
-            {%- if nav.new_window == "1" %} target=_blank {% endif -%}
-          >
-          {{nav.display_name}}</a></li>
-        {%- endif -%}
-      {%- endfor -%}
+
       </ul>
+    </div>
+
+
+    <div id="navbar" class="navbar-collapse collapse">
 
       <ul class="nav navbar-nav navbar-right">
-        <li>
+        <!-- li>
          <form class="navbar-form" role="search" action="/search">
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Search" name="q" id="global_q" size=10>
@@ -69,11 +132,49 @@
             </div>
           </div>
          </form>
-        </li>
-        <li><a href="/people/post/view/{{p.login}}" title="logout">{{p.login}}</a></li>
+       </li -->
+        {% set person = p.login|get(p.host, 'people', 'post') %}
+        {% if person %}
+          <li>
+            <a href="/people/post/view/{{p.login}}" title="logout" class="active">
+              {{person.title}}
+              {% if person.photo %}
+              &nbsp; <img src="/people/file/view/{{person.photo}}" width=20 height=20 />
+              {% endif %}
+            </a>
+          </li>
+        {% else %}
+          <li><a href="/auth/logout" title="logout"><b>GUEST</b></a></li>
+        {% endif %}
       </ul>
+
+      <div id="mySidenav" class="sidenav">
+        {% for nav in p.nav_list %}
+
+          {% if nav.children|length > 0 %}
+            <a href="#">{{nav.display_name}}</a>
+
+            {%- for child in nav.children -%}
+              <a
+                class="small {% if p.navigation.id == child.id %}active{% endif %}"
+                href="{%-if p.site.name-%}/{{p.site.name}}{%-endif-%}/{{child.name}}"
+                {%- if nav.new_window == "1" %} target=_blank {% endif -%} >
+                {{child.display_name}}</a>
+
+            {%- endfor -%}
+
+
+          {% else %}
+            <a
+              class="{% if p.navigation.id == nav.id %}active{% endif %}"
+              href="{%-if p.site.name-%}/{{p.site.name}}{%-endif-%}/{{nav.name}}"
+              {%- if nav.new_window == "1" %} target=_blank {% endif -%}>
+              {{nav.display_name}}</a>
+          {% endif %}
+
+        {% endfor %}
+      </div>
 
     </div><!--/.nav-collapse -->
   </div>
-
 </nav>

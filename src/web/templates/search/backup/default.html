@@ -1,0 +1,34 @@
+{% extends "post/admin_base.html" %}
+
+{% block body %}
+
+{%if p.message%}<div class="alert alert-danger">{{p.message}}</div>{%endif%}
+
+<form class="form-horizontal" method="post" enctype="multipart/form-data">
+  <legend class="text-muted">Backup &amp; Restore</legend>
+  <div class="form-group">
+    <label class="col-lg-2 control-label">Download Backup</label>    
+    <div class="col-lg-10 col-md-10">
+      <span class="help-block">
+        <a href="{{p.url}}/backup/download">
+          {{p.url}}/backup/download
+        </a>
+      </span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2 control-label">Restore</label>
+    <div class="col-lg-8 text-left">
+      <input type="file" name="restore" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-lg-10 col-lg-offset-2">
+      <button type="reset" class="btn btn-default">Cancel</button>
+      <button type="submit" class="btn btn-primary">Restore</button>
+    </div>
+  </div>
+</form>
+{% endblock %}

@@ -8,7 +8,7 @@ def get(p):
 
     if not p['operation']: p['operation'] = 'search'
     if p['operation'] == "admin": p['operation'] = 'config'
-    path = "web.modules.post.controllers.{}.control".format(p['operation'])
+    path = "web.modules.search.controllers.{}.control".format(p['operation'])
     control = importlib.import_module(path)
     return control.get(p)
 

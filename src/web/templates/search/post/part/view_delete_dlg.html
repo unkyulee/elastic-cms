@@ -1,0 +1,24 @@
+<!-- Delete Dialog -->
+<form class="form-horizontal" action="{{ p.url }}/post/delete/{{p.post.id}}" method="post">
+  <div id="modal-delete-post" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirm Delete Post</h4>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to <font color=red><b>DELETE</b></font> the post?</p>
+          <p>
+            <strong>{{p.post.title}}</strong><br>
+            Created by {{p.post.created_by}}
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Delete Post</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

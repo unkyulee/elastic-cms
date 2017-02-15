@@ -1,0 +1,90 @@
+
+<hr>
+<table class="table table-hover table-responsive">
+{% for c in p.post.comment %}
+<tr>
+  <td width='10%' class="text-right">
+    <div class="btn-group">
+      <a href="#" data-toggle="dropdown" title="{{c.created}}">
+        <button type="button" class="btn btn-xs btn-primary">
+          {{c.created_by}}
+        </button>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="#modal-edit-comment-{{c.id}}" data-toggle="modal">Edit Comment</a></li>
+        <li class="divider"></li>
+        <li><a href="#modal-delete-comment-{{c.id}}" data-toggle="modal">Delete</a></li>
+      </ul>
+    </div>
+  </td>
+  <td>
+      {{c.comment}}
+      <small class="text-muted">{{c.created|dt}}</small>
+  </td>
+</tr>
+{% endfor %}
+</table>
+
+
+{% for c in p.post.comment %}
+<form class="form-horizontal" action="{{p["url"]}}/comment/delete/{{p.post.id}}?id={{c.id}}" method="post">
+  <div id="modal-delete-comment-{{c.id}}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirm Delete Post</h4>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to <font color=red><b>DELETE</b></font> the comment?</p>
+          <p>
+            Created by {{c.created_by}} at {{c.created|dt}}
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-danger">Delete Comment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+<form class="form-horizontal" action="{{p["url"]}}/comment/edit/{{p.post.id}}?id={{c.id}}" method="post">
+  <div id="modal-edit-comment-{{c.id}}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Comment</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="col-lg-2 control-label">Comment</label>
+            <div class="col-lg-10">
+              <textarea class="form-control" rows="5" name="comment" placeholder="Comment">{{c.comment}}</textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Edit Comment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+{% endfor %}
+
+
+
+<form action="{{ p.url }}/comment/create" method="post">
+  <input type="hidden" name="post_id" value="{{p.post.id}}">
+  <div class="input-group">
+    <div class="input-group-btn">
+      <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i></button>
+    </div>
+    <input class="form-control" placeholder="Add a comment.." type="text" name="comment">
+  </div>
+</form>

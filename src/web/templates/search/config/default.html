@@ -1,0 +1,104 @@
+{% extends "post/admin_base.html" %}
+
+{% block body %}
+<form class="form-horizontal" method="post">
+  <legend class="text-muted">General Configuration</legend>
+
+  <div class="form-group">
+    <label class="col-lg-2 col-md-2 control-label">Name</label>
+    <div class="col-lg-10 col-md-10">
+      <input class="form-control" type="text" name="name"
+        placeholder="Display Name of the post module" value="{{p.c.name}}" />
+      <span class="help-block">Name is displayed as the title of the page header</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2 col-md-2 control-label">Description</label>
+    <div class="col-lg-10 col-md-10">
+      <textarea class="form-control" name="description" rows="2"
+        placeholder="Description of the post module">{{p.c.description}}</textarea>
+      <span class="help-block">Description is displayed as the subtext of the page header</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2 col-md-2 control-label">Host</label>
+    <div class="col-lg-10 col-md-10">
+      <input class="form-control" type="text" name="host"
+      placeholder="http://localhost:9200" value="{{p.c.host}}" />
+      <span class="help-block">Post module uses elasticsearch to store information. Please, specify Elasticsearch engine host e.g. http://localhost:9200</span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-lg-2 col-md-2 control-label">Index</label>
+    <div class="col-lg-10 col-md-10">
+      <input class="form-control" type="text" name="index"
+      placeholder="index name in elasticsearch" value="{{p.c.index}}" />
+      <span class="help-block">Post module uses one index to maintain the data. Please, specify the index name that is unique</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2 col-md-2 control-label">Page size</label>
+    <div class="col-lg-10 col-md-10">
+      <input class="form-control" type="text" name="page_size"
+        placeholder="10" value="{{p.c.page_size}}" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2 col-md-2 control-label">Initial Query</label>
+    <div class="col-lg-10 col-md-10">
+      <input class="form-control" type="text" name="query"
+      placeholder="start:[now/M TO now+1M/M]" value="{{p.c.query}}" />
+      <span class="help-block">first page query</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2 col-md-2 control-label">Sort Field</label>
+    <div class="col-lg-4 col-md-4">
+      <input class="form-control" type="text" name="sort_field"
+        placeholder="Field name" value="{{p.c.sort_field}}" />
+    </div>
+    <div class="col-lg-4 col-md-4">
+      <select name="sort_dir">
+        <option value=asc {%if p.c.sort_dir == "asc" %}selected="1"{%endif%}>ascending</option>
+        <option value=desc {%if p.c.sort_dir == "desc" or not p.c.sort_dir %}selected="1"{%endif%}>descending</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2 col-md-2 control-label">Upload Directory</label>
+    <div class="col-lg-10 col-md-10">
+      <input class="form-control" type="text" name="upload_dir"
+        placeholder="Upload Directory" value="{{p.c.upload_dir}}" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2 col-md-2 control-label">Allowed Extensions</label>
+    <div class="col-lg-10 col-md-10">
+      <input class="form-control" type="text" name="allowed_exts"
+        placeholder="jpg, png, doc, txt" value="{{p.c.allowed_exts}}" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2 col-md-2 control-label">Keep History</label>
+    <div class="col-lg-10 col-md-10">
+      {{ select.render("keep_history", "keep_history",
+            [{"id":"Yes", "name":"Yes"}, {"id":"No", "name":"No"}], p.c.keep_history )}}      
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-lg-10 col-lg-offset-2">
+      <button type="reset" class="btn btn-default">Cancel</button>
+      <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+  </div>
+</form>
+{% endblock %}

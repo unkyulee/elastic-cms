@@ -1,0 +1,44 @@
+<p class="bg-primary">&nbsp;<strong>{{p.c.name}}</strong></p>
+<table class="table table-hover table-responsive">
+{% for field in p.field_list if p.post[field.id] %}
+
+  <tr>
+    <td width='10%' class="text-right"><b>{{field.name}}</b></td>
+    <td>
+
+      {% if field.view_tpl %}
+        {{ field.view_tpl|render(p, p.post)|safe }}
+
+      {% elif field.handler == "file" %}
+        <a href="{{p.url}}/file/view/{{p.post[field.id]}}?id={{p.post.id}}" target=_blank>
+          {{ p.post[field.id]|filename(p.post.id) }}
+        </a>
+
+      {% elif field.handler == "multiple" %}
+        {% for v in p.post[field.id]|getlist %}
+
+          {% if field.is_filter == "1" %}
+            <a href="{{p.url}}?{{field.name}}={{v}}">
+          {% endif %}
+
+            {{v}}
+
+          {% if field.is_filter == "1" %}
+            </a>
+          {% endif %}
+
+          {%- if not loop.last %},  {% endif %}
+        {% endfor %}
+
+      {% else %}
+      {% if field.is_filter == "1" %}<a href="{{p.url}}?{{field.name}}={{ p.post[field.id] }}">{% endif %}
+        {{ p.post[field.id] }}
+      {% if field.is_filter == "1" %}</a>{% endif %}
+
+      {%endif%}
+
+    </td>
+  </tr>
+
+{%endfor%}
+</table>

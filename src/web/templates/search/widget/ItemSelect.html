@@ -1,0 +1,30 @@
+{% macro ItemSelect(url, p, name, id, values, placeholder="Search for items") %}
+<select type=hidden id="{{id}}" name="{{name}}" style="width:100%" multiple="multiple">
+  {% for v in values if values is not string %}
+    <option selected="1">{{v}}</option>
+  {% endfor %}
+  {% if values is string %}
+    <option selected="1">{{values}}</option>
+  {% endif %}
+</select>
+<script>
+$(document).ready(function() {
+  $("#{{id}}").select2({
+    placeholder: "{{placeholder}}", allowClear: true, delay: 250,
+    minimumInputLength: 2, tokenSeparators: [','],
+    ajax: {
+      url: '{{url|safe}}' ,
+      dataType: 'jsonp',
+      data: function (params) { return { q: params.term + "*" } },
+      processResults: function (data, page) {
+        ResultList = { "results" : [] , "more":false }
+        data.forEach(function(entry) {
+          ResultList.results.push( { "id":entry.Title, "text": entry.Title } )
+        });
+        return ResultList;
+      }
+    }
+  });
+});
+</script>
+{% endmacro %}

@@ -22,7 +22,7 @@ def install(host, base_dir):
         # create a navigation
         navigation = {
             "site_id":        'search',
-            "module_id":      '7',
+            "module_id":      '10',
             "order_key":      100,
             "is_displayed":   '1',
             "name" :          'search',

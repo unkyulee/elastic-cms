@@ -148,13 +148,13 @@ def install_data(host, base_dir):
             {"name": "people", "display_name":"People",
              "site_id":0, "module_id":"7", "is_displayed":"1", "order_key": 4})
 
-    # install default navigation - people
+    # install default navigation - schedule
     if not es.get(host, "core_nav", "navigation", 5):
         es.create(host, "core_nav", "navigation", 5,
             {"name": "schedule", "display_name":"Schedule",
              "site_id":0, "module_id":"7", "is_displayed":"1", "order_key": 5})
 
-    # install default navigation - people
+    # install default navigation - document management
     if not es.get(host, "core_nav", "navigation", 6):
         es.create(host, "core_nav", "navigation", 6,
             {"name": "doc", "display_name":"Document",

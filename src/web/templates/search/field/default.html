@@ -1,0 +1,58 @@
+{% extends "post/admin_base.html" %}
+
+{% block body %}
+<legend>Field Configuration</legend>
+<table class="table table-stripped table-hover table-responsive">
+  <thead>
+    <th></th>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Handler</th>
+    <th>Visible</th>
+    <th>Filter</th>
+    <th>Order</th>
+    <th>Action</th>
+  </thead>
+  <tbody>
+    {% for field in p.field_list %}
+    <tr>
+      <td>
+        <a href="{{p.url}}/field/edit/{{field.id}}">#</a>
+      </td>
+      <td>
+        <a href="{{p.url}}/field/edit/{{field.id}}">{{field.id}}</a>
+      </td>
+      <td>
+        {{field.name}}
+      </td>
+      <td>{{field.type}}</td>
+      <td>{{field.handler}}</td>
+      <td>
+        {%for v in field.visible|getlist%}
+          {{v}} {%if not loop.last%}, {%endif%}
+        {%endfor%}
+      </td>
+      <td>
+        {% if field.is_filter == "1" %}<span class="glyphicon glyphicon-ok"></span>{% endif %}
+      </td>
+      <td>
+        {{field.order_key}}
+      </td>
+      <td>
+        <div class="btn-group">
+          <button type="button" class="btn dropdown-toggle btn-mini btn-danger btn-xs" data-toggle="dropdown">
+            action<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="{{p.url}}/field/edit/{{field.id}}" data-toggle="modal">Edit</a></li>
+            <li class="divider"></li>
+            <li><a href="#modal-delete-{{field.id}}" data-toggle="modal">Delete</a></li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
