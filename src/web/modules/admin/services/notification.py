@@ -18,8 +18,6 @@ def get_conf(host):
 def send(p, header, message, recipients):
     conf = get_conf(p['host'])
 
-    print conf
-
     # transform header and message
     header = jinja.render(header, p)
     message = jinja.render(message, p)

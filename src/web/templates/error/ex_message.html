@@ -1,0 +1,18 @@
+user: {{session.user}}
+url: {{request.url}}
+referrer: {{request.referrer}}
+method: {{request.method}}
+{%- if request.form -%}
+form data:
+{% for k, v in request.form.items() %}
+{{k}}: {{v[0:50]}}
+{% endfor %}
+{%- endif -%}
+{%- if request.args -%}
+get data:
+{% for k, v in request.args.items() %}
+{{k}}: {{v[0:50]}}
+{% endfor %}
+{%- endif -%}
+TRACE
+{{traceback|safe}}

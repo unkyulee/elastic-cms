@@ -75,7 +75,6 @@ def post(p):
     for field in request.form:
         field_info = p['field_map'][field]
         value = tools.get(field)
-        print field_info['id'], value
 
         # if object then convert to json object
         if field_info.get('handler') == "object":

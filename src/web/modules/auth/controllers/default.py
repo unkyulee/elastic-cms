@@ -45,7 +45,6 @@ def post(p):
                 # session will live for 31 days
                 session.permanent = True
             else:
-                print "session not permanent"
                 session.permanent = False
 
             # save user_id in session

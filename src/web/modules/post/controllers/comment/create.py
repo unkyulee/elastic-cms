@@ -76,9 +76,11 @@ def get(p):
     ######################################################
     # notification
     if p['workflow']:
-        notifications = es.list(host, index, 'notification', 'workflow:{}'.format(p['workflow'].get('name')))
+        notifications = es.list(host, index,
+            'notification', 'workflow:{}'.format(p['workflow'].get('name')))
         for p['notification'] in notifications:
-            p['notification']['recipients'] = jinja.getlist(p['notification'].get('recipients'))
+            p['notification']['recipients'] =
+                jinja.getlist(p['notification'].get('recipients'))
 
             if p['notification'] and p['notification'].get('condition'):
                 try:
@@ -89,7 +91,6 @@ def get(p):
                 except Exception, e:
                     return "{}\n{}".format(e.message, traceback.format_exc())
 
-                # send notification
                 # send notification
                 notification.send(p,
                     p['notification'].get('header'),

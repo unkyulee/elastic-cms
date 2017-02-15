@@ -1,9 +1,13 @@
 import os
 import json
 import importlib
-from flask import session
+import traceback
+
+from flask import session, render_template, request
 import lib.es as es
 import web.util.tools as tools
+import web.util.jinja as jinja
+import web.modules.admin.services.notification as notification
 
 # find navigation structure
 def define(host, nav):
@@ -161,3 +165,33 @@ def get_site_list(host, navigation):
     site_list = es.list(host, 'core_nav', 'site', query, option)
 
     return site_list
+
+
+
+# handle exception
+def handle_exception(host):
+
+    # form exception message
+    message = render_template("error/ex_message.html",
+        request=request,
+        session=session,
+        traceback=traceback.format_exc())
+
+    # get admin email
+    admins = tools.get_conf(host, '-1', 'admins', '')
+    recipients = []
+    for admin in jinja.getlist(admins):
+        user = es.get(host, 'people', 'post', admin)
+        if user and user.get('email'):
+            recipients.append(user.get('email'))
+
+    # send email
+    if len(recipients) > 0:
+        notification.send(
+            {"host":host},
+            'exception email from elastic-cms',
+            message,
+            recipients)
+        print recipients
+
+    return render_template("error/exception.html"), 500
