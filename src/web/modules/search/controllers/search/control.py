@@ -58,8 +58,6 @@ def get(p):
                 value = value.replace("::highlight_end::", "</font>")
                 item[k] = value
 
-                print k, value[0:20]
-
 
         # produce standard fields
         if r.get('_index') and not item.get('app'):
