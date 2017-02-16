@@ -1,0 +1,89 @@
+{
+  "query": {
+    "function_score": {
+      "functions": [
+        {"field_value_factor": {
+          "field": "updated",
+          "factor": 1.2,
+          "missing": 1
+        }}
+      ],
+      "boost_mode": "multiply",
+
+      "filter": {
+        "bool": {
+          "should": [
+            {# filters out ACL #}
+            { "match" : { "acl_readonly" : "EVERYONE" } },
+            { "match" : { "acl_readonly" : "{{p.login}}" } },
+            { "match" : { "acl_edit" : "EVERYONE" } },
+            { "match" : { "acl_edit" : "{{p.login}}" } },
+            { "match" : { "created_by" : "{{p.login}}" } },
+            { "missing" : { "field": "acl_readonly" } }
+          ]
+        }
+      },
+
+      {% set selected_app = "" %}
+      {%- if p.selected_app %}
+        {% set selected_app = "(_index:{0} OR app:{0}) AND ".format(p.selected_app) %}
+      {% endif %}
+      "query": {
+        "query_string": {
+          "query": "{{selected_app}} {{p.q}}",
+          "default_operator": "AND",
+          "fields" : [
+          {% if p.fields %}
+            {% for f in p.fields|split(",") %}
+              "{{f}}"
+              {% if not loop.last %},{% endif %}
+            {% endfor %}
+          {% else %}
+            "id^1000",
+            "title^100",
+            "description",
+            "title.folded",
+            "_all"
+          {% endif %}
+          ]
+        }
+      }
+    }
+  },
+
+  "highlight": {
+      "number_of_fragments" : 1,
+      "fragment_size" : 300,
+      "no_match_size": 300,
+      "pre_tags" : ["::highlight::"],
+      "post_tags" : ["::highlight_end::"],
+      "fields" : {
+        "*": {"type":"plain"}
+      }
+  },
+
+  "aggs" : {
+    "internal":{
+      "terms": {
+        "field": "_index",
+        "size": 1000
+      }
+    },
+    "external":{
+      "terms": {
+        "field": "app",
+        "size": 1000
+      }
+    }
+  },
+
+  "suggest" : {
+      "didyoumean" : {
+          "text" : "{{p.q}}",
+          "term" : { "field" : "_all" }
+      }
+  },
+
+  "from": "{{p.from}}",
+  "size": "{{p.size}}"
+}

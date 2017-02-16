@@ -1,0 +1,9 @@
+{% if p.suggestion %}
+  <div class="container-fluid">
+    <span class="badge badge-success">Did you mean?</span>
+    <b><a href="javascript: $('#q').val('{% for s in p.suggestion %}{{s}} {% endfor %}'); $('#searchform').submit() ;">
+      {% for s in p.suggestion %}{{s}} {% endfor %}
+    </a></b>
+  </div>
+  <br></br>
+{% endif %}

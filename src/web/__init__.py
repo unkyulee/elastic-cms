@@ -62,5 +62,9 @@ def index(path):
         # render based on the navigation info
         return response.get(navigation)
     except:
+        # don't send email when debug mode is on
+        if app.config.get("DEBUG"):
+            raise
+
         # internal server error
         return mod.handle_exception(app.config.get("HOST"))

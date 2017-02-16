@@ -1,3 +1,5 @@
+import urlparse
+from flask import request
 import lib.es as es
 import web.util.tools as tools
 
@@ -12,24 +14,17 @@ def get(p):
         "name:'index' AND value:'{}'".format(index))
     if not len(configs) > 0:
         return tools.alert('site not found')
-    
+
     # get site id
     navigation_id = configs[0]['id'].split('_')[0]
     navigation = es.get(p['host'], 'core_nav', 'navigation', navigation_id)
     site = es.get(p['host'], 'core_nav', 'site', navigation['site_id'])
 
-    if site['name']:
-        return tools.redirect(
-            "{}/{}/post/view/{}".format(
-                site['name'],
-                navigation['name'],
-                id
-            )
-        )
-    else:
-        return tools.redirect(
-            "/{}/post/view/{}".format(
-                navigation['name'],
-                id
-            )
-        )
+    # form url
+    url = urlparse.urljoin(request.url_root, site.get('name'))
+    url = urlparse.urljoin(url, navigation.get('name'))
+
+    # add id at the end of the url
+    url = "{}/post/view/{}".format(url, id)
+
+    return tools.redirect(url)

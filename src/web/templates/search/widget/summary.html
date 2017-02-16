@@ -1,0 +1,22 @@
+
+{% if p.q == "*" %}
+<div class="alert alert-warning">
+  Total <b>{{p.total}}</b> records, showing from {{p.from+1}} - {{p.from+p.size+1}}
+</div>
+
+
+{% elif p["total"] == 0 %}
+<div class="alert alert-danger">
+  No search results found for "<b>{{p["q"]}}</b>"<br>
+</div>
+
+{% else %}
+
+<div class="alert alert-warning">
+  Searched
+    {% if p["q"] != "*" %} for "<b>{{p["q"]}}</b>", {% endif %}
+  took {{p["took"]}} ms, to return <b>{{p["total"]}}</b> results
+  <br>showing from {{p.from+1}} - {{p.from+p.size+1}}
+</div>
+
+{% endif %}
