@@ -2,6 +2,9 @@
 
 {% block content %}
 
+{####################################
+  Top
+####################################}
 {% if p.c.top %}
   <div class="row" id="top">{{ p.c.top|render(p)|safe }}</div>
 
@@ -13,8 +16,14 @@
 
 {% endif %}
 
+{####################################
+  Body
+####################################}
 {% block body %}{% endblock %}
 
-  <div class="row">{{ p.c.footer|safe|render(p) }}</div>
 
+{####################################
+  Footer
+####################################}
+  <div class="row">{{ p.c.footer|safe|render(p) }}</div>
 {% endblock %}

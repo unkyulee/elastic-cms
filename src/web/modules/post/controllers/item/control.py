@@ -5,10 +5,10 @@ import web.util.tools as tools
 from lib.read import readfile
 
 def get(p):
-    h = p['host']; n = p['navigation']['id'];
+    host = p['c']['host']; index = p['c']['index'];
 
     if request.method == "POST":
-        config.set_conf(h, n, 'search_item_template', tools.get('search_item_template'))
+        config.set_conf(host, index, 'search_item_template', tools.get('search_item_template'))
         return tools.redirect(request.referrer)
 
     if not p['c'].get('search_item_template'):
