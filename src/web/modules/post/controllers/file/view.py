@@ -12,6 +12,11 @@ def get(p):
     id = tools.get('id')
     shortname = jinja.filename(filename, id)
 
-    return send_from_directory(p['c']['upload_dir'], filename,
-                               as_attachment=True,
-                               attachment_filename=shortname)
+    if tools.get('download'):
+        return send_from_directory(p['c']['upload_dir'],
+            filename, as_attachment=True,
+            attachment_filename=shortname)
+    
+    return send_from_directory(
+        p['c']['upload_dir'],
+        filename, as_attachment=False)
