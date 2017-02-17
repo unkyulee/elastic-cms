@@ -180,7 +180,7 @@
         {% for nav in p.nav_list %}
 
           {% if nav.children|length > 0 %}
-            <a href="#">{{nav.display_name}}</a>
+            <a href="{{nav.url}}">{{nav.display_name}}</a>
 
             {%- for child in nav.children -%}
               <a
