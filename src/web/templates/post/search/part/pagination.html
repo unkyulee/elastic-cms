@@ -13,12 +13,12 @@
   <ul class="pagination">
     {% for n in range(10) if (start_page+n-1)*page_size < total_doc %}
       {% if loop.first and start_page+n > 1 %}
-      <li><a href="javascript:Set('from', 0); $('#searchform').submit();">  &lt;&lt;&lt;  </a></li>
+      <li><a href="javascript:window.location.search = jQuery.query.set('from', 0);">  &lt;&lt;&lt;  </a></li>
       {% endif %}
       {% if current_page == start_page+n %}<li class="active">{% else %}<li>{% endif %}
-      <a href="javascript:Set('from', {{(start_page+n-1)*page_size}}); $('#searchform').submit();">{{start_page+n}}</a></li>
+      <a href="javascript:window.location.search = jQuery.query.set('from', {{(start_page+n-1)*page_size}});">{{start_page+n}}</a></li>
       {% if loop.last and (start_page+n)*page_size < total_doc %}
-      <li><a href="javascript:Set('from', {{ ((total_doc/page_size)|int)*page_size }}); $('#searchform').submit();">  &gt;&gt;&gt;  </a></li>
+      <li><a href="javascript:window.location.search = jQuery.query.set('from', {{ ((total_doc/page_size)|int)*page_size }});">  &gt;&gt;&gt;  </a></li>
       {% endif %}
     {% endfor %}
   </ul>
