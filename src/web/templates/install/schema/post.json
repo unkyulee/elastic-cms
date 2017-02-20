@@ -133,7 +133,7 @@
     "log": {
       "dynamic": "strict",
       "properties": {
-        "id":           {"type": "string"},
+        "id":           {"type" : "string", "index" : "not_analyzed"},
         "field":        {"type": "string"},
         "previous":     {"type": "string"},
         "current":      {"type": "string"},

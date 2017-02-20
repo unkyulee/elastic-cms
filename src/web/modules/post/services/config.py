@@ -34,19 +34,30 @@ def get(p):
     }
 
 def set(p):
-    # get host and index from the global config
-    h = tools.get_conf(p['host'], p['navigation']['id'], 'host', 'http://localhost:9200')
-    n = tools.get_conf(p['host'], p['navigation']['id'], 'index', '')
+    # get host, index
+    host = p['c']['host']
+    if not host:
+        host = tools.get('host')
 
-    set_conf(h, n, 'name', tools.get('name'))
-    set_conf(h, n, 'description', tools.get('description'))
-    set_conf(h, n, 'upload_dir', tools.get('upload_dir'))
-    set_conf(h, n, 'allowed_exts', tools.get('allowed_exts'))
-    set_conf(h, n, 'page_size', tools.get('page_size'))
-    set_conf(h, n, 'query', tools.get('query'))
-    set_conf(h, n, 'sort_field', tools.get('sort_field'))
-    set_conf(h, n, 'sort_dir', tools.get('sort_dir'))
-    set_conf(h, n, 'keep_history', tools.get('keep_history'))
+    index = p['c']['index']
+    if not index:
+        index = tools.get('index')
+
+    # get host and index from the global config
+    tools.set_conf(p['host'], p['navigation']['id'], 'host', host)
+    tools.set_conf(p['host'], p['navigation']['id'], 'index', index)
+
+    # set local config
+    if p['c']['index']: # save local config only when index is already created
+        set_conf(host, index, 'name', tools.get('name'))
+        set_conf(host, index, 'description', tools.get('description'))
+        set_conf(host, index, 'upload_dir', tools.get('upload_dir'))
+        set_conf(host, index, 'allowed_exts', tools.get('allowed_exts'))
+        set_conf(host, index, 'page_size', tools.get('page_size'))
+        set_conf(host, index, 'query', tools.get('query'))
+        set_conf(host, index, 'sort_field', tools.get('sort_field'))
+        set_conf(host, index, 'sort_dir', tools.get('sort_dir'))
+        set_conf(host, index, 'keep_history', tools.get('keep_history'))
 
 
 def get_conf(host, index, name, default):
