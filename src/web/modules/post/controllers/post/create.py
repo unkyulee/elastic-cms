@@ -76,7 +76,8 @@ def post(p):
     if p['workflow'] and p['workflow'].get('validation'):
         try:
             exec (p['workflow']['validation'], globals())
-            validation(p)
+            ret = validation(p)
+            if ret != True and ret: return ret
         except SystemExit: pass
         except Exception, e: return str(e)
     ######################################################
