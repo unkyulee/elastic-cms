@@ -34,7 +34,7 @@ def get(p):
             if ret != True and ret: return ret
         except SystemExit: pass
         except Exception, e:
-            return "{}\n{}".format(e.message, traceback.format_exc())
+            raise
     ######################################################
 
     if request.method == "POST":
@@ -79,7 +79,8 @@ def post(p):
             ret = validation(p)
             if ret != True and ret: return ret
         except SystemExit: pass
-        except Exception, e: return str(e)
+        except Exception, e:
+            raise
     ######################################################
 
     # create post
@@ -124,13 +125,15 @@ def post(p):
 
     ######################################################
     # Post action
+    p['post'] = es.get(host, index, 'post', p["post"]["id"])
     if p['workflow'] and p['workflow'].get('postaction'):
         try:
             exec (p['workflow']['postaction'], globals())
-            postaction(p)
+            ret = postaction(p)
+            if ret != True and ret: return ret
         except SystemExit: pass
-        except Exception, e: return str(e)
-
+        except Exception, e:
+            raise
     ######################################################
 
 
@@ -148,7 +151,7 @@ def post(p):
                     if ret != True and ret: return ret
                 except SystemExit: pass
                 except Exception, e:
-                    return "{}\n{}".format(e.message, traceback.format_exc())
+                    raise
 
                 # send notification
                 notification.send(p,

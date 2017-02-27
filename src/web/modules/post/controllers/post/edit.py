@@ -38,7 +38,7 @@ def get(p):
             if ret != True and ret: return ret
         except SystemExit: pass
         except Exception, e:
-            return "{}\n{}".format(e.message, traceback.format_exc())
+            raise
     else:
         # check ACL
         valid_acl = False
@@ -105,7 +105,7 @@ def post(p):
             if ret != True and ret: return ret
         except SystemExit: pass
         except Exception, e:
-            return "{}\n{}".format(e.message, traceback.format_exc())
+            raise
     ######################################################
 
     # handle attachment
@@ -152,7 +152,7 @@ def post(p):
             if ret != True and ret: return ret
         except SystemExit: pass
         except Exception, e:
-            return "{}\n{}".format(e.message, traceback.format_exc())
+            raise
     ######################################################
 
 
@@ -170,7 +170,7 @@ def post(p):
                     if ret != True and ret: return ret
                 except SystemExit: pass
                 except Exception, e:
-                    return "{}\n{}".format(e.message, traceback.format_exc())
+                    raise
 
                 # send notification
                 notification.send(p,
