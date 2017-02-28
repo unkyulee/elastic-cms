@@ -1,13 +1,21 @@
+import re
+import string
+import json
+import urllib2
+import traceback
+
 from flask import render_template, request
+
 import web.util.tools as tools
 import lib.http as http
 import lib.es as es
-import urllib2
+
 from web import app
-import json
+
 from lib.read import readfile
 import web.modules.post.services.workflow as workflow
-import traceback
+
+
 
 def get(p):
     if p['c']['intro'] and not tools.get('q'):
@@ -72,12 +80,15 @@ def get(p):
             p["selected_filter_list"][field['id']] = values
 
     # search query
-    p["q"] = p["q"].replace('"', '\\"')
+    original_query = p['q']
+    p['q'] = escape(p['q'])
+
     if p['c'].get('search_query'):
         p['search_query'] = render_template(app.jinja_env.from_string(p['c']['search_query']), p=p)
     else:
         p['search_query'] = render_template("post/search/part/search_query.html", p=p)
-    p["q"] = p["q"].replace('\\"', '"')
+
+    p["q"] = original_query
 
     try:
         search_url = "{}/{}/post/_search".format(host, index)
@@ -154,3 +165,23 @@ def get(p):
             p['c'].get('search_item_template')), p=p)
 
     return render_template("post/search/default.html", p=p)
+
+
+def escape(q):
+    # + - = && || > < ! ( ) { } [ ] ^ " ~ * ? : \ /
+    q = q.replace('&&', ' ')
+    q = q.replace('||', ' ')
+    q = q.replace('>', ' ')
+    q = q.replace('<', ' ')
+    q = q.replace('!', ' ')
+    q = q.replace('(', ' ')
+    q = q.replace(')', ' ')
+    q = q.replace('{', ' ')
+    q = q.replace('}', ' ')
+    q = q.replace('^', ' ')
+    q = q.replace('"', ' ')
+    q = q.replace('~', ' ')
+    q = q.replace('?', ' ')
+    q = q.replace('\\', ' ')
+
+    return q
