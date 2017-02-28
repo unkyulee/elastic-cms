@@ -6,7 +6,7 @@
 <div class="row">{{p.c.content_header|render(p)|safe}}</div>
 
 <div class="row">
-  <div class="col-lg-9 col-md-9">
+  <div class="col-sm-9">
     <div class="panel panel-default">
       <div class="panel-body">
         {% include "post/post/part/view_content.html" %}
@@ -16,51 +16,50 @@
 
   </div>
 
-  <div class="col-lg-3 col-md-3">
-    {% include "post/post/part/view_meta.html" %}
-    {% include "post/post/part/view_side.html" %}
+  <div class="col-sm-3">
+    <div data-spy="affix">
+      {% include "post/post/part/view_meta.html" %}
+      {% include "post/post/part/view_side.html" %}
 
-    {# display edit icon when post/edit is allowed #}
-    {% if 'post/edit' in p.allowed_operation %}
-      <a href="{{p.url}}/post/edit/{{p.post.id}}" title="new">
-        <button type="button" class="btn btn-xs btn-primary">
-          <span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit
+      {# display edit icon when post/edit is allowed #}
+      {% if 'post/edit' in p.allowed_operation %}
+        <a href="{{p.url}}/post/edit/{{p.post.id}}" title="new">
+          <button type="button" class="btn btn-xs btn-primary">
+            <span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit
+          </button>
+        </a>
+      {% endif %}
+
+      {# display edit icon when post/delete is allowed #}
+      {% if 'post/delete' in p.allowed_operation %}
+        <a href="#modal-delete-post" data-toggle="modal" title="delete">
+          <button type="button" class="btn btn-xs btn-danger">
+            <span class="glyphicon glyphicon-trash"></span>&nbsp;Delete
+          </button>
+        </a>
+      {% endif %}
+
+      {# display edit icon for editor and author #}
+      {% if p.login == p.post.created_by or
+            p.login in p.post.acl_edit or
+            'EVERYONE' in p.post.acl_edit
+      %}
+      <a href="{{p.url}}/post/edit/{{p.post.id}}?wf=security" title="set security">
+        <button type="button" class="btn btn-xs btn-warning">
+          <i class="fa fa-lock" aria-hidden="true"></i>&nbsp;Security
         </button>
       </a>
-    {% endif %}
+      {% endif %}
 
-    {# display edit icon when post/delete is allowed #}
-    {% if 'post/delete' in p.allowed_operation %}
-      <a href="#modal-delete-post" data-toggle="modal" title="delete">
-        <button type="button" class="btn btn-xs btn-danger">
-          <span class="glyphicon glyphicon-trash"></span>&nbsp;Delete
+      {# display edit icon when post/history is allowed #}
+      {% if 'history/list' in p.allowed_operation %}
+      <a href="{{p.url}}/history/list/{{p.post.id}}" title="show history">
+        <button type="button" class="btn btn-xs btn-default">
+          <i class="fa fa-history" aria-hidden="true"></i>&nbsp;History
         </button>
       </a>
-    {% endif %}
-    
-    {# display edit icon for editor and author #}
-    {% if p.login == p.post.created_by or
-          p.login in p.post.acl_edit or
-          'EVERYONE' in p.post.acl_edit
-    %}
-    <a href="{{p.url}}/post/edit/{{p.post.id}}?wf=security" title="set security">
-      <button type="button" class="btn btn-xs btn-warning">
-        <i class="fa fa-lock" aria-hidden="true"></i>&nbsp;Security
-      </button>
-    </a>
-    {% endif %}
-
-    {# display edit icon when post/history is allowed #}
-    {% if 'history/list' in p.allowed_operation %}
-    <a href="{{p.url}}/history/list/{{p.post.id}}" title="show history">
-      <button type="button" class="btn btn-xs btn-default">
-        <i class="fa fa-history" aria-hidden="true"></i>&nbsp;History
-      </button>
-    </a>
-    {% endif %}
-
-
-
+      {% endif %}
+    </div>
   </div>
 
 </div>

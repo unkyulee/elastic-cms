@@ -1,9 +1,18 @@
 <table class="table table-stripped table-hover table-responsive">
   <thead>
   <tr>
-    <th colspan=2>Information</th>
+    <th colspan=2 style="background-color: orange">
+      <font color=white>{{ p.c.name }}</font>
+    </th>
   </tr>
 </thead>
+
+<tr>
+  <td colspan="2">
+      <small class="text-muted">{{ p.post.title }}</small>
+      <br><br>
+  </td>
+</tr>
 
   {%if p.post.status%}
   <tr>
