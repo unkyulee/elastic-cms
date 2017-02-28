@@ -13,6 +13,8 @@ def get(p):
         config.set_conf(h, n, 'content_header', tools.get('content_header'))
         config.set_conf(h, n, 'content_footer', tools.get('content_footer'))
         config.set_conf(h, n, 'intro', tools.get('intro'))
-        es.flush(h, n)
+        
+        return tools.redirect(request.referrer)
+
 
     return render_template("post/layout/default.html", p=p)
