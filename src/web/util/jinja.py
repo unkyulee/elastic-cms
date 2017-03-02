@@ -1,9 +1,10 @@
 # jinja custom filters
+import json
+from datetime import datetime
+from dateutil.parser import *
+
 from flask import render_template
 from web import app
-import pytz
-from dateutil.parser import *
-import json
 import lib.es as es
 
 
@@ -108,9 +109,9 @@ def pretty_date(time=False):
     pretty string like 'an hour ago', 'Yesterday', '3 months ago',
     'just now', etc
     """
-    time = parse(time)
-    from datetime import datetime
-    now = datetime.utcnow().replace(tzinfo=pytz.utc)
+    time = parse(time, ignoretz=True)
+    now = datetime.now()
+    
     if type(time) is int:
         diff = now - datetime.fromtimestamp(time)
     elif isinstance(time,datetime):
