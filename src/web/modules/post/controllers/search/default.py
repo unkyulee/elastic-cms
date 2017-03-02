@@ -49,7 +49,7 @@ def get(p):
             if ret != True and ret: return ret
         except SystemExit: pass
         except Exception, e:
-            return "{}\n{}".format(e.message, traceback.format_exc())
+            raise
 
     ######################################################
 
