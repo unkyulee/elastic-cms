@@ -1,5 +1,7 @@
 {% include "post/search/part/script.html" %}
 
+{% include "post/search/part/summary.html" %}
+
 <!-- List of Selected Filters -->
 {% include "post/search/part/selected_filters.html" %}
 
@@ -7,7 +9,7 @@
 {% import "post/search/part/filter.html" as filter %}
 {% for field in p.available_filter_list|sort(attribute='name') %}
   {% if loop.first %}
-    <br><p class="bg-info">&nbsp;Available Filters</p>
+    <p class="bg-info">&nbsp;Available Filters</p>
   {%endif%}
   {{ filter.render(p, field) }}
 {% endfor %}
