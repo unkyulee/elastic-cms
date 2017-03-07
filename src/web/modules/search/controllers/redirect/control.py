@@ -21,10 +21,10 @@ def get(p):
     site = es.get(p['host'], 'core_nav', 'site', navigation['site_id'])
 
     # form url
-    url = urlparse.urljoin(request.url_root, site.get('name'))
-    url = urlparse.urljoin(url, navigation.get('name'))
-
-    # add id at the end of the url
+    url = '{}/{}'.format(site.get('name'), navigation.get('name'))
     url = "{}/post/view/{}".format(url, id)
+    # when navigation or site is empty then it contains double slash 
+    url = url.replace("//", "/")
+    url = urlparse.urljoin(request.url_root, url)
 
     return tools.redirect(url)
