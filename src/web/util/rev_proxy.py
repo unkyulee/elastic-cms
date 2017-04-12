@@ -46,16 +46,23 @@ def rev_proxy(host, url, rev_proxy_rule):
 
     # Make Http Request
     resp = requests.request(method=request.method, url=dest_url,
-                            headers=req_header, data=request.get_data(),
-                            cookies=request.cookies, stream=True)
+                            #headers=req_header,
+                            #data=request.get_data(),
+                            #cookies=request.cookies,
+                            #stream=True
+                            )
 
     # Response
     headers = {}
+
     # remove content encoding header in response
     for h, v in resp.headers.items():
         if h.lower() == "content-encoding": continue
         if h.lower() == "transfer-encoding": continue
+        if h.lower() == "content-length": continue
         headers[h] = v
     def generate():
-        for chunk in resp.iter_content(1000): yield chunk
+        for chunk in resp.iter_content(1000):
+            yield chunk
+
     return Response(generate(), status=resp.status_code, headers=headers)
