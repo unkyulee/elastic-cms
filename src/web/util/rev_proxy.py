@@ -46,10 +46,10 @@ def rev_proxy(host, url, rev_proxy_rule):
 
     # Make Http Request
     resp = requests.request(method=request.method, url=dest_url,
-                            #headers=req_header,
-                            #data=request.get_data(),
-                            #cookies=request.cookies,
-                            #stream=True
+                            headers=req_header,
+                            data=request.get_data(),
+                            cookies=request.cookies,
+                            stream=True
                             )
 
     # Response
