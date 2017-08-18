@@ -17,6 +17,7 @@ class TaskLog():
             "message": message,
             "created": es.now()
         })
+        es.flush(self.host, 'core_task')
 
     def info(self, message):
         self.log("INFO", message)
