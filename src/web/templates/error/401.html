@@ -6,7 +6,7 @@
 {% block content %}
 
 <div class="page-header">
-  <h2>401 - <a href='/auth?url={{ p.full_url }}'>Login</a> Required</h2>
+  <h2>401: Unauthorized</h2>
 </div>
 
 <div class="row">
@@ -17,7 +17,7 @@
       <li>You are currently logged in as <strong>{{ p.login }}</strong>
         If this is not you then try to <a href='/auth?url={{ p.full_url }}'>login</a> with your account</li>
 
-      <li>You may not have the access rights to the page. Please, inform system admin if this is unexpected system behavior</li>
+      <li>Please, inform the system admin if this is unexpected system behavior</li>
     </ul>
 
   </div>
