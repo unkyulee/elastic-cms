@@ -1,2 +1,2 @@
 # elastic-cms
-Web-based Content Management using ElasticSearch fulltext engine
+Python-based Web Content Management using ElasticSearch fulltext engine
